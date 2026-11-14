@@ -1,6 +1,6 @@
 .watch-page {
-  --watch-offblack: #110e0c;
-  --watch-raised: #1a1410;
+  --watch-offblack: var(--canvas);
+  --watch-raised: var(--surface);
   --watch-amber: #ffb598;
   --watch-border: rgb(236 187 157 / 25%);
   --watch-quiet: var(--muted, #c6b7aa);
@@ -12,7 +12,7 @@
   padding-block: clamp(3.5rem, 8vw, 8rem);
   color: var(--watch-paper);
   background:
-    radial-gradient(ellipse at 70% 28%, #382017 0%, transparent 58%),
+    radial-gradient(ellipse at 70% 28%, var(--walnut-charcoal), transparent 64%),
     var(--watch-offblack);
 }
 
@@ -32,12 +32,12 @@
 .watch-page h1 {
   margin: 0 0 0.24em -0.025em;
   line-height: 0.98;
-  letter-spacing: -0.075em;
-  font-weight: 690;
+  letter-spacing: var(--display-spacing);
+  font-weight: var(--display-weight);
 }
 
 .watch-index-header h1 { font-size: clamp(4rem, 11vw, 11rem); }
-.watch-index-header h1 span { color: var(--watch-accent); }
+.watch-index-header h1 span { color: var(--signature-red); }
 
 .watch-index-header p,
 .watch-info > p,

@@ -7,15 +7,15 @@
 }
 
 .inside {
-  background: radial-gradient(ellipse at 78% 22%, #3a2115 0%, transparent 50%);
+  background: radial-gradient(ellipse at 78% 22%, var(--walnut-charcoal), transparent 58%);
 }
 
 .about {
-  background: radial-gradient(ellipse at 92% 35%, #342016 0%, transparent 51%);
+  background: radial-gradient(ellipse at 92% 35%, var(--walnut-charcoal), transparent 58%);
 }
 
 .connect {
-  background: radial-gradient(ellipse at 32% 73%, #392014 0%, transparent 55%);
+  background: radial-gradient(ellipse at 32% 73%, var(--walnut-charcoal), transparent 62%);
 }
 
 .split {
@@ -59,15 +59,13 @@
 .title {
   margin: 0;
   font-size: clamp(3.2rem, 8.35vw, 8rem);
-  font-weight: 680;
-  letter-spacing: -0.078em;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-spacing);
   line-height: 0.94;
   text-wrap: balance;
 }
 
-.title span {
-  color: var(--orange, #ff7846);
-}
+.title span { color: var(--signature-red); }
 
 .lead {
   max-width: 37ch;

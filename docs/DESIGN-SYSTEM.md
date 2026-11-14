@@ -12,16 +12,16 @@ The hero cards use the Engraved Copper finish. Fine brushed lines sit over warm 
 
 ## Colour and type
 
-- Near-black and warm charcoal establish the background. Warm white gives readable text and warm orange marks important actions and architectural light.
-- Use wood, copper and amber tones for the environment and softer layers. The colour system is a project interpretation pending approval of the brand source.
-- Combine an expressive display hierarchy with readable body text and compact monospace metadata.
+- Sampled walnut shadow `#221911` and warm charcoal `#2D241D` guide the dark surfaces. Pale sign white `#E1E8EB` guides the illuminated architectural strokes. Keep text in readable off-white and use copper and amber for the hero cards.
+- Signature red `#BC3728` is a reference for the handwritten mark and decorative details. Links, controls and focus indicators use colours checked for contrast on their own surfaces.
+- Use DM Sans Variable for headings, body text, navigation, card labels and controls. Use compact monospace for the location, video duration and other metadata. The red lettering is part of the image-derived mark. The supplied JPEG gives too little detail to identify a typeface with confidence.
 - Keep links and controls readable over artwork, dimmed gradients or in reduced-motion mode. Reserve media dimensions. Give pointer hover and keyboard focus comparable emphasis.
 
 ## Shared surfaces
 
 | Surface | Design behaviour |
 | --- | --- |
-| Header and menu | A small studio mark, immediate navigation and a keyboard-accessible full-screen menu where enhanced. |
+| Header, menu and footer | The compact studio mark pairs the supplied white house linework with the red handwritten signature. The header mark links home, and the full-screen menu remains keyboard accessible. |
 | Opening | The illuminated house behind a 3D carousel for Watch, Inside the House, About and Connect. The upright, 1:2 portrait cards rotate together, with each card moving forward into focus and receding as the next arrives. A scroll-snap rail gives access to every card in reduced motion and without JavaScript. |
 | Watch cards | An illuminated video frame, the official thumbnail and meaningful duration, title and destination. |
 | Studio and profile | Architectural framing and warm depth carry over to editorial pages. Approved imagery can occupy the current concept artwork’s place. |
@@ -29,4 +29,4 @@ The hero cards use the Engraved Copper finish. Fine brushed lines sit over warm 
 
 ## Artwork and rights
 
-The house outline is an original site motif. Original studio photos and the approved logo master are pending. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview. Confirm the rights and accurate captions of any additional assets before adding them.
+The studio mark comes from the supplied 150 × 150 px JPEG. Use the raster only at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview.

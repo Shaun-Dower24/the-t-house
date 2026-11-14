@@ -13,7 +13,7 @@
     "tokens": [
       "app/globals.css"
     ],
-    "components": ["components/hero-carousel.tsx", "components/card-route-transition.tsx"],
+    "components": ["components/studio-mark.tsx", "components/hero-carousel.tsx", "components/card-route-transition.tsx"],
     "assets": [
       "public/images"
     ],
@@ -52,7 +52,7 @@
     "patterns": ["Shared 3D stage with orbiting portrait links", "Card half-turn followed by viewport expansion"]
   },
   "constraints": {
-    "must": ["Use real route links and honour system and site motion preferences"],
+    "must": ["Use real route links and honour system and site motion preferences", "Keep the image-derived studio mark compact and use signature red for decorative details"],
     "avoid": ["Autoplay and navigation triggered by swiping or focus"]
   },
   "decisions": [{
@@ -63,6 +63,10 @@
     "id": "hero-carousel-finish",
     "decision": "Use the Engraved Copper finish with a brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card.",
     "source": "https://21st.dev/@fransederr/components/grain-light-card"
+  }, {
+    "id": "studio-image-style-and-type",
+    "decision": "Use the supplied house drawing and red handwritten signature in the compact header, menu and footer mark. Take walnut, charcoal and pale sign-white cues from the image. Use DM Sans Variable for headings, body text and controls, and compact monospace for metadata.",
+    "source": "User-supplied T-House JPEG and approved image, style and typography plan"
   }],
   "evidence": [
     {

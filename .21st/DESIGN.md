@@ -14,7 +14,7 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 ## Sources
 
 - Tokens: app/globals.css
-- Components: `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
+- Components: `components/studio-mark.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
 - Assets: public/images
 - Instructions: AGENTS.md
 
@@ -42,12 +42,15 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 ### Must
 
 - Use real route links and honour system and site motion preferences.
+- Keep the image-derived studio mark compact and use signature red for decorative details.
 
 ### Avoid
 
 - Autoplay and navigation triggered by swiping or focus.
 
 ## Decisions
+
+- Use the supplied white house drawing and red handwritten signature in the compact header, menu and footer mark. Take walnut, charcoal and pale sign-white cues from the image. Use DM Sans Variable for headings, body text and controls, and compact monospace for metadata.
 
 - Use the Engraved Copper finish with brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
 

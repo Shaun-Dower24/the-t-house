@@ -4,6 +4,7 @@ import { useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { studio } from "../content/studio";
+import { StudioMark } from "./studio-mark";
 
 const links = [
   { href: "/", label: "Home" },
@@ -34,8 +35,7 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="page-grid header-inner">
         <Link className="wordmark" href="/" aria-label={`${studio.name} home`}>
-          <span className="house-mark" aria-hidden="true" />
-          The T-House<span className="sr-only"> Studio</span>
+          <StudioMark className="studio-mark header-mark" />
         </Link>
         <div className="header-actions">
           <nav className="header-nav" aria-label="Main">
@@ -54,7 +54,8 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
       <dialog ref={dialog} id="site-menu" className="site-menu" aria-labelledby="menu-title" onClose={closeMenu}>
         <div className="page-grid menu-layout">
           <div className="menu-top">
-            <h2 id="menu-title" className="meta">The T-House / Menu</h2>
+            <StudioMark className="studio-mark menu-mark" />
+            <h2 id="menu-title" className="sr-only">The T-House / Menu</h2>
             <form method="dialog"><button className="menu-trigger" autoFocus>Close <span aria-hidden="true">×</span></button></form>
           </div>
           <nav aria-label="Site menu" className="menu-links">
