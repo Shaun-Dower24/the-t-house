@@ -9,9 +9,19 @@ import styles from "./card-route-transition.module.css";
 type Card = { href: string; label: string; image?: string; tone: string };
 type Phase = "flip" | "zoom" | "navigate" | "reveal";
 type Gsap = typeof import("gsap").gsap;
+type OrbitPose = {
+  scene: DOMRect;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  transform: string;
+  transformOrigin: string;
+};
 type Visual = {
   card: Card;
   bounds: DOMRect;
+  orbit?: OrbitPose;
   frontImage?: string;
 };
 type Motion = {
@@ -35,18 +45,38 @@ function motionIsEnabled(preferences?: HTMLElement | null) {
     && !window.matchMedia("(prefers-reduced-motion: reduce), (forced-colors: active)").matches;
 }
 
+function readOrbitPose(source: HTMLAnchorElement): OrbitPose | undefined {
+  const slide = source.parentElement;
+  const stage = slide?.parentElement;
+  if (!stage?.hasAttribute("data-hero-orbit") || !slide || slide.offsetParent !== stage) return;
+
+  const { transform, transformOrigin } = getComputedStyle(slide);
+  const matrix = new DOMMatrixReadOnly(transform === "none" ? undefined : transform);
+  // Perspective has no visible effect on the centred face at zero rotation and depth.
+  if (Math.abs(matrix.m13) < 0.001 && Math.abs(matrix.m41) < 0.001 && Math.abs(matrix.m43) < 0.001) return;
+
+  return {
+    scene: stage.getBoundingClientRect(),
+    left: stage.clientLeft + slide.offsetLeft + source.offsetLeft,
+    top: stage.clientTop + slide.offsetTop + source.offsetTop,
+    width: source.offsetWidth,
+    height: source.offsetHeight,
+    transform,
+    transformOrigin,
+  };
+}
+
 function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement) {
   const originalSlide = source.parentElement;
   if (!originalSlide) return;
 
   const slide = document.createElement("div");
   slide.className = originalSlide.className;
-  slide.dataset.active = originalSlide.dataset.active;
-  slide.dataset.side = originalSlide.dataset.side;
+  Object.assign(slide.dataset, originalSlide.dataset);
 
   const front = document.createElement("div");
   front.className = source.className;
-  front.dataset.destination = source.dataset.destination;
+  Object.assign(front.dataset, source.dataset);
   front.style.transform = "none";
   front.style.transition = "none";
 
@@ -152,6 +182,7 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
     const image = source.querySelector("img");
     const nextVisual = {
       card, bounds,
+      orbit: readOrbitPose(source),
       frontImage: image?.currentSrc || image?.src || card.image,
     };
     active.current = { visual: nextVisual, source, preferences, pathname, phase: "flip", originalOpacity: source.style.opacity };
@@ -166,45 +197,67 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
     if (!visual || !current || current.visual !== visual || current.phase !== "flip" || current.timeline) return;
     const gsap = animation.current;
     const overlay = layer.current;
+    const placement = overlay?.querySelector<HTMLElement>("[data-card-route-placement]");
     const panel = overlay?.querySelector<HTMLElement>("[data-card-route-panel]");
     const rotator = overlay?.querySelector<HTMLElement>("[data-card-route-rotator]");
     const scrim = overlay?.querySelector<HTMLElement>("[data-card-route-scrim]");
     const front = overlay?.querySelector<HTMLElement>("[data-card-route-front]");
     const title = overlay?.querySelector<HTMLElement>("[data-card-route-title]");
-    if (!gsap || !overlay || !panel || !rotator || !scrim || !front || !title
+    if (!gsap || !overlay || !placement || !panel || !rotator || !scrim || !front || !title
       || getComputedStyle(overlay).position !== "fixed" || !motionIsEnabled(current.preferences)) {
       skipMotion(current);
       return;
     }
 
-    const { width, height, left, top } = visual.bounds;
+    const { orbit, bounds } = visual;
+    const { width, height } = orbit ?? bounds;
+    const left = orbit ? orbit.scene.left + orbit.left : bounds.left;
+    const top = orbit ? orbit.scene.top + orbit.top : bounds.top;
     const target = overlay.getBoundingClientRect();
     const x = target.width / 2 - (left + width / 2);
     const y = target.height / 2 - (top + height / 2);
     const scale = Math.max(target.width / width, target.height / height) + 0.025;
+    const lift = orbit ? 0.12 : 0;
+    const zoom = lift + 0.3;
 
     try {
       copyFrontFace(current.source, front);
       current.source.style.opacity = "0";
       const fitTitle = gsap.quickSetter(title, "scale");
 
-      current.timeline = gsap.timeline({ onComplete: () => navigate(current) })
+      current.timeline = gsap.timeline({ onComplete: () => navigate(current) });
+      if (orbit) {
+        const projected = new DOMMatrixReadOnly(orbit.transform).toFloat64Array();
+        const flat = new DOMMatrixReadOnly().toFloat64Array();
+        const pose = { progress: 0 };
+        // Keep the source's perspective terms until the card has settled into the flip plane.
+        current.timeline.to(pose, {
+          progress: 1, duration: lift, ease: "power2.out",
+          onUpdate: () => {
+            const matrix = projected.map((coordinate, index) => coordinate + (flat[index] - coordinate) * pose.progress);
+            placement.style.transform = `matrix3d(${matrix.join(",")})`;
+          },
+          onComplete: () => { placement.style.transform = "none"; },
+        }, 0);
+      }
+
+      current.timeline
         .to(scrim, { opacity: 0.64, duration: 0.28, ease: "power2.out" }, 0)
-        .to(rotator, { rotationY: 180, duration: 0.3, ease: "power2.inOut" }, 0)
+        .to(rotator, { rotationY: 180, duration: 0.3, ease: "power2.inOut" }, lift)
         .call(() => {
           current.phase = "zoom";
           overlay.dataset.phase = "zoom";
-        }, [], 0.3)
+        }, [], zoom)
         .to(panel, {
           x, y, scale, duration: 0.32, ease: "power3.inOut",
           onUpdate: () => {
             const scaleX = Number(gsap.getProperty(panel, "scaleX"));
             fitTitle(Math.min(1, 1.35 / scaleX));
           },
-        }, 0.3);
+        }, zoom);
 
       // Give navigation a bounded wait even if the animation is interrupted.
-      current.timeout = window.setTimeout(() => skipMotion(current), 780);
+      current.timeout = window.setTimeout(() => skipMotion(current), 780 + lift * 1000);
     } catch {
       skipMotion(current);
     }
@@ -291,14 +344,28 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
       {visual && createPortal(
         <div ref={layer} className={styles.overlay} data-card-route-overlay data-phase="flip" aria-hidden="true" inert>
           <div className={styles.scrim} data-card-route-scrim />
-          <div className={styles.panel} data-card-route-panel style={{
-            left: visual.bounds.left, top: visual.bounds.top, width: visual.bounds.width, height: visual.bounds.height,
+          <div className={styles.scene} style={visual.orbit && {
+            left: visual.orbit.scene.left,
+            top: visual.orbit.scene.top,
+            width: visual.orbit.scene.width,
+            height: visual.orbit.scene.height,
           }}>
-            <div className={styles.rotator} data-card-route-rotator>
-              <div className={styles.front} data-card-route-front />
-              <div className={styles.back} style={{ backgroundColor: visual.card.tone }}>
-                {visual.frontImage ? <div className={styles.image} style={{ backgroundImage: `url("${visual.frontImage}")` }} /> : <HouseOutline />}
-                <span data-card-route-title>{visual.card.label}</span>
+            <div className={styles.placement} data-card-route-placement style={{
+              left: (visual.orbit ?? visual.bounds).left,
+              top: (visual.orbit ?? visual.bounds).top,
+              width: (visual.orbit ?? visual.bounds).width,
+              height: (visual.orbit ?? visual.bounds).height,
+              transform: visual.orbit?.transform,
+              transformOrigin: visual.orbit?.transformOrigin,
+            }}>
+              <div className={styles.panel} data-card-route-panel>
+                <div className={styles.rotator} data-card-route-rotator>
+                  <div className={styles.front} data-card-route-front />
+                  <div className={styles.back} style={{ backgroundColor: visual.card.tone }}>
+                    {visual.frontImage ? <div className={styles.image} style={{ backgroundImage: `url("${visual.frontImage}")` }} /> : <HouseOutline />}
+                    <span data-card-route-title>{visual.card.label}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

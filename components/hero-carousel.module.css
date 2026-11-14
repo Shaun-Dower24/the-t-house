@@ -1,3 +1,9 @@
+@property --t-house-orbit-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
 .carousel {
   --card-width: clamp(9rem, min(17vw, 20svh), 12rem);
   --card-gap: clamp(0.75rem, 2vw, 1.75rem);
@@ -5,6 +11,20 @@
   z-index: 1;
   width: 100%;
   min-width: 0;
+}
+
+.stage {
+  position: relative;
+  overflow: clip;
+}
+
+.stage:has([data-hero-orbit])::before {
+  position: absolute;
+  inset: auto 8% 3% 8%;
+  height: 27%;
+  background: radial-gradient(ellipse, rgb(255 123 49 / 22%), transparent 68%);
+  content: "";
+  pointer-events: none;
 }
 
 .rail {
@@ -27,15 +47,49 @@
   display: none;
 }
 
+.rail[data-hero-orbit] {
+  --orbit-radius: calc(var(--card-width) * 1.5);
+  --orbit-perspective: 54rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 0;
+  overflow: visible;
+  padding-inline: 0;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  transition: --t-house-orbit-angle 700ms cubic-bezier(0.2, 0.82, 0.24, 1);
+}
+
+.rail[data-instant] {
+  transition: none;
+}
+
 .slide {
   flex: 0 0 var(--card-width);
   min-inline-size: 0;
   scroll-snap-align: center;
-  perspective: 58rem;
+}
+
+.rail[data-hero-orbit] .slide {
+  --orbit-position: calc(var(--card-angle) - var(--t-house-orbit-angle));
+  --orbit-depth: cos(var(--orbit-position));
+  grid-area: 1 / 1;
+  width: var(--card-width);
+  z-index: calc(1001 + 1000 * var(--orbit-depth));
+  transform: perspective(var(--orbit-perspective)) translate3d(
+    calc(sin(var(--orbit-position)) * var(--orbit-radius)),
+    0,
+    calc((var(--orbit-depth) - 1) * var(--orbit-radius))
+  ) rotateY(calc(sin(var(--orbit-position)) * 37deg));
+}
+
+.rail[data-hero-orbit] .slide[data-rear] {
+  pointer-events: none;
 }
 
 .card {
-  --card-angle: -15deg;
   position: relative;
   isolation: isolate;
   display: flex;
@@ -45,22 +99,19 @@
   height: 100%;
   aspect-ratio: 1 / 2;
   padding: clamp(0.8rem, 2vw, 1.15rem);
-  border: 1px solid rgb(255 206 172 / 48%);
+  border: 1px solid rgb(255 188 145 / 62%);
   background: #251713;
   color: var(--paper);
   text-decoration: none;
-  transform: rotateY(var(--card-angle)) scale(0.94);
-  transition: transform 250ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out;
-}
-
-.slide[data-side="before"] .card {
-  --card-angle: 15deg;
+  box-shadow: inset 0 1px 0 rgb(255 207 170 / 40%), inset 0 0 0 2px rgb(255 165 103 / 12%),
+    0 0 0.45rem rgb(255 142 75 / 21%), 0 1rem 1.5rem rgb(10 5 3 / 42%);
+  transition: border-color 250ms ease-out, box-shadow 250ms ease-out;
 }
 
 .slide[data-active="true"] .card {
-  border-color: rgb(255 174 117 / 82%);
-  box-shadow: 0 0 1.4rem rgb(250 120 61 / 23%);
-  transform: none;
+  border-color: #ffb383;
+  box-shadow: inset 0 0 0 2px rgb(255 165 103 / 24%), 0 0 0.55rem rgb(255 142 75 / 54%),
+    0 0 2.25rem rgb(250 120 61 / 30%), 0 1rem 1.5rem rgb(10 5 3 / 52%);
 }
 
 .card:focus-visible {
@@ -129,12 +180,14 @@
 .card::after {
   z-index: -1;
   content: "";
-  background: linear-gradient(0deg, rgb(12 9 8 / 98%), rgb(12 9 8 / 70%) 24%, rgb(12 9 8 / 36%) 65%);
+  background: linear-gradient(0deg, rgb(12 9 8 / 98%), rgb(12 9 8 / 70%) 24%, rgb(12 9 8 / 36%) 65%),
+    linear-gradient(120deg, rgb(255 160 104 / 16%), transparent 38%);
 }
 
 .slide[data-active="true"] .card::after,
 .card:focus-visible::after {
-  background: linear-gradient(0deg, rgb(12 9 8 / 99%), rgb(12 9 8 / 71%) 26%, rgb(12 9 8 / 11%) 73%);
+  background: linear-gradient(0deg, rgb(12 9 8 / 99%), rgb(12 9 8 / 71%) 26%, rgb(12 9 8 / 11%) 73%),
+    linear-gradient(120deg, rgb(255 160 104 / 13%), transparent 42%);
 }
 
 .label {
@@ -235,9 +288,7 @@
 
   .rail { padding-block: 0.65rem 0.95rem; }
 
-  .card { --card-angle: -8deg; }
-
-  .slide[data-side="before"] .card { --card-angle: 8deg; }
+  .rail[data-hero-orbit] { --orbit-radius: calc(var(--card-width) * 1.12); --orbit-perspective: 36rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

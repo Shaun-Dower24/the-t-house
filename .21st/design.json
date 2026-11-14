@@ -49,7 +49,7 @@
   "components": {
     "installed": [],
     "preferredPrimitives": [],
-    "patterns": ["Centred coverflow navigation with tilted side cards", "Card half-turn followed by viewport expansion"]
+    "patterns": ["Shared 3D stage with orbiting portrait links", "Card half-turn followed by viewport expansion"]
   },
   "constraints": {
     "must": ["Use real route links and honour system and site motion preferences"],
@@ -57,8 +57,8 @@
   },
   "decisions": [{
     "id": "hero-carousel-navigation",
-    "decision": "Use upright, 1:2 portrait cards with centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom.",
-    "source": "21st.dev Coverflow Carousel, Dimensional Switch Slider and Portal Carousel"
+    "decision": "Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom.",
+    "source": "https://21st.dev/@louisstudios/components/warp-carousel"
   }],
   "evidence": [
     {

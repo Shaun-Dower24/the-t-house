@@ -49,4 +49,4 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ## Decisions
 
-- Use upright, 1:2 portrait cards with centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom. The 21st.dev references are Coverflow Carousel, Dimensional Switch Slider and Portal Carousel.
+- Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)

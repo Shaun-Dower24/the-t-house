@@ -6,7 +6,7 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 | Area | Implementation and review |
 | --- | --- |
-| Site and motion | House-inspired entrance, hero carousel linking to four destinations, progressively enhanced scroll motion, accessible menu and reduced-motion control. |
+| Site and motion | House-inspired entrance, Warp-inspired 3D hero carousel linking to four destinations, progressively enhanced scroll motion, accessible menu and reduced-motion control. |
 | Real content | A typed record for the one verified public upload. The library can grow as more releases are verified. |
 | Studio identity | Temporary concept artwork and an original house motif. Approved studio photography, logo source and definitive profile copy remain open. |
 | Contact | Links to official channels. A dedicated form or email route requires an approved contact destination and privacy treatment. |
@@ -23,16 +23,16 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 | Keyboard, reduced motion and no JavaScript | Verified the skip link, menu navigation and focus return, scroll motion after returning home, persistent motion preference, system reduction and essential links with scripts disabled. |
 | Video activation, fallback and sharing | Verified the player loads after activation, the direct YouTube fallback is available and copying the episode URL gives feedback. |
 | Accessibility scan | Axe-core found zero automated violations across six routes and the open menu on desktop and mobile. Gradient contrast still requires a complete manual audit before launch. |
-| Mobile lab performance | One Lighthouse run with the carousel scored 95, with LCP 2.89 s, CLS 0.003 and total blocking time 30 ms. Measure field Core Web Vitals after launch. |
+| Mobile lab performance | The pre-Warp carousel scored 95 in one Lighthouse run, with LCP 2.89 s, CLS 0.003 and total blocking time 30 ms. Measure field Core Web Vitals after launch. |
 
 ## Hero carousel verification
 
 | Check | Result |
 | --- | --- |
-| Responsive layout and input | Chrome passed at 320, 390, 768 and 1440 px with upright 1:2 portrait cards. The controls and a glimpse of the next card are visible at 320 × 568 px. Previous and Next, Tab, arrow keys and touch swipes browse the row. Clicking an angled card opens its destination. A swipe does not trigger navigation. |
+| Responsive layout and input | Verified looping orbit controls, mouse drag and keyboard browsing in desktop Chrome. At 320 × 568 px and 390 × 844 px the controls fit, a swipe turns the ring and a tap opens the chosen page. |
 | Animation and browser history | Sampled the card completing a 180° turn before expanding to cover the viewport. Verified destination focus, Back and Forward with the browsed card restored, Escape cancellation, rapid activation, modified-click navigation and resize recovery. |
-| Cross-browser navigation | All four cards completed the flip, zoom, route change and focus transfer in desktop Chromium, Firefox and WebKit. |
-| Slow connection and fallback | A delayed route exposed a direct link and cleared the overlay. Also verified direct navigation under both motion settings and with JavaScript disabled. |
+| Cross-browser navigation | All four cards completed the flip, zoom, route change and focus transfer in desktop Chromium, Firefox and WebKit. Verified direct clicks on an angled card and the match between the projected card and the first transition frame in each engine. |
+| Slow connection and fallback | A delayed route exposed a direct link and cleared the overlay. The same links appear on a native scroll-snap rail under both reduced-motion settings and with JavaScript disabled. |
 | Accessibility scan | Axe-core found zero automated violations in the carousel at 390 and 1440 px. |
 
 Confirm domain, permissions and approved studio media before a public release. Cross-browser device testing, field performance and analytics checks belong to the launch environment.
