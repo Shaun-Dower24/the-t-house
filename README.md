@@ -1,6 +1,6 @@
 # The T-House
 
-Website prototype for The T-House Studio, a creative music studio in Leyton, East London. The first milestone introduces the studio through an architectural opening and a scroll transition, with links to the studio’s YouTube and Instagram channels.
+Review prototype for The T-House Studio, a creative music studio in Leyton, East London. The scope follows the original Website Master Plan v1.1. The homepage leads from an illuminated house outline to the studio’s verified YouTube upload, the studio introduction and social links.
 
 ## Run locally
 

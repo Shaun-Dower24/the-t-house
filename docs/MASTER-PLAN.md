@@ -1,63 +1,42 @@
 # The T-House website master plan
 
-## Purpose
+## Source of truth
 
-The T-House is a creative music studio in Leyton, East London, associated with producer SV on the Beat. The website introduces the studio, makes its published media easy to discover and directs visitors to its YouTube and Instagram channels. Dower Digital commissioned the work.
+The user confirmed that **The T-House Website Master Plan v1.1**, dated 14 November 2026, governs this project. This repository summary carries forward its scope and decisions. The plan describes a prior standalone motion prototype built for review and sets visual direction and verified content as the next decisions before a production website.
 
-The first milestone is a local homepage prototype with an accessible studio introduction and an animated transition between the opening and the studio section. The named GitHub repository was empty at the start of the work.
+The T-House is a creative music studio in Leyton, East London, associated with producer SV on the Beat. The website's primary goal is to help people discover published content and follow the studio on [YouTube](https://www.youtube.com/@thethousestudio) and [Instagram](https://www.instagram.com/thethousestudio/). The studio and its story give visitors a reason to remember the brand. Collaboration and service enquiries depend on an approved offering and contact destination.
 
-The supplied HTML and skills archive were read as reference material. Reviewing the [live Fabian Tjoe-A-On site](https://fabiantjoeaon.com/) and the [designer’s motion demo](https://x.com/tjoeaon/status/2107903894529421444) confirmed its defining pattern: a central glass tile wall that stays in place as the environment changes, with hover previews and compact controls around it. The revised homepage translates that interaction into an illuminated house-shaped pattern, three navigation hotspots and two lighting scenes. The environment artwork and layout were developed for The T-House.
+## Current milestone
 
-## Visitor journey
+Continue with the single-page **Enter The House** motion prototype for review. The signature motif is the illuminated outline of the house. It connects the arrival to a single featured video and leads into the studio. The [Fabian Tjoe-A-On reference](https://fabiantjoeaon.com/) informs atmosphere, motion continuity and small monospace labels. The T-House design draws its identity from the house sign, warm orange light and actual studio media.
 
-| Scene | Visitor experience | Delivery |
-| --- | --- | --- |
-| The Arrival | A floating tile wall and the headline “Enter the House.” establish the studio identity. Visitors can select a hotspot, change the scene lighting or scroll directly to the studio. | Initial prototype |
-| Entering the House | The opening recedes as the studio section comes into view. Architectural lines, layering and typography create depth. | Initial prototype |
-| Inside the House | An editorial studio introduction. Approved photographs of the space can replace the illustrative treatment and support a gallery. | Introduction in prototype, photography and gallery after asset delivery |
-| The Content | A prominent route to the studio’s published media, then an expandable Watch library. | Channel link in prototype, individual media once verified |
-| Stay Connected | YouTube and Instagram are the principal follow actions. A future collaboration page gives visitors a verified way to enquire. | Social links in prototype, enquiry route in Phase 4 |
-
-## Routes and delivery
-
-| Route | Role | Phase |
-| --- | --- | --- |
-| `/` | Opening, studio introduction and social discovery | 2–3 |
-| `/watch` | Expandable library of verified media | 4 |
-| `/watch/[slug]` | Verified video, optional publication date and guest information, related content when available | 4 or later |
-| `/inside` | Studio introduction and gallery using approved images | 4 |
-| `/about` | Verified brand and studio background | 4 |
-| `/contact` | Verified contact details or a collaboration enquiry flow | 4 |
-
-Navigation in the prototype should point to homepage sections or working social destinations. Add links to supporting routes as those pages become available.
-
-## Delivery phases
-
-1. **Planning.** Confirm repository state, gather available project guidance and record scope, architecture, design, motion and acceptance criteria.
-2. **Foundation.** Create the feature branch and build the App Router shell with a reusable site layout, responsive typography, CSS tokens, metadata and accessible navigation.
-3. **Initial prototype.** Implement the opening, scroll transition and first studio section. Use an original architectural illustration until studio photography is available.
-4. **Supporting content.** Integrate approved photography and video, then build Watch, Inside, About and Contact. Make future content additions data-driven.
-5. **Production readiness.** Verify accessibility, layout, motion, performance, indexing and Netlify deployment readiness. Obtain approval before merging into `main` or deploying to production.
-
-## Acceptance criteria for the first milestone
-
-- `npm ci`, lint, type checking and a production build run from the feature branch. Record actual results in [Implementation status](IMPLEMENTATION-STATUS.md).
-- The homepage opens directly at `/`. A visitor can read and navigate before motion initializes and with motion disabled.
-- Desktop and mobile show a legible opening, a reachable studio introduction and working links to the studio’s YouTube and Instagram channels.
-- Navigation is operable by keyboard with visible focus. Reduced-motion settings preserve the same content and actions. Media and sound never start on their own.
-- The illustration reads as a design treatment. Captions and copy use verified studio information. Introduce authentic studio photography only when available.
-- Browser checks exercise desktop, mobile, keyboard and reduced motion. Record any checks that could not be run.
-- The feature branch remains separate from `main`. The initial handoff is a working local prototype.
-
-## Inputs for subsequent phases
-
-| Input | What it enables |
+| Scene | Visitor experience |
 | --- | --- |
-| Approved house logo in vector or high-resolution raster form | Accurate reproduction of the white architectural lines and orange handwritten lettering |
-| Approved studio photos, credits, publication permissions and descriptions | The first studio photograph, gallery and share imagery |
-| Direct link to the confirmed YouTube upload and its verified metadata | A featured video and its Watch entry |
-| Approved studio description, contact destination and any enquiry requirements | About copy, contact page and collaboration workflow |
-| Production domain and Netlify project details | Canonical URLs, sitemap, verified deployment and Search Console setup |
-| GA4 property, consent requirements and agreed conversion events | Measurement for social follow, video discovery and future collaboration enquiries |
+| Arrival | A warm dark canvas, a house outline that lights up, and immediately usable Watch Latest and Explore The House links. |
+| Latest video | The opening linework leads into a framed card for [Fifa In The T EP 1: SV Vs Kojo Funds](https://www.youtube.com/watch?v=9adqs1vgcMA), the single upload verified on the official channel. The card uses YouTube’s thumbnail and links directly to the video. |
+| Inside the house | A staggered gallery and studio context. Use the three supplied studio photographs when recovered and cleared for this use. Label any temporary concept art. |
+| Follow | Visible links to YouTube and Instagram. |
+| Navigation and preferences | A full-screen menu with keyboard support, a skip link and manual motion control alongside the system preference. |
 
-Social channels supplied in the brief are [YouTube](https://www.youtube.com/@thethousestudio) and [Instagram](https://www.instagram.com/thethousestudio/).
+The visual prototype uses ordinary HTML as its baseline. Native scrolling, reduced-motion support and a straightforward phone layout preserve access to every link. The working branch is `feature/immersive-homepage`.
+
+## Later website scope
+
+| Route | Role |
+| --- | --- |
+| `/` | Signature opening, featured media, studio preview and follow actions |
+| `/watch` | Library of verified content once there is enough material to browse |
+| `/watch/[slug]` | Direct video, factual context and related entries where available |
+| `/inside-the-house` | Approved studio photographs, story and behind-the-scenes media |
+| `/about` and `/connect` | Approved studio and producer profile plus collaboration or enquiry routes. These may be combined in a compact navigation. |
+
+The first milestone ends at prototype review. Review the visual direction and animation strength with the client, secure the media and permissions, and agree the next scope before the core website or CMS build. Phase 3 in v1.1 is the core website build. Phase 4 adds motion integration and launch-candidate QA. Phase 5 covers the approved production launch and measurement. Netlify build settings support evaluation of a GitHub preview. The production hosting and release remain subject to project approval.
+
+## Inputs to close
+
+- Original house mark or approved brand source, and studio photography with the necessary usage permissions.
+- A verified publish date if used in the editorial record. Add library content as it is verified.
+- Approved studio and SV profile copy, a collaboration contact destination and publishing ownership.
+- Scope decision for the CMS, approved domain and host, launch permissions, and analytics and consent requirements.
+
+Verification of the implementation lives in [Implementation status](IMPLEMENTATION-STATUS.md).

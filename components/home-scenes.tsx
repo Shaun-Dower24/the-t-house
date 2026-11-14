@@ -1,113 +1,115 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { SiteHeader } from "./site-header";
 
-export function HomeScenes({ children }: { children: ReactNode }) {
-  const root = useRef<HTMLElement>(null);
+const preferenceKey = "t-house-reduce-motion";
+const systemPreference = "(prefers-reduced-motion: reduce)";
+const preferenceChanged = "t-house-motion-change";
+let sessionPreference = false;
+
+function getSystemPreference() {
+  return window.matchMedia(systemPreference).matches;
+}
+
+function motionIsReduced() {
+  if (getSystemPreference()) return true;
+  try {
+    return window.localStorage.getItem(preferenceKey) === "true";
+  } catch {
+    return sessionPreference;
+  }
+}
+
+function subscribeToMotion(onChange: () => void) {
+  const system = window.matchMedia(systemPreference);
+  system.addEventListener("change", onChange);
+  window.addEventListener("storage", onChange);
+  window.addEventListener(preferenceChanged, onChange);
+  return () => {
+    system.removeEventListener("change", onChange);
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener(preferenceChanged, onChange);
+  };
+}
+
+function toggleMotion() {
+  if (getSystemPreference()) return;
+  sessionPreference = !motionIsReduced();
+  try {
+    window.localStorage.setItem(preferenceKey, String(sessionPreference));
+  } catch {
+    // Keep the choice for this page when storage is unavailable.
+  }
+  window.dispatchEvent(new Event(preferenceChanged));
+}
+
+const serverMotionPreference = () => false;
+const initialMotionPreference = () => undefined;
+
+export function HomeScenes({ children, footer }: { children: ReactNode; footer: ReactNode }) {
+  const root = useRef<HTMLDivElement>(null);
+  const reduced = useSyncExternalStore(subscribeToMotion, motionIsReduced, initialMotionPreference);
+  const systemReduced = useSyncExternalStore(subscribeToMotion, getSystemPreference, serverMotionPreference);
 
   useEffect(() => {
-    const main = root.current;
-    const motionPreference = window.matchMedia("(prefers-reduced-motion: no-preference)");
+    const page = root.current;
+    if (!page || reduced !== false) return;
+    let active = true;
     let cleanup: (() => void) | undefined;
-    let revision = 0;
 
-    async function syncMotion() {
-      const currentRevision = ++revision;
-      cleanup?.();
-      cleanup = undefined;
-
-      if (!main || !motionPreference.matches) return;
-
+    async function startMotion(scope: HTMLDivElement) {
       try {
         const [{ gsap }, { ScrollTrigger }] = await Promise.all([
           import("gsap"),
           import("gsap/ScrollTrigger"),
         ]);
 
-        if (currentRevision !== revision) return;
-
+        if (!active || motionIsReduced()) return;
         gsap.registerPlugin(ScrollTrigger);
-        const media = gsap.matchMedia(main);
+        const media = gsap.matchMedia(scope);
 
-        media.add(
-          {
-            wide: "(min-width: 48rem)",
-            narrow: "(max-width: 47.999rem)",
-            pointer: "(min-width: 48rem) and (hover: hover) and (pointer: fine)",
-          },
-          ({ conditions }) => {
-            const wide = conditions?.wide;
+        media.add({ desktop: "(min-width: 48rem)", all: "(min-width: 0px)" }, ({ conditions }) => {
+          gsap.to("[data-scroll-progress]", {
+            scaleX: 1,
+            ease: "none",
+            scrollTrigger: { trigger: scope, start: "top top", end: "bottom bottom", scrub: true },
+          });
 
-            gsap.to("[data-arrival-art]", {
-              scale: wide ? 1.16 : 1.08,
-              yPercent: wide ? 9 : 4,
-              ease: "none",
-              scrollTrigger: {
-                trigger: "[data-arrival]",
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
-              },
-            });
+          if (!conditions?.desktop) return;
+          const entrance = { trigger: "#arrival", start: "top top", end: "bottom 42%", scrub: true };
 
-            gsap.fromTo("[data-inside-art]", { yPercent: wide ? -7 : -3 }, {
-              yPercent: wide ? 7 : 3,
-              ease: "none",
-              scrollTrigger: {
-                trigger: "#inside",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-              },
-            });
+          gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: entrance })
+            .to("[data-house-outline]", { attr: { points: "60,330 60,112 270,112 480,112 480,330 270,330" } }, 0)
+            .to("[data-house-detail]", { opacity: 0 }, 0)
+            .to("[data-house-art]", { yPercent: 12, scale: 0.91 }, 0);
 
-            const field = main.querySelector<HTMLElement>("[data-tile-field]");
-            const stage = field?.closest<HTMLElement>(".tile-stage");
-            if (!conditions?.pointer || !field || !stage) return;
-
-            const properties = ["--tilt-x", "--tilt-y", "--pointer-x", "--pointer-y"];
-
-            function tilt(event: PointerEvent) {
-              if (!field || !stage || event.pointerType === "touch") return;
-              const bounds = stage.getBoundingClientRect();
-              const x = (event.clientX - bounds.left) / bounds.width;
-              const y = (event.clientY - bounds.top) / bounds.height;
-              field.style.setProperty("--tilt-x", `${(0.5 - y) * 8}deg`);
-              field.style.setProperty("--tilt-y", `${(x - 0.5) * 11}deg`);
-              field.style.setProperty("--pointer-x", `${x * 100}%`);
-              field.style.setProperty("--pointer-y", `${y * 100}%`);
-            }
-
-            function reset() {
-              for (const property of properties) field?.style.removeProperty(property);
-            }
-
-            stage.addEventListener("pointermove", tilt, { passive: true });
-            stage.addEventListener("pointerleave", reset);
-
-            return () => {
-              stage.removeEventListener("pointermove", tilt);
-              stage.removeEventListener("pointerleave", reset);
-              reset();
-            };
-          },
-        );
+          gsap.fromTo("[data-studio-art]", { yPercent: -5 }, {
+            yPercent: 5,
+            ease: "none",
+            scrollTrigger: { trigger: "#inside", start: "top bottom", end: "bottom top", scrub: true },
+          });
+        });
 
         cleanup = () => media.revert();
       } catch (error) {
-        console.warn("The homepage animation could not start.", error);
+        console.warn("The homepage motion could not start.", error);
       }
     }
 
-    void syncMotion();
-    motionPreference.addEventListener("change", syncMotion);
-
+    void startMotion(page);
     return () => {
-      revision++;
+      active = false;
       cleanup?.();
-      motionPreference.removeEventListener("change", syncMotion);
     };
-  }, []);
+  }, [reduced]);
 
-  return <main id="main-content" ref={root} tabIndex={-1}>{children}</main>;
+  return (
+    <div ref={root} className="prototype" data-motion={reduced === undefined ? undefined : reduced ? "reduced" : "full"}>
+      <div className="scroll-progress" aria-hidden="true" data-scroll-progress />
+      <SiteHeader reduceMotion={reduced === true} toggleMotion={toggleMotion} systemReduced={systemReduced} />
+      <main id="main-content" tabIndex={-1}>{children}</main>
+      {footer}
+    </div>
+  );
 }

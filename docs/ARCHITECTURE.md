@@ -1,39 +1,32 @@
 # The T-House architecture
 
-## Stack
+## Current prototype
 
 | Layer | Approach |
 | --- | --- |
-| Routing and rendering | Next.js App Router and TypeScript. Render the homepage and metadata on the server. |
-| Styling | Tailwind CSS v4 with global CSS custom properties for the design tokens. |
-| Animation | GSAP and ScrollTrigger for the scene transition. Evaluate Motion for React when a specific component interaction warrants it. |
-| Content | Static typed content where multiple surfaces reuse the same data. Plan a small media model for Watch. |
-| Hosting | GitHub-connected Netlify. Validate a branch or deploy preview before requesting production approval. |
+| Routing and rendering | Next.js App Router and TypeScript. Render the single homepage and metadata on the server. |
+| Styling | Tailwind CSS v4 and CSS custom properties for a shared type, spacing and colour system. |
+| Animation | CSS for the outline, states and small visual transitions. GSAP ScrollTrigger for the house-to-feature handoff and restrained decorative movement. |
+| Content | A single verified video feature with a direct watch link and a separate channel link. Centralise the video, studio and social details. |
+| Media | YouTube hosts the official feature thumbnail. Local studio concept art and below-fold imagery reserve their dimensions and load lazily. |
 | Verification | ESLint, TypeScript, production build and browser checks. |
 
-The prototype uses static content and lightweight browser animation. The design can be implemented with HTML, CSS and a small animation module.
+Keep content and actions available independently of animation. Isolate client logic to the menu, preferences and motion, and clean up listeners and animations when their owning components unmount. CSS and GSAP cover the current motion prototype. WebGL requires evidence of material visual benefit and mobile performance before any later inclusion.
 
 ## Source layout
 
 | Area | Responsibility |
 | --- | --- |
-| `app/layout.tsx` | Root document, typography, site metadata and global CSS |
-| `app/page.tsx` | Homepage scene composition |
-| `app/globals.css` | Tokens, base styles, reusable utilities and motion fallbacks |
-| `components/` | Shared shell, scene components and the client-side animation boundary |
-| `content/studio.ts` | Studio name, location and social destinations shared across the homepage |
-| `public/` | Original illustrations, approved brand assets and locally served images |
-| `netlify.toml` | Production build command and publish directory for the automatic Next.js adapter |
-| `docs/` | Scope, design, architecture, motion and implementation record |
+| `app/layout.tsx` | Root document, typography and metadata |
+| `app/page.tsx` | Homepage scenes and content hierarchy |
+| `app/globals.css` | Design tokens, layout and motion fallbacks |
+| `components/` | Shared shell and client interaction boundaries |
+| `content/studio.ts` | Shared studio, social and featured video details |
+| `public/` | Optimised local media and brand assets |
+| `docs/` | Scope, design, architecture, motion and verification |
 
-Keep the core homepage markup readable without client-side scripting. Scope animation to the homepage and use a GSAP context or equivalent lifecycle cleanup to remove timelines and scroll triggers. Use CSS for small interaction states. Defer noncritical media, reserve its dimensions and respect reduced motion during initialization and preference changes.
+## Future content and infrastructure
 
-## Media model for Watch
+v1.1 proposes an editorial model with a stable slug, title, content type, publication status, factual description, source URL, optional verified external ID, thumbnail and rights status. Guest credits, timestamps, transcripts and related entries depend on verified source content and permissions. Keep direct video links available if an embed cannot play. A hosted headless CMS or repository-backed editor can be selected after editorial ownership, permissions and preview requirements are agreed.
 
-A future entry should have a stable slug, title, description and YouTube video ID. Add publication date, credited guests, thumbnail and image alternative text only when verified. Derive related entries from actual records when there is enough content. Render external media after a clear user action where practical and keep the direct YouTube destination available.
-
-## Deployment and discovery
-
-The lockfile and `.nvmrc` capture the build inputs and Node.js 24 runtime. Netlify should build the application through its [Next.js integration](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/). Confirm preview behaviour and routing before promotion.
-
-Include descriptive metadata and semantic headings from the foundation. Add canonical URLs, sitemap and production robots policy when the production domain is known. Verify the property in Search Console after launch. Keep analytics identifiers and tracking decisions configurable for future GA4 integration once the property and consent requirements are confirmed.
+The lockfile and `.nvmrc` record the Node.js 24 build inputs. [Netlify’s Next.js adapter](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/) can build the prototype with the repository’s configuration. Production hosting, canonical URLs, sitemap, Search Console, analytics and consent are decisions for the core build and release phases.
