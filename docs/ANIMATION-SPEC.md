@@ -9,15 +9,15 @@ The opening establishes the studio’s architectural identity and gives visitors
 | Sequence | Trigger | Direction | Accessible behaviour |
 | --- | --- | --- | --- |
 | Opening composition | Initial view | Bring architectural linework into view and add subtle background movement. The headline and links appear in the first render. | No gate, loading screen or delayed access to controls. |
-| Studio transition | Natural page scroll | Let the opening recede while the studio heading and artwork approach their resting positions. Use modest travel and a limited number of layers. | Scrolling, anchor links and browser history behave normally. |
+| Studio transition | Natural page scroll | Ease the decorative entrance artwork forward as the studio section comes into view. Keep both headings fixed within their sections. | Scrolling, anchor links and browser history behave normally. |
 | Studio introduction | Approaching the section | Use a restrained reveal for decorative layers. Keep the text and art visible in their static baseline. | Reduced motion displays the final composition immediately. |
 | Link feedback | Pointer or keyboard | Short colour or underline changes. | Keyboard focus has a visible static outline. |
 
 ## Implementation
 
-Use ScrollTrigger for motion tied to the transition between scenes. Prefer `transform` and `opacity` on small decorative layers. Avoid layout-driven scroll handlers, forced scroll positions and sustained effects that compete with the text. Keep effects within one lifecycle boundary and clean them up on unmount.
+The opening traces decorative frame lines over 1.15 seconds and fades in a warm glow over 1.2 seconds. ScrollTrigger then scales the entrance artwork to 116% on wide screens and 108% on narrow screens as the visitor scrolls toward the studio. The close crop in the studio section uses shorter vertical parallax. Keep effects within one lifecycle boundary and clean them up on unmount.
 
-Use `prefers-reduced-motion` in CSS and when deciding whether to initialize scroll effects. Disable parallax, entrances and smooth scrolling for that preference. Set the page up so initial HTML and CSS form a finished, usable composition if the animation module never runs. Reduce travel and avoid heavy effects on narrow viewports.
+Use `prefers-reduced-motion` in CSS and when deciding whether to initialize scroll effects. Disable parallax and entrance effects for that preference. The page uses native scrolling, including instant section jumps. Initial HTML and CSS form a usable composition if the animation module never runs. Narrow viewports use shorter motion travel.
 
 ## Verification
 

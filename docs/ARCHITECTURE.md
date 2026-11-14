@@ -13,7 +13,7 @@
 
 The prototype uses static content and lightweight browser animation. The design can be implemented with HTML, CSS and a small animation module.
 
-## Proposed source layout
+## Source layout
 
 | Area | Responsibility |
 | --- | --- |
@@ -21,7 +21,9 @@ The prototype uses static content and lightweight browser animation. The design 
 | `app/page.tsx` | Homepage scene composition |
 | `app/globals.css` | Tokens, base styles, reusable utilities and motion fallbacks |
 | `components/` | Shared shell, scene components and the client-side animation boundary |
+| `content/studio.ts` | Studio name, location and social destinations shared across the homepage |
 | `public/` | Original illustrations, approved brand assets and locally served images |
+| `netlify.toml` | Production build command and publish directory for the automatic Next.js adapter |
 | `docs/` | Scope, design, architecture, motion and implementation record |
 
 Keep the core homepage markup readable without client-side scripting. Scope animation to the homepage and use a GSAP context or equivalent lifecycle cleanup to remove timelines and scroll triggers. Use CSS for small interaction states. Defer noncritical media, reserve its dimensions and respect reduced motion during initialization and preference changes.
@@ -32,6 +34,6 @@ A future entry should have a stable slug, title, description and YouTube video I
 
 ## Deployment and discovery
 
-Keep the build reproducible from Git and the lockfile. Pin a supported Node runtime in project configuration or document the selected runtime after verification. Netlify should build the application through its Next.js integration. Confirm branch preview behaviour and routing before promotion.
+The lockfile and `.nvmrc` capture the build inputs and Node.js 24 runtime. Netlify should build the application through its [Next.js integration](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/). Confirm preview behaviour and routing before promotion.
 
 Include descriptive metadata and semantic headings from the foundation. Add canonical URLs, sitemap and production robots policy when the production domain is known. Verify the property in Search Console after launch. Keep analytics identifiers and tracking decisions configurable for future GA4 integration once the property and consent requirements are confirmed.

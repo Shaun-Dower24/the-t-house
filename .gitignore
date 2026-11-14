@@ -1,0 +1,8 @@
+/node_modules/
+/.next/
+/out/
+/.netlify/
+/.env*
+*.tsbuildinfo
+next-env.d.ts
+*.log

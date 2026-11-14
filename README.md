@@ -4,7 +4,7 @@ Website prototype for The T-House Studio, a creative music studio in Leyton, Eas
 
 ## Run locally
 
-Use the Node.js version supported by the project and install dependencies from the lockfile.
+Use Node.js 24 and install dependencies from the lockfile.
 
 ```sh
 npm ci
@@ -31,4 +31,4 @@ See [Implementation status](docs/IMPLEMENTATION-STATUS.md) for browser coverage,
 - [Animation specification](docs/ANIMATION-SPEC.md)
 - [Implementation status](docs/IMPLEMENTATION-STATUS.md)
 
-The intended hosting workflow is GitHub-connected Netlify with a branch or deploy preview before production approval.
+The [Netlify configuration](netlify.toml) uses the automatic Next.js adapter. Connect the GitHub repository and validate a preview before the production release.

@@ -19,7 +19,7 @@ These values are proposed brand inputs. Use semantic CSS properties for canvas, 
 
 ## Typography and layout
 
-- Use a bold display face for the opening and section headings, paired with a readable sans serif for body copy and controls. Keep fallbacks robust and prefer self-hosted assets when licensing and availability allow.
+- Use Barlow Condensed 700 for the opening and section headings. Use DM Sans for body copy and controls. Both fonts are self-hosted through Fontsource with system fallbacks.
 - Let the opening headline scale fluidly. Preserve readable body copy, comfortable line spacing and consistent content gutters at narrow widths and at browser zoom.
 - Align the site header, studio copy and follow actions to a shared grid. On narrow screens, move secondary artwork and editorial details into a natural single-column flow.
 - Keep navigation labels descriptive and text links recognisable. Provide a visible focus style and ample pointer targets.
@@ -36,3 +36,7 @@ These values are proposed brand inputs. Use semantic CSS properties for canvas, 
 | Footer | Studio attribution and key follow links as appropriate to the layout. |
 
 Photography should preserve the colour and character of the actual space. Reserve dimensions to avoid layout shifts. Write meaningful alternative text for informative images and use empty alternatives for purely decorative images.
+
+## Prototype artwork
+
+`public/images/arrival.webp` is an original illustration made with the built-in image generator. The prompt called for a gabled entrance with concentric cream and amber lines, blackened ribbed wood and a warm floor reflection, framed to the right of the composition. `public/images/threshold-detail.webp` is a close crop of the same artwork. The studio section identifies it as entrance concept artwork. The CSS house mark and site icon are temporary design elements while the approved logo is pending.

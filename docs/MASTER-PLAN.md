@@ -6,6 +6,8 @@ The T-House is a creative music studio in Leyton, East London, associated with p
 
 The first milestone is a local homepage prototype with an accessible studio introduction and an animated transition between the opening and the studio section. The named GitHub repository was empty at the start of the work.
 
+The supplied HTML and skills archive were read as reference material. The saved Fabian Tjoe A On HTML contains a client-rendered shell. The live page could not be rendered in the web lookup, so the [published reference capture](https://www.landing.love/sites/fabiantjoeaon/) informed the use of atmospheric depth and continuity between scenes. The studio artwork and layout were developed for The T-House.
+
 ## Visitor journey
 
 | Scene | Visitor experience | Delivery |
