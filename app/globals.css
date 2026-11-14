@@ -301,7 +301,7 @@ html:has(.site-menu[open]) { overflow: hidden; }
 .arrival-title {
   margin-block: 0.25em 0.2em;
   margin-inline-start: -0.045em;
-  font-size: clamp(4rem, 9.7vw, 8.6rem);
+  font-size: clamp(4rem, min(9.7vw, 13svh), 8.6rem);
   text-transform: uppercase;
 }
 
@@ -622,7 +622,7 @@ html:has(.site-menu[open]) { overflow: hidden; }
   .menu-trigger { padding-inline: 0.5rem; }
   .menu-icon { display: none; }
   .arrival { min-height: max(34rem, calc(95svh - 4rem)); }
-  .arrival-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: clamp(2rem, 10vh, 5rem) 1.2rem; }
+  .arrival-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: clamp(1.25rem, 4svh, 3rem) 1.2rem; }
   .arrival-title { font-size: clamp(3.15rem, 12.5vw, 5.75rem); }
   .arrival-art { display: none; }
   .hero-depth img { object-position: 74% 45%; }

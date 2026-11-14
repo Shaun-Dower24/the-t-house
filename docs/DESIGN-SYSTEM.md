@@ -18,7 +18,7 @@ The reference uses thin illuminated edges and panels that gain or recede in dept
 | Surface | Design behaviour |
 | --- | --- |
 | Header and menu | A small studio mark, immediate navigation and a keyboard-accessible full-screen menu where enhanced. |
-| Opening | The illuminated house behind a scroll-snap carousel for Watch, Inside the House, About and Connect. The centred card faces forward and neighbours angle into the scene. |
+| Opening | The illuminated house behind a scroll-snap carousel for Watch, Inside the House, About and Connect. The upright portrait cards have a 1:2 aspect ratio. The centred card faces forward and neighbours angle into the scene. |
 | Watch cards | An illuminated video frame, the official thumbnail and meaningful duration, title and destination. |
 | Studio and profile | Architectural framing and warm depth carry over to editorial pages. Approved imagery can occupy the current concept artwork’s place. |
 | Social routes | Show clear channel names and identify the destination of each link. |

@@ -49,4 +49,4 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ## Decisions
 
-- Use centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom. The 21st.dev references are Coverflow Carousel, Dimensional Switch Slider and Portal Carousel.
+- Use upright, 1:2 portrait cards with centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom. The 21st.dev references are Coverflow Carousel, Dimensional Switch Slider and Portal Carousel.

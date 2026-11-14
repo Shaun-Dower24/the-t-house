@@ -57,7 +57,7 @@
   },
   "decisions": [{
     "id": "hero-carousel-navigation",
-    "decision": "Use centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom.",
+    "decision": "Use upright, 1:2 portrait cards with centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom.",
     "source": "21st.dev Coverflow Carousel, Dimensional Switch Slider and Portal Carousel"
   }],
   "evidence": [

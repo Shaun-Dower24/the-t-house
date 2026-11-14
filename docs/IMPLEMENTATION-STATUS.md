@@ -29,7 +29,7 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 | Check | Result |
 | --- | --- |
-| Responsive layout and input | Chrome passed at 320, 390, 768 and 1440 px. Previous and Next, Tab, arrow keys and touch swipes browse the row. Clicking an angled card opens its destination. A swipe does not trigger navigation. |
+| Responsive layout and input | Chrome passed at 320, 390, 768 and 1440 px with upright 1:2 portrait cards. The controls and a glimpse of the next card are visible at 320 × 568 px. Previous and Next, Tab, arrow keys and touch swipes browse the row. Clicking an angled card opens its destination. A swipe does not trigger navigation. |
 | Animation and browser history | Sampled the card completing a 180° turn before expanding to cover the viewport. Verified destination focus, Back and Forward with the browsed card restored, Escape cancellation, rapid activation, modified-click navigation and resize recovery. |
 | Cross-browser navigation | All four cards completed the flip, zoom, route change and focus transfer in desktop Chromium, Firefox and WebKit. |
 | Slow connection and fallback | A delayed route exposed a direct link and cleared the overlay. Also verified direct navigation under both motion settings and with JavaScript disabled. |

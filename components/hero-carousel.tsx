@@ -135,11 +135,13 @@ export function HeroCarousel() {
             >
               <span className={styles.art} aria-hidden="true">
                 {"image" in card ? (
-                  <Image src={card.image} alt="" fill sizes="(min-width: 768px) 368px, 78vw" unoptimized={card.id === "watch"} />
+                  <Image src={card.image} alt="" fill sizes="(min-width: 768px) 192px, (min-width: 400px) 184px, 46vw" unoptimized={card.id === "watch"} />
                 ) : <HouseOutline />}
               </span>
-              {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}
-              <span className={styles.label}>{card.label}</span>
+              <span>
+                {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}
+                <span className={styles.label}>{card.label}</span>
+              </span>
               <span className={styles.arrow} aria-hidden="true">↗</span>
             </Link>
           </li>
