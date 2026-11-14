@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { SiteHeader } from "./site-header";
 
 const preferenceKey = "t-house-reduce-motion";
@@ -49,12 +50,13 @@ const initialMotionPreference = () => undefined;
 
 export function HomeScenes({ children, footer }: { children: ReactNode; footer: ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
   const reduced = useSyncExternalStore(subscribeToMotion, motionIsReduced, initialMotionPreference);
   const systemReduced = useSyncExternalStore(subscribeToMotion, getSystemPreference, serverMotionPreference);
 
   useEffect(() => {
     const page = root.current;
-    if (!page || reduced !== false) return;
+    if (!page || reduced !== false || pathname !== "/") return;
     let active = true;
     let cleanup: (() => void) | undefined;
 
@@ -82,12 +84,19 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
           gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: entrance })
             .to("[data-house-outline]", { attr: { points: "60,330 60,112 270,112 480,112 480,330 270,330" } }, 0)
             .to("[data-house-detail]", { opacity: 0 }, 0)
-            .to("[data-house-art]", { yPercent: 12, scale: 0.91 }, 0);
+            .to("[data-house-art]", { yPercent: 12, scale: 0.91 }, 0)
+            .to("[data-hero-depth]", { yPercent: 9, scale: 1.09 }, 0);
 
           gsap.fromTo("[data-studio-art]", { yPercent: -5 }, {
             yPercent: 5,
             ease: "none",
             scrollTrigger: { trigger: "#inside", start: "top bottom", end: "bottom top", scrub: true },
+          });
+
+          gsap.fromTo("[data-feature-stage]", { "--wing-depth": "0deg" }, {
+            "--wing-depth": "24deg",
+            ease: "none",
+            scrollTrigger: { trigger: "#watch", start: "top bottom", end: "top 30%", scrub: true },
           });
         });
 
@@ -102,11 +111,11 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
       active = false;
       cleanup?.();
     };
-  }, [reduced]);
+  }, [pathname, reduced]);
 
   return (
     <div ref={root} className="prototype" data-motion={reduced === undefined ? undefined : reduced ? "reduced" : "full"}>
-      <div className="scroll-progress" aria-hidden="true" data-scroll-progress />
+      {pathname === "/" && <div className="scroll-progress" aria-hidden="true" data-scroll-progress />}
       <SiteHeader reduceMotion={reduced === true} toggleMotion={toggleMotion} systemReduced={systemReduced} />
       <main id="main-content" tabIndex={-1}>{children}</main>
       {footer}

@@ -1,27 +1,28 @@
 # The T-House implementation status
 
-## Current scope
+## Rebuild scope
 
-The user supplied **The T-House Website Master Plan v1.1** and designated it as the plan for this branch. It records an earlier standalone prototype and calls for motion-prototype review before the full website or CMS. See the [repository master plan](MASTER-PLAN.md) for the current scope.
+The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes cover Home, Watch, the individual release, Inside the House, About and Connect. The homepage feature opens the episode page, where viewers can load the privacy-enhanced player, share the episode or watch directly on YouTube. Its official source supplies the title, 3:43 duration, publication timestamp and thumbnail. [Official upload](https://www.youtube.com/watch?v=9adqs1vgcMA)
 
-| Item | Status |
+| Area | Implementation and review |
 | --- | --- |
-| Project foundation | Next.js App Router, TypeScript, Tailwind CSS and a GitHub feature branch |
-| Homepage direction | House-outline arrival, one featured video with its official thumbnail and direct watch link, studio section and official social links |
-| Signature motion and navigation | Desktop house-to-frame morph, full-screen menu, manual motion control and system reduced-motion support |
-| Original logo and studio photography | The original prototype package and three referenced photos were unavailable in this workspace. The review build uses an original house motif and labeled concept artwork while source files and usage permissions are pending. |
-| Confirmed upload | Verified [Fifa In The T EP 1: SV Vs Kojo Funds](https://www.youtube.com/watch?v=9adqs1vgcMA) and its 3:43 duration on the studio’s YouTube Videos tab. |
-| Core routes, CMS and production release | Later phases after prototype review, content clearance and scope approval |
+| Site and motion | House-inspired entrance, progressively enhanced scroll motion, accessible menu and reduced-motion control. |
+| Real content | A typed record for the one verified public upload. The library can grow as more releases are verified. |
+| Studio identity | Temporary concept artwork and an original house motif. Approved studio photography, logo source and definitive profile copy remain open. |
+| Contact | Links to official channels. A dedicated form or email route requires an approved contact destination and privacy treatment. |
+| Editorial management | Repository-based updates. A managed CMS depends on the editorial owner, account, draft process and preferences. |
+| Hosting and measurement | Local review and GitHub branch work. Production domain, release approval, Search Console, GA4 properties and consent decisions remain open. |
 
-## Verification for the v1.1 revision
+## Verification
 
-| Check | Result |
+| Check | Rebuild result |
 | --- | --- |
-| ESLint | `npm run lint` passed |
-| TypeScript | `npm run typecheck` passed |
-| Production build | `npm run build` passed and prerendered `/` |
-| Browser desktop, tablet and mobile | Playwright in Chrome passed at 1440 × 900, 768 × 1024, 390 × 844 and 320 × 720. Checked for clipping, browser errors, loaded images and the verified video destination. |
-| Menu, keyboard, motion preference and no-JavaScript fallback | Verified menu focus containment, Escape, focus return, section links, skip link, scroll morph, motion preference persistence, OS reduced motion and usable links without JavaScript. |
-| Visual inspection and automated accessibility scan | Reviewed desktop, mobile and open-menu captures. Axe-core 4.12.1 reported zero violations at desktop and phone widths, including with the menu open. Manually checked the text over gradients and confirmed the menu control targets the native dialog. |
+| Lint, type checking and production build | Passed on Node.js 24. The build prerenders six content pages. |
+| Route and metadata checks | All six routes respond successfully. An unknown video returns HTTP 404. Verified the preview indexing rules, structured episode metadata and six sitemap entries with a test public origin. |
+| Browser desktop, tablet and phones | Chrome checks passed at 1440, 768, 390 and 320 pixels, including layout fit and loaded imagery. |
+| Keyboard, reduced motion and no JavaScript | Verified the skip link, menu navigation and focus return, scroll motion after returning home, persistent motion preference, system reduction and essential links with scripts disabled. |
+| Video activation, fallback and sharing | Verified the player loads after activation, the direct YouTube fallback is available and copying the episode URL gives feedback. |
+| Accessibility scan | Axe-core found zero automated violations across six routes and the open menu on desktop and mobile. Gradient contrast still requires a complete manual audit before launch. |
+| Mobile lab performance | One Lighthouse run against the production preview scored 95, with LCP 2.83 s, CLS 0.014 and total blocking time 38 ms. Measure field Core Web Vitals after launch. |
 
-The prior branch iterations passed production builds and Chrome checks, including reduced motion and JavaScript-disabled navigation. Those results predate the v1.1 implementation. The development audit had moderate findings in the ESLint dependency chain via `minimatch`. The earlier production-only dependency audit reported zero findings. Cross-browser, real-device and production performance evidence belongs to a later release candidate.
+Confirm domain, permissions and approved studio media before a public release. Cross-browser device testing, field performance and analytics checks belong to the launch environment.

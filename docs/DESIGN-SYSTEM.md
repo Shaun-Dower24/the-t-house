@@ -1,29 +1,28 @@
 # The T-House design system
 
-## Direction
+## Visual direction
 
-**Enter The House** uses the house outline as a recurring shape. It starts as a light drawing, becomes a video frame and guides the visitor into the studio gallery. The design pairs charcoal and warm orange with expressive typography, small monospace details and the texture of the studio. Use the original logo and approved studio photographs as they become available.
+The house outline is the recurring architectural motif. The approach brings a sense of depth through a focused foreground subject, restrained framing and softer layers behind it. The reveal of the featured video gives the opening motion a destination. The wider site uses the same contrast, composition and material cues to connect the Watch library, studio and contact routes.
 
-The Fabian Tjoe-A-On reference informs how layers and lighting carry motion across sections. The opening should read as The T-House through its own architecture, room and people. The latest video is the first content feature.
+The reference uses thin illuminated edges and panels that gain or recede in depth as a user explores. Use that principle to give an active surface weight, with the current action always apparent in the text and focus treatment. [Recorded reference](https://www.landing.love/sites/fabiantjoeaon/)
 
 ## Colour and type
 
-- Near-black charcoal for the canvas and recessed surfaces, warm white for readable text, and orange for the house lighting and key actions.
-- Amber, copper and wood tones add depth around the artwork. The exact brand palette awaits the original logo source.
-- Use expressive display type for headings, a legible sans serif for body text and compact monospace for metadata and controls.
-- Keep focus outlines and text legible over the brightest part of each image or gradient. Reserve image dimensions and keep important controls within the phone viewport.
+- Near-black and warm charcoal establish the background. Warm white gives readable text and warm orange marks important actions and architectural light.
+- Use wood, copper and amber tones for the environment and softer layers. The colour system is a project interpretation pending approval of the brand source.
+- Combine an expressive display hierarchy with readable body text and compact monospace metadata.
+- Keep links and controls readable over artwork, dimmed gradients or in reduced-motion mode. Reserve media dimensions. Give pointer hover and keyboard focus comparable emphasis.
 
-## Components
+## Shared surfaces
 
-| Component | Design behaviour |
+| Surface | Design behaviour |
 | --- | --- |
-| Header and menu | Compact brand mark and a full-screen navigation menu when enhanced. Keep direct links available in the initial HTML. |
-| Opening | A single house-outline motif, one primary heading, location and immediate Watch Latest and Explore The House actions. |
-| Video feature | A framed card with the verified video’s official YouTube thumbnail, title and direct watch link. Keep the channel link available separately. |
-| Studio gallery | Stagger images on wide layouts and stack them at phone widths. Use approved studio photography and factual captions. Any temporary concept image needs a clear label. |
-| Motion control | Compact button with visible current state and keyboard focus. Start from the visitor’s system preference. |
-| Follow | Distinct YouTube and Instagram links with readable names. |
+| Header and menu | A small studio mark, immediate navigation and a keyboard-accessible full-screen menu where enhanced. |
+| Opening | One prominent house motif and immediately available links to Watch and Inside the House. |
+| Watch cards | An illuminated video frame, the official thumbnail and meaningful duration, title and destination. |
+| Studio and profile | Architectural framing and warm depth carry over to editorial pages. Approved imagery can occupy the current concept artwork’s place. |
+| Social routes | Show clear channel names and identify the destination of each link. |
 
-## Prototype artwork
+## Artwork and rights
 
-The opening outline is an original prototype motif based on the architectural form described in v1.1. The official logo and the three studio photos belong in the design once their source files and intended use are confirmed. Where generated concept artwork is used for review, its caption identifies it as such. Images of the studio and its visitors need factual descriptions and publication approval where required.
+The house outline is an original site motif. Original studio photos and the approved logo master are pending. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview. Confirm the rights and accurate captions of any additional assets before adding them.

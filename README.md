@@ -1,10 +1,10 @@
 # The T-House
 
-Review prototype for The T-House Studio, a creative music studio in Leyton, East London. The scope follows the original Website Master Plan v1.1. The homepage leads from an illuminated house outline to the studio’s verified YouTube upload, the studio introduction and social links.
+The T-House is a creative music studio in Leyton, East London. This site rebuild follows the Website Master Plan v1.1. It connects an illuminated house entrance to the studio’s verified YouTube release, a Watch library, a studio introduction, About and Connect.
 
 ## Run locally
 
-Use Node.js 24 and install dependencies from the lockfile.
+Use Node.js 24 and install the locked dependencies.
 
 ```sh
 npm ci
@@ -13,22 +13,18 @@ npm run dev
 
 Open [the local homepage](http://localhost:3000).
 
-## Verification
+For a production build preview, use `npm run build` and then `npm run start`. Run `npm run lint` and `npm run typecheck` before handing over changes.
 
-```sh
-npm run lint
-npm run typecheck
-npm run build
-```
+## Configuration
 
-See [Implementation status](docs/IMPLEMENTATION-STATUS.md) for browser coverage, asset requirements and checks still pending.
+The local build works without environment variables. Set `SITE_URL` to the approved public origin, including `https://`, when the release is authorised to be indexed. It provides canonical URLs and the sitemap origin. Leave it unset for local and preview environments.
+
+The repository includes [Netlify build settings](netlify.toml). Run production and deployment checks against the approved preview before launching.
 
 ## Project documentation
 
-- [Master plan](docs/MASTER-PLAN.md)
+- [Master plan and scope](docs/MASTER-PLAN.md)
 - [Design system](docs/DESIGN-SYSTEM.md)
-- [Architecture](docs/ARCHITECTURE.md)
-- [Animation specification](docs/ANIMATION-SPEC.md)
-- [Implementation status](docs/IMPLEMENTATION-STATUS.md)
-
-The [Netlify configuration](netlify.toml) uses the automatic Next.js adapter. Connect the GitHub repository and validate a preview before the production release.
+- [Motion specification](docs/ANIMATION-SPEC.md)
+- [Architecture and editorial workflow](docs/ARCHITECTURE.md)
+- [Implementation status and verification](docs/IMPLEMENTATION-STATUS.md)

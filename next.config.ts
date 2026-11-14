@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  agentRules: false,
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/9adqs1vgcMA/**" }],
+    remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com", pathname: "/vi/**" }],
   },
 };
 
