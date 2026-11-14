@@ -245,6 +245,7 @@ export function HeroCarousel() {
                   {"image" in card ? (
                     <Image src={card.image} alt="" fill draggable={false} sizes="(min-width: 768px) 192px, (min-width: 400px) 184px, 46vw" unoptimized={card.id === "watch"} />
                   ) : <HouseOutline />}
+                <span className={styles.glint} data-card-glint />
                 </span>
                 <span>
                   {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}

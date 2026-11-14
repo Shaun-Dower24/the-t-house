@@ -81,6 +81,10 @@ function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement) {
   front.style.transition = "none";
 
   for (const child of source.childNodes) front.append(child.cloneNode(true));
+  const sourceGlint = source.querySelector<HTMLElement>("[data-card-glint]");
+  const glint = front.querySelector<HTMLElement>("[data-card-glint]");
+  if (sourceGlint && glint) glint.style.transform = getComputedStyle(sourceGlint).transform;
+
   const image = front.querySelector("img");
   const sourceImage = source.querySelector("img");
   if (image && sourceImage?.currentSrc) {

@@ -32,6 +32,7 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 | Responsive layout and input | Verified looping orbit controls, mouse drag and keyboard browsing in desktop Chrome. At 320 × 568 px and 390 × 844 px the controls fit, a swipe turns the ring and a tap opens the chosen page. |
 | Animation and browser history | Sampled the card completing a 180° turn before expanding to cover the viewport. Verified destination focus, Back and Forward with the browsed card restored, Escape cancellation, rapid activation, modified-click navigation and resize recovery. |
 | Cross-browser navigation | All four cards completed the flip, zoom, route change and focus transfer in desktop Chromium, Firefox and WebKit. Verified direct clicks on an angled card and the match between the projected card and the first transition frame in each engine. |
+| Engraved Copper finish | Verified the brushed grain, single glint and continuity through the flip into Inside the House in Chrome at 390 and 1440 px. Reduced motion displays the static finish and opens the page directly. |
 | Slow connection and fallback | A delayed route exposed a direct link and cleared the overlay. The same links appear on a native scroll-snap rail under both reduced-motion settings and with JavaScript disabled. |
 | Accessibility scan | Axe-core found zero automated violations in the carousel at 390 and 1440 px. |
 

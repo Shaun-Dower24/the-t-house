@@ -99,8 +99,8 @@
   height: 100%;
   aspect-ratio: 1 / 2;
   padding: clamp(0.8rem, 2vw, 1.15rem);
-  border: 1px solid rgb(255 188 145 / 62%);
-  background: #251713;
+  border: 1px solid rgb(229 150 102 / 65%);
+  background: #40211a;
   color: var(--paper);
   text-decoration: none;
   box-shadow: inset 0 1px 0 rgb(255 207 170 / 40%), inset 0 0 0 2px rgb(255 165 103 / 12%),
@@ -109,7 +109,7 @@
 }
 
 .slide[data-active="true"] .card {
-  border-color: #ffb383;
+  border-color: #ffbc96;
   box-shadow: inset 0 0 0 2px rgb(255 165 103 / 24%), 0 0 0.55rem rgb(255 142 75 / 54%),
     0 0 2.25rem rgb(250 120 61 / 30%), 0 1rem 1.5rem rgb(10 5 3 / 52%);
 }
@@ -133,9 +133,9 @@
   z-index: -2;
   display: block;
   overflow: hidden;
-  background-color: #241611;
-  background-image: radial-gradient(ellipse at 75% 34%, rgb(255 140 85 / 30%), transparent 50%),
-    repeating-linear-gradient(90deg, transparent 0 0.64rem, rgb(254 173 121 / 13%) 0.64rem 0.7rem);
+  background-color: #40211a;
+  background-image: radial-gradient(ellipse at 62% 36%, #704024, transparent 65%),
+    linear-gradient(135deg, #4a2a1d, #23140e 76%);
   background-size: cover;
   background-position: center;
 }
@@ -145,10 +145,10 @@
   height: 100%;
   object-fit: cover;
   object-position: center 55%;
+  filter: sepia(0.68) brightness(0.84) saturate(0.8);
 }
 
 .card[data-destination="watch"] .art img {
-  filter: saturate(0.72) brightness(0.84);
   object-position: 72% 55%;
 }
 
@@ -157,37 +157,58 @@
   inset: 0 5% auto;
   width: 90%;
   height: 86%;
-  opacity: 0.88;
+  color: #f7be93;
 }
 
+.art :global(.house-frames),
+.art :global(.house-door),
+.art :global(.house-datum) { stroke: currentColor; }
+
 .card[data-destination="about"] .art {
-  background-image: radial-gradient(ellipse at 73% 32%, #61351f, transparent 57%),
-    linear-gradient(115deg, #170e0d 7%, #31201a);
+  background-image: radial-gradient(ellipse at 62% 38%, #754628, transparent 63%),
+    linear-gradient(115deg, #2b1a13 7%, #4a2c20);
 }
 
 .card[data-destination="connect"] .art {
-  background-image: radial-gradient(ellipse at 67% 48%, #513123, transparent 66%),
-    repeating-linear-gradient(90deg, #1a120f 0 0.64rem, #231711 0.66rem 0.7rem);
+  background-image: radial-gradient(ellipse at 67% 44%, #694026, transparent 68%),
+    linear-gradient(115deg, #26170f 7%, #41261a);
 }
 
 .card[data-destination="connect"] .art svg {
   inset: -11% auto auto -14%;
   width: 128%;
   height: 104%;
-  opacity: 0.62;
+  opacity: 0.83;
 }
 
 .card::after {
   z-index: -1;
   content: "";
-  background: linear-gradient(0deg, rgb(12 9 8 / 98%), rgb(12 9 8 / 70%) 24%, rgb(12 9 8 / 36%) 65%),
-    linear-gradient(120deg, rgb(255 160 104 / 16%), transparent 38%);
+  background: repeating-linear-gradient(92deg, rgb(255 217 179 / 7%) 0 1px, rgb(35 17 9 / 7%) 1px 4px),
+    linear-gradient(0deg, rgb(18 10 7 / 98%), rgb(30 14 8 / 72%) 22%, rgb(46 24 12 / 27%) 62%, rgb(149 83 47 / 24%));
 }
 
 .slide[data-active="true"] .card::after,
 .card:focus-visible::after {
-  background: linear-gradient(0deg, rgb(12 9 8 / 99%), rgb(12 9 8 / 71%) 26%, rgb(12 9 8 / 11%) 73%),
-    linear-gradient(120deg, rgb(255 160 104 / 13%), transparent 42%);
+  background: repeating-linear-gradient(92deg, rgb(255 217 179 / 8%) 0 1px, rgb(35 17 9 / 7%) 1px 4px),
+    linear-gradient(0deg, rgb(18 10 7 / 99%), rgb(30 14 8 / 74%) 23%, rgb(46 24 12 / 13%) 63%, rgb(149 83 47 / 20%));
+}
+
+.glint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(121deg, transparent 32%, rgb(255 219 170 / 39%) 50%, transparent 68%);
+  transform: translateX(-116%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rail[data-hero-orbit] .slide[data-active="true"] .glint {
+    animation: copper-glint 1.2s ease-out both;
+  }
+}
+
+@keyframes copper-glint {
+  to { transform: translateX(116%); }
 }
 
 .label {

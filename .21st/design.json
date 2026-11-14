@@ -59,6 +59,10 @@
     "id": "hero-carousel-navigation",
     "decision": "Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom.",
     "source": "https://21st.dev/@louisstudios/components/warp-carousel"
+  }, {
+    "id": "hero-carousel-finish",
+    "decision": "Use the Engraved Copper finish with a brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card.",
+    "source": "https://21st.dev/@fransederr/components/grain-light-card"
   }],
   "evidence": [
     {

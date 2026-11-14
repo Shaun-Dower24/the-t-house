@@ -8,6 +8,8 @@ The reference uses thin illuminated edges and panels that gain or recede in dept
 
 The hero adapts Warp Carousel’s rotating ring and illuminated edges to the studio’s warm amber palette. The original renders stat cards on a WebGL canvas. The T-House cards are HTML links whose artwork and labels move together through the shared 3D scene. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
 
+The hero cards use the Engraved Copper finish. Fine brushed lines sit over warm artwork and the house motif reads as etched copper. A single glint crosses the front card as it comes into focus. The brushed finish continues across both faces during the page transition. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
+
 ## Colour and type
 
 - Near-black and warm charcoal establish the background. Warm white gives readable text and warm orange marks important actions and architectural light.

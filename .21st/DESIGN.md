@@ -49,4 +49,6 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ## Decisions
 
+- Use the Engraved Copper finish with brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
+
 - Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
