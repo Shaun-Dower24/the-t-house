@@ -23,8 +23,8 @@ export default function HomePage() {
         </div>
         <div className="page-grid arrival-grid">
           <div className="arrival-copy">
+            <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
             <p className="meta location"><span aria-hidden="true" />{studio.location}</p>
-            <h1 id="arrival-heading" className="display arrival-title">Enter the<br /> house<span>.</span></h1>
             <p className="intro">A creative music studio in East London.</p>
           </div>
           <div className="arrival-art" data-house-art aria-hidden="true"><HouseOutline motion /></div>

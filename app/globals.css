@@ -278,12 +278,12 @@ html:has(.site-menu[open]) { overflow: hidden; }
 .arrival-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.68fr);
-  align-items: center;
+  align-items: start;
   gap: 0.5rem;
   padding-block: clamp(2rem, 6vh, 4rem) clamp(0.6rem, 2vh, 1.35rem);
 }
 
-.arrival-copy { position: relative; z-index: 1; }
+.arrival-copy { position: relative; z-index: 1; display: grid; gap: 0.6rem; }
 
 .location {
   display: flex;
@@ -296,13 +296,6 @@ html:has(.site-menu[open]) { overflow: hidden; }
   width: 1.2rem;
   height: 1px;
   background: var(--orange);
-}
-
-.arrival-title {
-  margin-block: 0.25em 0.2em;
-  margin-inline-start: -0.045em;
-  font-size: clamp(4rem, min(9.7vw, 13svh), 8.6rem);
-  text-transform: uppercase;
 }
 
 .intro {
@@ -623,7 +616,6 @@ html:has(.site-menu[open]) { overflow: hidden; }
   .menu-icon { display: none; }
   .arrival { min-height: max(34rem, calc(95svh - 4rem)); }
   .arrival-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: clamp(1.25rem, 4svh, 3rem) 1.2rem; }
-  .arrival-title { font-size: clamp(3.15rem, 12.5vw, 5.75rem); }
   .arrival-art { display: none; }
   .hero-depth img { object-position: 74% 45%; }
   .hero-environment::after {
