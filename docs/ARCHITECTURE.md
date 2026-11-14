@@ -4,7 +4,7 @@
 | --- | --- |
 | Rendering | Next.js App Router and TypeScript. Public pages render crawlable HTML with stable paths and per-page metadata. |
 | Styling | Tailwind CSS v4 with shared CSS custom properties for type, spacing, colour and focus. |
-| Motion | CSS and GSAP ScrollTrigger enhance the home sequence. The menu and preference control use focused client components. |
+| Motion | CSS scroll snap positions the hero cards, and a scoped GSAP timeline runs the selected card’s flip and zoom. GSAP ScrollTrigger enhances the home scroll sequence. |
 | Content | Typed, repository-backed video and studio content. One verified YouTube release drives the homepage, Watch library and video page. |
 | Video | The poster links to the video page and the player loads after visitor action. The page uses YouTube’s privacy-enhanced player and keeps the direct YouTube link available. |
 | Sharing and discovery | The video has a stable route, share controls and dedicated preview metadata. The approved `SITE_URL` supplies the public origin for canonicals and the sitemap. |
@@ -17,6 +17,7 @@
 | --- | --- |
 | `app/layout.tsx`, `components/` | Root metadata, shared navigation, footer, preferred motion and homepage enhancements. |
 | `app/page.tsx`, `app/globals.css` | Home composition, shared design tokens, layout and motion fallbacks. |
+| `components/hero-carousel.tsx`, `components/card-route-transition.tsx` | Link-based hero navigation, native scrolling and the visual handoff through a Next.js route change. |
 | `app/watch/` | Media library, stable video pages and progressive video and share controls. |
 | `app/inside-the-house/`, `app/about/`, `app/connect/` | Studio, brand story and official contact routes. |
 | `content/studio.ts` | Verified video, studio and channel records. |

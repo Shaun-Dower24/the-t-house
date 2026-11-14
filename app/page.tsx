@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HouseOutline } from "../components/house-outline";
+import { HeroCarousel } from "../components/hero-carousel";
 import { routeMetadata } from "../content/site";
 import { featuredVideo, studio } from "../content/studio";
 import heroImage from "../public/images/house-installation.webp";
@@ -25,13 +26,10 @@ export default function HomePage() {
             <p className="meta location"><span aria-hidden="true" />{studio.location}</p>
             <h1 id="arrival-heading" className="display arrival-title">Enter the<br /> house<span>.</span></h1>
             <p className="intro">A creative music studio in East London.</p>
-            <div className="actions">
-              <Link className="primary-action" href={featuredVideo.href}>Watch latest <span aria-hidden="true">↗</span></Link>
-              <Link className="text-action" href="/inside-the-house">Explore the house <span aria-hidden="true">↗</span></Link>
-            </div>
           </div>
           <div className="arrival-art" data-house-art aria-hidden="true"><HouseOutline motion /></div>
         </div>
+        <div className="arrival-carousel"><HeroCarousel /></div>
         <div className="page-grid arrival-foot">
           <a className="meta scroll-link" href="#watch"><span aria-hidden="true">↓</span> Featured video</a>
         </div>

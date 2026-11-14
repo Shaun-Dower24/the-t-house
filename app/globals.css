@@ -254,7 +254,8 @@ html:has(.site-menu[open]) { overflow: hidden; }
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
+  grid-template-columns: minmax(0, 1fr);
   min-height: max(36rem, calc(100svh - 4.5rem));
   overflow: clip;
   background: #120f0d;
@@ -270,16 +271,16 @@ html:has(.site-menu[open]) { overflow: hidden; }
 
 .hero-environment::after {
   background: linear-gradient(90deg, rgb(12 11 10 / 96%), rgb(12 11 10 / 70%) 26%, transparent 69%),
-    linear-gradient(0deg, var(--canvas), transparent 32%);
+    linear-gradient(0deg, var(--canvas) 1%, rgb(12 11 10 / 56%) 30%, transparent 57%);
   content: "";
 }
 
 .arrival-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.68fr);
-  align-items: end;
+  align-items: center;
   gap: 0.5rem;
-  padding-block: clamp(3.5rem, 10vh, 7rem) clamp(2.5rem, 8vh, 6.25rem);
+  padding-block: clamp(2rem, 6vh, 4rem) clamp(0.6rem, 2vh, 1.35rem);
 }
 
 .arrival-copy { position: relative; z-index: 1; }
@@ -300,7 +301,7 @@ html:has(.site-menu[open]) { overflow: hidden; }
 .arrival-title {
   margin-block: 0.25em 0.2em;
   margin-inline-start: -0.045em;
-  font-size: clamp(4.2rem, 10.55vw, 9.8rem);
+  font-size: clamp(4rem, 9.7vw, 8.6rem);
   text-transform: uppercase;
 }
 
@@ -345,8 +346,8 @@ html:has(.site-menu[open]) { overflow: hidden; }
 .arrival-art {
   position: absolute;
   z-index: 0;
-  inset: auto 3.75% 5.75% auto;
-  width: min(27vw, 25rem);
+  inset: clamp(3rem, 8vh, 6.5rem) 6% auto auto;
+  width: min(27vw, 22rem);
   opacity: 0.44;
   pointer-events: none;
 }
@@ -370,6 +371,8 @@ html:has(.site-menu[open]) { overflow: hidden; }
 }
 
 .arrival-foot { border-top: 1px solid var(--line); }
+
+.arrival-carousel { position: relative; z-index: 1; min-width: 0; }
 
 .scroll-link {
   display: inline-flex;
@@ -619,8 +622,8 @@ html:has(.site-menu[open]) { overflow: hidden; }
   .menu-trigger { padding-inline: 0.5rem; }
   .menu-icon { display: none; }
   .arrival { min-height: max(34rem, calc(95svh - 4rem)); }
-  .arrival-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: 12rem 1.5rem; }
-  .arrival-title { font-size: clamp(3.5rem, 13vw, 6.15rem); }
+  .arrival-grid { grid-template-columns: minmax(0, 1fr); gap: 0; padding-block: clamp(2rem, 10vh, 5rem) 1.2rem; }
+  .arrival-title { font-size: clamp(3.15rem, 12.5vw, 5.75rem); }
   .arrival-art { display: none; }
   .hero-depth img { object-position: 74% 45%; }
   .hero-environment::after {

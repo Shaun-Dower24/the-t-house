@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "project": {
+    "name": "the-t-house",
+    "productType": "Creative music studio and video website",
+    "stack": [
+      "nextjs",
+      "react",
+      "tailwind-v4"
+    ]
+  },
+  "sources": {
+    "tokens": [
+      "app/globals.css"
+    ],
+    "components": ["components/hero-carousel.tsx", "components/card-route-transition.tsx"],
+    "assets": [
+      "public/images"
+    ],
+    "instructions": [
+      "AGENTS.md"
+    ]
+  },
+  "design": {
+    "colorMode": "dark",
+    "colors": {
+      "--muted": {
+        "value": "#c4b8ad",
+        "source": "app/globals.css"
+      }
+    },
+    "typography": {
+      "--font-sans": {
+        "value": "\"DM Sans Variable\", Arial, sans-serif",
+        "source": "app/globals.css"
+      }
+    },
+    "spacing": {
+      "--gutter": {
+        "value": "clamp(1.125rem, 5vw, 5rem)",
+        "source": "app/globals.css"
+      }
+    },
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": ["Centred coverflow navigation with tilted side cards", "Card half-turn followed by viewport expansion"]
+  },
+  "constraints": {
+    "must": ["Use real route links and honour system and site motion preferences"],
+    "avoid": ["Autoplay and navigation triggered by swiping or focus"]
+  },
+  "decisions": [{
+    "id": "hero-carousel-navigation",
+    "decision": "Use centred scroll snap and the existing GSAP dependency for a 180° card flip followed by a route zoom.",
+    "source": "21st.dev Coverflow Carousel, Dimensional Switch Slider and Portal Carousel"
+  }],
+  "evidence": [
+    {
+      "fact": "design.colorMode:dark",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "design.tokens",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "AGENTS.md"
+    },
+    {
+      "fact": "project.stack:nextjs",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:tailwind-v4",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-11-14T18:13:08.141Z"
+}

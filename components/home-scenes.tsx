@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { CardRouteTransitionProvider } from "./card-route-transition";
 import { SiteHeader } from "./site-header";
 
 const preferenceKey = "t-house-reduce-motion";
@@ -116,9 +117,11 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
   return (
     <div ref={root} className="prototype" data-motion={reduced === undefined ? undefined : reduced ? "reduced" : "full"}>
       {pathname === "/" && <div className="scroll-progress" aria-hidden="true" data-scroll-progress />}
-      <SiteHeader reduceMotion={reduced === true} toggleMotion={toggleMotion} systemReduced={systemReduced} />
-      <main id="main-content" tabIndex={-1}>{children}</main>
-      {footer}
+      <CardRouteTransitionProvider>
+        <SiteHeader reduceMotion={reduced === true} toggleMotion={toggleMotion} systemReduced={systemReduced} />
+        <main id="main-content" tabIndex={-1}>{children}</main>
+        {footer}
+      </CardRouteTransitionProvider>
     </div>
   );
 }
