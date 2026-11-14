@@ -13,7 +13,7 @@
     "tokens": [
       "app/globals.css"
     ],
-    "components": ["components/studio-mark.tsx", "components/hero-carousel.tsx", "components/card-route-transition.tsx"],
+    "components": ["components/studio-mark.tsx", "components/house-elevation.tsx", "components/hero-carousel.tsx", "components/card-route-transition.tsx"],
     "assets": [
       "public/images"
     ],
@@ -24,6 +24,12 @@
   "design": {
     "colorMode": "dark",
     "colors": {
+      "--canvas": { "value": "#120e0b", "source": "app/globals.css" },
+      "--surface": { "value": "#221911", "source": "app/globals.css" },
+      "--walnut-charcoal": { "value": "#2d241d", "source": "app/globals.css" },
+      "--sign-white": { "value": "#e1e8eb", "source": "app/globals.css" },
+      "--signature-red": { "value": "#bc3728", "source": "app/globals.css" },
+      "--display-red": { "value": "#f46a57", "source": "app/globals.css" },
       "--muted": {
         "value": "#c4b8ad",
         "source": "app/globals.css"
@@ -31,9 +37,10 @@
     },
     "typography": {
       "--font-sans": {
-        "value": "\"DM Sans Variable\", Arial, sans-serif",
+        "value": "\"Barlow\", Arial, sans-serif",
         "source": "app/globals.css"
-      }
+      },
+      "--font-script": { "value": "\"Explora\", var(--font-sans)", "source": "app/globals.css" }
     },
     "spacing": {
       "--gutter": {
@@ -57,7 +64,7 @@
   },
   "decisions": [{
     "id": "hero-carousel-navigation",
-    "decision": "Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom.",
+    "decision": "Adapt Warp Carousel's ring motion for four upright 1:2 portrait links. Warm copper surfaces have pale rims and a red front-card accent. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback.",
     "source": "https://21st.dev/@louisstudios/components/warp-carousel"
   }, {
     "id": "hero-carousel-finish",
@@ -65,8 +72,8 @@
     "source": "https://21st.dev/@fransederr/components/grain-light-card"
   }, {
     "id": "studio-image-style-and-type",
-    "decision": "Use the supplied house drawing and red handwritten signature in the compact header, menu and footer mark. Take walnut, charcoal and pale sign-white cues from the image. Use DM Sans Variable for headings, body text and controls, and compact monospace for metadata.",
-    "source": "User-supplied T-House JPEG and approved image, style and typography plan"
+    "decision": "Build the site around the supplied logo's white house elevation, red lettering and dark walnut backdrop. Keep the source mark at a compact size. Use Explora for short red display titles and Barlow for navigation, body text, full episode titles and metadata.",
+    "source": "User-supplied T-House JPEG and approved logo-led website restyle plan"
   }],
   "evidence": [
     {

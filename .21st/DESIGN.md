@@ -14,7 +14,7 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 ## Sources
 
 - Tokens: app/globals.css
-- Components: `components/studio-mark.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
+- Components: `components/studio-mark.tsx`, `components/house-elevation.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
 - Assets: public/images
 - Instructions: AGENTS.md
 
@@ -27,11 +27,18 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ### Colors
 
+- `--canvas`: `#120e0b` (app/globals.css)
+- `--surface`: `#221911` (app/globals.css)
+- `--walnut-charcoal`: `#2d241d` (app/globals.css)
+- `--sign-white`: `#e1e8eb` (app/globals.css)
+- `--signature-red`: `#bc3728` (app/globals.css)
+- `--display-red`: `#f46a57` (app/globals.css)
 - `--muted`: `#c4b8ad` (app/globals.css)
 
 ### Typography
 
-- `--font-sans`: `"DM Sans Variable", Arial, sans-serif` (app/globals.css)
+- `--font-sans`: `"Barlow", Arial, sans-serif` (app/globals.css)
+- `--font-script`: `"Explora", var(--font-sans)` (app/globals.css)
 
 ### Spacing
 
@@ -50,8 +57,8 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ## Decisions
 
-- Use the supplied white house drawing and red handwritten signature in the compact header, menu and footer mark. Take walnut, charcoal and pale sign-white cues from the image. Use DM Sans Variable for headings, body text and controls, and compact monospace for metadata.
+- Build the site around the supplied logo's white house elevation, red lettering and dark walnut backdrop. Keep the source mark at a compact size. Use Explora for short red display titles and Barlow for navigation, body text, full episode titles and metadata.
 
 - Use the Engraved Copper finish with brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
 
-- Adapt Warp Carousel's ring motion for four upright, 1:2 portrait links with amber edges. Move the cards through a shared 3D stage during drag, arrow or keyboard browsing. Use a scroll-snap rail for reduced motion and without JavaScript. Keep the 180° card flip followed by the route zoom. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
+- Adapt Warp Carousel's ring motion for four upright 1:2 portrait links with pale rims and a red front-card accent. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)

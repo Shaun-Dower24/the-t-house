@@ -3,7 +3,11 @@ import type { ReactNode } from "react";
 import { HomeScenes } from "../components/home-scenes";
 import { SiteFooter } from "../components/site-footer";
 import { siteUrl } from "../content/site";
-import "@fontsource-variable/dm-sans/wght.css";
+import "@fontsource/barlow/latin-400.css";
+import "@fontsource/barlow/latin-500.css";
+import "@fontsource/barlow/latin-600.css";
+import "@fontsource/barlow/latin-700.css";
+import "@fontsource/explora/latin-400.css";
 import "./globals.css";
 
 export const metadata: Metadata = {

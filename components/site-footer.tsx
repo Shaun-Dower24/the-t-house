@@ -10,7 +10,7 @@ export function SiteFooter() {
         <div className="footer-art" aria-hidden="true"><HouseOutline /></div>
         <div className="follow-layout grid">
           <div>
-            <h2 id="follow-heading" className="display footer-title">Stay connected<span>.</span></h2>
+            <h2 id="follow-heading" className="script-title footer-title">Stay connected</h2>
             <p>Follow The T-House for studio content and updates.</p>
           </div>
           <nav className="social-links" aria-label="Social media">

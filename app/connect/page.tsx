@@ -12,9 +12,11 @@ export default function ConnectPage() {
   return (
     <div className={styles.connect}>
       <div className={`page-grid ${styles.connectLayout}`}>
-        <header className={styles.intro}>
-          <p className={styles.location}>{studio.location}</p>
-          <h1 className={styles.title}>Connect<span>.</span></h1>
+        <header className={`${styles.intro} ${styles.connectIntro}`}>
+          <div>
+            <p className={styles.location}>{studio.location}</p>
+            <h1 className={styles.title}>Connect</h1>
+          </div>
           <p className={styles.lead}>Have a guest suggestion or an idea for a collaboration? Reach The T-House on Instagram.</p>
         </header>
 

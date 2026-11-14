@@ -12,10 +12,10 @@ export const metadata = routeMetadata(
 export default function AboutPage() {
   return (
     <div className={styles.about}>
-      <div className={`page-grid ${styles.split} ${styles.aboutLayout}`}>
+      <div className={`page-grid ${styles.aboutLayout}`}>
         <header className={styles.intro}>
           <p className={styles.location}>{studio.location}</p>
-          <h1 className={styles.title}>About The T-House<span>.</span></h1>
+          <h1 className={styles.title}>About The T-House</h1>
           <p className={styles.lead}>The T-House is a creative music studio in East London sharing music, conversation and video.</p>
           <Link href="/inside-the-house" className={styles.textLink}>Inside the House <span aria-hidden="true">→</span></Link>
         </header>

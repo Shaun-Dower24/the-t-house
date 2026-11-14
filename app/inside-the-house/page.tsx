@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HouseOutline } from "../../components/house-outline";
 import { routeMetadata } from "../../content/site";
 import { studio } from "../../content/studio";
 import styles from "./studio-pages.module.css";
@@ -16,12 +17,13 @@ export default function InsideTheHousePage() {
       <div className={`page-grid ${styles.split}`}>
         <header className={styles.intro}>
           <p className={styles.location}>{studio.location}</p>
-          <h1 className={styles.title}>Inside the House<span>.</span></h1>
+          <h1 className={styles.title}>Inside the House</h1>
           <p className={styles.lead}>Warm lighting, wood panelling and an illuminated house sign give this Leyton music studio its character.</p>
           <Link className={styles.action} href="/watch">Explore the videos <span aria-hidden="true">→</span></Link>
         </header>
 
         <figure className={styles.gallery}>
+          <div className={styles.elevation} aria-hidden="true"><HouseOutline /></div>
           <div className={styles.frame}>
             <Image
               src="/images/threshold-detail.webp"

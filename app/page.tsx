@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HouseOutline } from "../components/house-outline";
+import { HouseElevation } from "../components/house-elevation";
 import { HeroCarousel } from "../components/hero-carousel";
 import { routeMetadata } from "../content/site";
 import { featuredVideo, studio } from "../content/studio";
-import heroImage from "../public/images/house-installation.webp";
 
 export const metadata = routeMetadata(
   "/",
@@ -17,8 +16,8 @@ export default function HomePage() {
     <>
       <section className="arrival" id="arrival" aria-labelledby="arrival-heading">
         <div className="hero-environment" aria-hidden="true">
-          <div className="hero-depth" data-hero-depth>
-            <Image src={heroImage} alt="" fill loading="eager" fetchPriority="high" sizes="100vw" placeholder="blur" />
+          <div className="arrival-art" data-house-art>
+            <HouseElevation />
           </div>
         </div>
         <div className="page-grid arrival-grid">
@@ -27,7 +26,6 @@ export default function HomePage() {
             <p className="meta location"><span aria-hidden="true" />{studio.location}</p>
             <p className="intro">A creative music studio in East London.</p>
           </div>
-          <div className="arrival-art" data-house-art aria-hidden="true"><HouseOutline motion /></div>
         </div>
         <div className="arrival-carousel"><HeroCarousel /></div>
         <div className="page-grid arrival-foot">
@@ -38,7 +36,7 @@ export default function HomePage() {
       <section id="watch" className="watch section-space" aria-labelledby="watch-heading" tabIndex={-1}>
         <div className="page-grid">
           <div className="section-heading">
-            <h2 id="watch-heading" className="display section-title">Watch the latest<span>.</span></h2>
+            <h2 id="watch-heading" className="script-title section-title">Watch the latest</h2>
             <Link className="text-action" href="/watch">View all videos <span aria-hidden="true">↗</span></Link>
           </div>
           <article className="feature" data-feature-stage>
@@ -63,7 +61,7 @@ export default function HomePage() {
       <section id="inside" className="inside section-space" aria-labelledby="inside-heading">
         <div className="page-grid home-studio">
           <div className="home-studio-copy">
-            <h2 id="inside-heading" className="display section-title">Inside<br /> the house<span>.</span></h2>
+            <h2 id="inside-heading" className="script-title section-title">Inside the house</h2>
             <p>The T-House is a creative music studio in Leyton, East London, associated with producer SV on the Beat.</p>
             <Link className="text-action" href="/inside-the-house">Step inside <span aria-hidden="true">↗</span></Link>
           </div>

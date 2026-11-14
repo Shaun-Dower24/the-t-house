@@ -83,10 +83,8 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
           const entrance = { trigger: "#arrival", start: "top top", end: "bottom 42%", scrub: true };
 
           gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: entrance })
-            .to("[data-house-outline]", { attr: { points: "60,330 60,112 270,112 480,112 480,330 270,330" } }, 0)
-            .to("[data-house-detail]", { opacity: 0 }, 0)
-            .to("[data-house-art]", { yPercent: 12, scale: 0.91 }, 0)
-            .to("[data-hero-depth]", { yPercent: 9, scale: 1.09 }, 0);
+            .to("[data-house-art] [data-house-detail]", { opacity: 0, stagger: 0.03 }, 0)
+            .to("[data-house-art]", { yPercent: 8, scale: 0.94, opacity: 0.24 }, 0);
 
           gsap.fromTo("[data-studio-art]", { yPercent: -5 }, {
             yPercent: 5,

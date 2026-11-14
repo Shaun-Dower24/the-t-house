@@ -76,14 +76,16 @@ export default async function VideoPage({ params }: Props) {
           <h1>{video.title}</h1>
         </header>
 
-        <VideoPlayer title={video.title} duration={video.duration} thumbnail={video.thumbnail} url={video.url} embedUrl={embedUrl} />
+        <div className="watch-screening">
+          <VideoPlayer title={video.title} duration={video.duration} thumbnail={video.thumbnail} url={video.url} embedUrl={embedUrl} />
 
-        <div className="watch-info">
-          <p>{video.description}</p>
-          <div className="watch-actions">
-            <a className="watch-primary-link" href={video.url}>Watch on YouTube <span aria-hidden="true">↗</span></a>
-            <a className="watch-text-link" href={studio.youtube}>Subscribe on YouTube <span aria-hidden="true">↗</span></a>
-            <ShareLink canonicalUrl={canonicalUrl} />
+          <div className="watch-info">
+            <p>{video.description}</p>
+            <div className="watch-actions">
+              <a className="watch-primary-link" href={video.url}>Watch on YouTube <span aria-hidden="true">↗</span></a>
+              <a className="watch-text-link" href={studio.youtube}>Subscribe on YouTube <span aria-hidden="true">↗</span></a>
+              <ShareLink canonicalUrl={canonicalUrl} />
+            </div>
           </div>
         </div>
         {related.length > 0 && (

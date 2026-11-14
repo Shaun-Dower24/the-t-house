@@ -4,8 +4,8 @@
 
 | Scene | Trigger | Visual change | Baseline |
 | --- | --- | --- | --- |
-| Arrival | First view | Light builds around the architectural house motif. | The initial HTML gives the page title, studio context and working navigation immediately. |
-| Hero browsing | Drag, swipe, previous or next control, or keyboard navigation | Upright portrait cards rotate around a shared 3D stage. The front card comes forward and its neighbours recede into depth, with amber edges defining each face. | A native scroll-snap rail displays the same links in reduced motion and without JavaScript. |
+| Arrival | First view and native scroll | White lines trace the house elevation. Its detail recedes as the visitor scrolls toward the framed release. | The initial HTML gives the page title, studio context, visible drawing and navigation immediately. |
+| Hero browsing | Drag, swipe, previous or next control, or keyboard navigation | Upright copper cards rotate around a shared 3D stage. The front card comes forward and its neighbours recede into depth, with pale edges defining each face. | A native scroll-snap rail displays the same links in reduced motion and without JavaScript. |
 | Hero navigation | A visitor activates a destination card | An angled card comes forward from its current pose. The selected card turns 180° on its vertical axis over 300 ms. Its reverse face then expands for 320 ms, and fades after the destination renders. | Ordinary links open their destinations with system or site reduced motion, or with JavaScript disabled. |
 | Latest release | Native scroll | Architectural lines and lighting guide attention from the opening to the framed release. | Real video information and links stay in the document flow. |
 | Watch | Card engagement | Subtle frame emphasis or depth signals the active link. | Focus and touch provide an operable card and labelled destination. |

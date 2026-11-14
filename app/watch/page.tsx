@@ -16,12 +16,10 @@ export const metadata = {
 export default function WatchPage() {
   return (
     <div className="watch-page">
-      <div className="page-grid watch-inner">
+      <div className="page-grid watch-inner watch-library">
         <header className="watch-index-header">
-          <div>
-            <h1>Watch<span>.</span></h1>
-            <p>Videos from The T-House in Leyton, East London.</p>
-          </div>
+          <h1 className="script-title">Watch</h1>
+          <p>Videos from The T-House in Leyton, East London.</p>
           <a className="watch-text-link" href={studio.youtube}>
             YouTube channel <span aria-hidden="true">↗</span>
           </a>
