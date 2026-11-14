@@ -6,13 +6,13 @@ The T-House is a creative music studio in Leyton, East London, associated with p
 
 The first milestone is a local homepage prototype with an accessible studio introduction and an animated transition between the opening and the studio section. The named GitHub repository was empty at the start of the work.
 
-The supplied HTML and skills archive were read as reference material. The saved Fabian Tjoe A On HTML contains a client-rendered shell. The live page could not be rendered in the web lookup, so the [published reference capture](https://www.landing.love/sites/fabiantjoeaon/) informed the use of atmospheric depth and continuity between scenes. The studio artwork and layout were developed for The T-House.
+The supplied HTML and skills archive were read as reference material. Reviewing the [live Fabian Tjoe-A-On site](https://fabiantjoeaon.com/) and the [designer’s motion demo](https://x.com/tjoeaon/status/2107903894529421444) confirmed its defining pattern: a central glass tile wall that stays in place as the environment changes, with hover previews and compact controls around it. The revised homepage translates that interaction into an illuminated house-shaped pattern, three navigation hotspots and two lighting scenes. The environment artwork and layout were developed for The T-House.
 
 ## Visitor journey
 
 | Scene | Visitor experience | Delivery |
 | --- | --- | --- |
-| The Arrival | An architectural opening and the headline “Enter the House.” establish the studio identity. Visitors can scroll or jump into the page immediately. | Initial prototype |
+| The Arrival | A floating tile wall and the headline “Enter the House.” establish the studio identity. Visitors can select a hotspot, change the scene lighting or scroll directly to the studio. | Initial prototype |
 | Entering the House | The opening recedes as the studio section comes into view. Architectural lines, layering and typography create depth. | Initial prototype |
 | Inside the House | An editorial studio introduction. Approved photographs of the space can replace the illustrative treatment and support a gallery. | Introduction in prototype, photography and gallery after asset delivery |
 | The Content | A prominent route to the studio’s published media, then an expandable Watch library. | Channel link in prototype, individual media once verified |

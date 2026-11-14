@@ -30,7 +30,11 @@ export function HomeScenes({ children }: { children: ReactNode }) {
         const media = gsap.matchMedia(main);
 
         media.add(
-          { wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" },
+          {
+            wide: "(min-width: 48rem)",
+            narrow: "(max-width: 47.999rem)",
+            pointer: "(min-width: 48rem) and (hover: hover) and (pointer: fine)",
+          },
           ({ conditions }) => {
             const wide = conditions?.wide;
 
@@ -56,6 +60,36 @@ export function HomeScenes({ children }: { children: ReactNode }) {
                 scrub: true,
               },
             });
+
+            const field = main.querySelector<HTMLElement>("[data-tile-field]");
+            const stage = field?.closest<HTMLElement>(".tile-stage");
+            if (!conditions?.pointer || !field || !stage) return;
+
+            const properties = ["--tilt-x", "--tilt-y", "--pointer-x", "--pointer-y"];
+
+            function tilt(event: PointerEvent) {
+              if (!field || !stage || event.pointerType === "touch") return;
+              const bounds = stage.getBoundingClientRect();
+              const x = (event.clientX - bounds.left) / bounds.width;
+              const y = (event.clientY - bounds.top) / bounds.height;
+              field.style.setProperty("--tilt-x", `${(0.5 - y) * 8}deg`);
+              field.style.setProperty("--tilt-y", `${(x - 0.5) * 11}deg`);
+              field.style.setProperty("--pointer-x", `${x * 100}%`);
+              field.style.setProperty("--pointer-y", `${y * 100}%`);
+            }
+
+            function reset() {
+              for (const property of properties) field?.style.removeProperty(property);
+            }
+
+            stage.addEventListener("pointermove", tilt, { passive: true });
+            stage.addEventListener("pointerleave", reset);
+
+            return () => {
+              stage.removeEventListener("pointermove", tilt);
+              stage.removeEventListener("pointerleave", reset);
+              reset();
+            };
           },
         );
 

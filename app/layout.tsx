@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import "@fontsource/barlow-condensed/latin-700.css";
 import "@fontsource-variable/dm-sans/wght.css";
 import "./globals.css";
 
