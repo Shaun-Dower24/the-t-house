@@ -17,6 +17,8 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ### Homepage video arrival — 15 November 2026
 
+- Short-landscape follow-up: confirmed clipped controls at 844×390 (button y=399.1875–443.1875 outside stage y=0–390). A height-scoped portrait size and tighter stage padding now put both buttons at y=294.59375–338.59375; at 667×375 they sit at y=280.78125–324.78125 inside the visible stage y=0–374.5. Chrome screenshots: `/home/ubuntu/shots/landscape-{844,667}-after.png`. The 390/768/1440 landing regression, lint, typecheck and production build passed unchanged.
+
 - Implemented plan steps 1, 2, 3 and 5: a native-scroll sticky stage, one persistent Watch video, measured full-stage-to-artwork geometry, Explore focus handoff, reversible entrance before browsing and ordinary Warp navigation afterwards. The previous arrival scrub is retired; feature and studio triggers are unchanged.
 - The supplied demo is served locally: `public/videos/arrival.mp4` (3,551,929 bytes) and `public/images/arrival-poster.jpg` (179,976 bytes). Confirm footage rights or replace it with an approved studio loop before production. Set `--arrival-focal-point` on the arrival scene to adjust the portrait and landscape crop.
 - `npm ci`, lint, TypeScript and the production build passed on Node 24.22.2. Install reported 13 dependency vulnerabilities (2 low, 11 moderate); no dependency or lockfile changes were made.

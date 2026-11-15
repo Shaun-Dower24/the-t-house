@@ -40,6 +40,10 @@
 @media (max-width: 47.999rem) {
   .scene[data-arrival-enhanced] { height: 150svh; }
 }
+@media (max-height: 32rem) {
+  .scene[data-arrival-enhanced] .stage { padding-block: 4rem 0.5rem; }
+  .scene[data-arrival-enhanced] .carousel > nav { --portrait-width: clamp(4rem, 20svh, 8rem); }
+}
 @media (prefers-reduced-motion: reduce), (forced-colors: active) {
   .scene[data-arrival-enhanced] { height: auto; }
   .scene[data-arrival-enhanced] .stage { position: relative; height: auto; min-height: calc(100svh - 5rem); }
