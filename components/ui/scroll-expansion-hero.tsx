@@ -5,6 +5,8 @@ import { HeroCarousel } from "../hero-carousel";
 import { HouseElevation } from "../house-elevation";
 import styles from "./scroll-expansion-hero.module.css";
 
+const historyKey = "tHouseArrivalSettled";
+
 export function ScrollExpansionHero() {
   const root = useRef<HTMLElement>(null);
   const settle = useRef<() => void>(() => {});
@@ -76,7 +78,7 @@ export function ScrollExpansionHero() {
       if (disposed || generation !== version || !eligible()) return;
       gsap.registerPlugin(ScrollTrigger);
       if (!scene || !stage || !frame || !art) return;
-      let chosen = false;
+      let chosen = window.history.state?.[historyKey] === true;
       let landing = { left: 0, top: 0, width: 0, height: 0 };
       let progress = 0;
       scene.dataset.arrivalEnhanced = "true";
@@ -122,8 +124,6 @@ export function ScrollExpansionHero() {
       const rail = scene.querySelector("[data-carousel-rail]");
       if (rail) resize.observe(rail);
       settle.current = () => { chosen = true; draw(1); };
-      // History restores the browsed selection rather than replaying its entrance.
-      if (scene.querySelector('[data-carousel-slide][data-active="true"] [data-destination]:not([data-destination="watch"])')) settle.current();
       teardown = () => {
         resize.disconnect(); trigger.kill(); settle.current = () => {};
         art.append(frame); frame.removeAttribute("style");
@@ -146,8 +146,13 @@ export function ScrollExpansionHero() {
     };
   }, []);
 
-  function explore() {
+  function settleArrival() {
+    window.history.replaceState({ ...window.history.state, [historyKey]: true }, "");
     settle.current();
+  }
+
+  function explore() {
+    settleArrival();
     const scene = root.current;
     const stage = scene?.querySelector<HTMLElement>("[data-arrival-stage]");
     if (scene?.dataset.arrivalEnhanced && stage) window.scrollTo({ top: scene.offsetTop + scene.offsetHeight - stage.offsetHeight, behavior: "instant" });
@@ -167,9 +172,9 @@ export function ScrollExpansionHero() {
         }}>{paused ? "Play video" : "Pause video"}</button>}
       </div>
       <div id="arrival-carousel" className={styles.carousel}
-        onFocusCapture={() => settle.current()}
-        onPointerDownCapture={() => settle.current()}
-        onKeyDownCapture={() => settle.current()}>
+        onFocusCapture={settleArrival}
+        onPointerDownCapture={settleArrival}
+        onKeyDownCapture={settleArrival}>
         <HeroCarousel />
       </div>
     </div>

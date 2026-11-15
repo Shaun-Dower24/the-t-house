@@ -17,6 +17,8 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ### Homepage video arrival — 15 November 2026
 
+- History follow-up: intentional settlement is stored as `tHouseArrivalSettled` on the current history entry, preserving Next's existing history fields. Restoration no longer infers settlement from the active card. Chrome verified Explore → Inside → top → Watch → Watch route → Back restores Watch, scrollY=0 and the settled card (166.1875px wide), while the earlier landed-scroll Inside case restores scrollY=914 and Inside. A new client navigation home and a fresh URL visit both start unsettled with Watch and scrollY=0. Script: `/home/ubuntu/shots/check-arrival-history.cjs`; screenshot: `/home/ubuntu/shots/arrival-history-back-top.png`. No page errors. Four-size forward/reverse handoff, lint, typecheck and production build passed.
+
 - Short-landscape label follow-up: use 12px labels with normal word wrapping on enhanced short-viewport cards. Chrome screenshots at 844×390 and 667×375 show Watch and Connect on single lines, with Inside the House wrapping only at spaces: `/home/ubuntu/shots/landscape-{844,667}-labels.png`. Card/control geometry is unchanged. The four-size forward/reverse handoff assertions, lint, typecheck and production build passed.
 
 - Short-landscape follow-up: confirmed clipped controls at 844×390 (button y=399.1875–443.1875 outside stage y=0–390). A height-scoped portrait size and tighter stage padding now put both buttons at y=294.59375–338.59375; at 667×375 they sit at y=280.78125–324.78125 inside the visible stage y=0–374.5. Chrome screenshots: `/home/ubuntu/shots/landscape-{844,667}-after.png`. The 390/768/1440 landing regression, lint, typecheck and production build passed unchanged.
