@@ -1,0 +1,25 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.backdrop {
+  --signal-glow: color-mix(in srgb, var(--signature-red) 21%, transparent);
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(transparent 0 3px, color-mix(in srgb, var(--sign-white) 6%, transparent) 3px 4px),
+    radial-gradient(ellipse at 55% 54%, var(--signal-glow), transparent 68%);
+  mask-image: radial-gradient(ellipse 75% 76% at 53% 52%, black 24%, transparent 77%);
+}
+
+.backdrop[data-signal="old-television"] {
+  --signal-glow: color-mix(in srgb, var(--sign-white) 13%, transparent);
+}
+
+@media (forced-colors: active) {
+  .backdrop { display: none; }
+}

@@ -1,0 +1,20 @@
+.root {
+  position: relative;
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-motion="full"]) .root[data-animation="subtle"] :is(.intro, .art) {
+    animation: reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  :global([data-motion="full"]) .root[data-animation="subtle"] .art {
+    animation-duration: 600ms;
+    animation-delay: 80ms;
+  }
+}
+
+@keyframes reveal {
+  from { translate: 0 0.6rem; }
+  to { translate: 0 0; }
+}

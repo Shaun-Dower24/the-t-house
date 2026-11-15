@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
+import HoverExpandGallery from "@/components/ui/hover-expand-gallery";
 import { HouseOutline } from "../../components/house-outline";
 import { routeMetadata } from "../../content/site";
-import { studio } from "../../content/studio";
 import styles from "./studio-pages.module.css";
 
 export const metadata = routeMetadata(
@@ -16,7 +15,6 @@ export default function InsideTheHousePage() {
     <div className={styles.inside}>
       <div className={`page-grid ${styles.split}`}>
         <header className={styles.intro}>
-          <p className={styles.location}>{studio.location}</p>
           <h1 className={styles.title}>Inside the House</h1>
           <p className={styles.lead}>Warm lighting, wood panelling and an illuminated house sign give this Leyton music studio its character.</p>
           <Link className={styles.action} href="/watch">Explore the videos <span aria-hidden="true">→</span></Link>
@@ -24,17 +22,15 @@ export default function InsideTheHousePage() {
 
         <figure className={styles.gallery}>
           <div className={styles.elevation} aria-hidden="true"><HouseOutline /></div>
-          <div className={styles.frame}>
-            <Image
-              src="/images/threshold-detail.webp"
-              alt="An imagined entrance framed by repeated amber roof outlines"
-              width={910}
-              height={786}
-              sizes="(max-width: 47.99rem) 94vw, (max-width: 85rem) 48vw, 42rem"
-              preload
-            />
-          </div>
-          <figcaption className={styles.caption}>Entrance concept artwork</figcaption>
+          <HoverExpandGallery
+            className={styles.exhibit}
+            height="clamp(19rem, 61cqw, 29rem)"
+            railWidth={56}
+            maxOpenWidth={560}
+            mobileImageHeight={340}
+            duration={440}
+          />
+          <figcaption className={styles.caption}>Studio concept artwork</figcaption>
         </figure>
       </div>
 

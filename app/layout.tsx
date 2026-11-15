@@ -7,7 +7,7 @@ import "@fontsource/barlow/latin-400.css";
 import "@fontsource/barlow/latin-500.css";
 import "@fontsource/barlow/latin-600.css";
 import "@fontsource/barlow/latin-700.css";
-import "@fontsource/explora/latin-400.css";
+import "@fontsource/hurricane/latin-400.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,8 +25,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB">
-      <body><HomeScenes footer={<SiteFooter />}>{children}</HomeScenes></body>
+    <html lang="en-GB" className="dark">
+      <body>
+        <svg className="absolute" width="0" height="0" aria-hidden="true" focusable="false">
+          <defs>
+            <filter id="text-antialiasing" x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
+              <feColorMatrix type="matrix" />
+            </filter>
+          </defs>
+        </svg>
+        <HomeScenes footer={<SiteFooter />}>{children}</HomeScenes>
+      </body>
     </html>
   );
 }

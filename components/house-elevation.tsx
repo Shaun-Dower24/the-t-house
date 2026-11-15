@@ -27,7 +27,6 @@ export function HouseElevation() {
         <path d="M216 207l130-93 172 121m-115-83 86 63m80-15 67-26m90 27 25-17 65 49m-510 91v-76m295 111v52m-435-65h170m148 71h141m17 14h182" />
         <path d="M231 450h96m39 0h100m179 0h121m-439-7v9m139-9v9m-59 3v14m466-39h27m-16-7v14" />
       </g>
-      <path className="elevation-red" d="M152 481h62m590 0h58" />
     </svg>
   );
 }

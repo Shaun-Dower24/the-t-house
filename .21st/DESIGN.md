@@ -14,7 +14,7 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 ## Sources
 
 - Tokens: app/globals.css
-- Components: `components/studio-mark.tsx`, `components/house-elevation.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
+- Components: `components/studio-mark.tsx`, `components/house-elevation.tsx`, `components/ui/warp-carousel.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx`
 - Assets: public/images
 - Instructions: AGENTS.md
 
@@ -27,18 +27,17 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ### Colors
 
-- `--canvas`: `#120e0b` (app/globals.css)
-- `--surface`: `#221911` (app/globals.css)
-- `--walnut-charcoal`: `#2d241d` (app/globals.css)
-- `--sign-white`: `#e1e8eb` (app/globals.css)
-- `--signature-red`: `#bc3728` (app/globals.css)
-- `--display-red`: `#f46a57` (app/globals.css)
-- `--muted`: `#c4b8ad` (app/globals.css)
+- `--canvas`: `#0b0b0b` (app/globals.css)
+- `--surface`: `#171717` (app/globals.css)
+- `--charcoal`: `#232323` (app/globals.css)
+- `--sign-white`: `#f5f5f5` (app/globals.css)
+- `--signature-red`: `#c83838`, sampled from pixel (116, 115) on the logo signature (app/globals.css)
+- `--muted-text`: `#bcbcbc` (app/globals.css)
 
 ### Typography
 
 - `--font-sans`: `"Barlow", Arial, sans-serif` (app/globals.css)
-- `--font-script`: `"Explora", var(--font-sans)` (app/globals.css)
+- `--font-script`: `"Hurricane", var(--font-sans)` (app/globals.css)
 
 ### Spacing
 
@@ -57,8 +56,12 @@ Generated from project sources at 2026-11-14T18:13:08.141Z.
 
 ## Decisions
 
-- Build the site around the supplied logo's white house elevation, red lettering and dark walnut backdrop. Keep the source mark at a compact size. Use Explora for short red display titles and Barlow for navigation, body text, full episode titles and metadata.
+- Use the original mark and a white and red brand palette on neutral charcoal. Set short display titles in Hurricane, the closest script in the visual comparison. Use Barlow for navigation, body text, full episode titles and metadata. The original signature's typeface remains unverified. [Hurricane](https://fonts.google.com/specimen/Hurricane)
 
-- Use the Engraved Copper finish with brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
+- Use matte charcoal surfaces with artwork in colour and a dark fade behind card labels. Frame the Watch card around the person with a darker backdrop. Play the source video in full colour.
 
-- Adapt Warp Carousel's ring motion for four upright 1:2 portrait links with pale rims and a red front-card accent. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
+- Use white hand-drawn arrows and reveal a textured signature-red underline on hover or keyboard focus.
+
+- Widen the hovered desktop card to a 16:9 artwork frame and begin the flip from its current size and crop. [Expanding Cards](https://21st.dev/@vaib215/components/expanding-cards)
+
+- Use the supplied Warp Carousel's fitted projection and spin timing for four upright 1:2 portrait links with pale rims. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)

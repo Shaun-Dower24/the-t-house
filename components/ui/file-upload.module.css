@@ -1,0 +1,73 @@
+.root { display: grid; min-width: 0; gap: 0.7rem; }
+.beam { border-radius: 0.4rem; }
+
+.dropzone {
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1.15rem 0.8rem;
+  border: 1px dashed var(--line);
+  border-radius: 0.4rem;
+  background: var(--canvas);
+  color: var(--sign-white);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.dropzone:hover { border-color: var(--sign-white); }
+.dropzone:focus-visible { outline: 2px solid var(--sign-white); outline-offset: 3px; }
+.dropzone[data-dragging] {
+  border-color: var(--signature-red);
+  background: color-mix(in srgb, var(--signature-red) 9%, var(--canvas));
+}
+
+.illustration { display: flex; justify-content: center; margin-block-end: 0.3rem; pointer-events: none; }
+.fileIcon {
+  display: grid;
+  inline-size: 2.55rem;
+  block-size: 2.55rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: var(--surface);
+  color: var(--muted-text);
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.fileIcon + .fileIcon { margin-inline-start: -0.3rem; }
+.fileIcon:first-child:not(:only-child) { transform: rotate(-9deg); }
+.fileIcon:last-child:not(:only-child) { transform: rotate(9deg); }
+.dropzone[data-dragging] .fileIcon { transform: translateY(-0.15rem); color: var(--sign-white); }
+.fileIcon svg, .thumbnail svg { inline-size: 1.2rem; block-size: 1.2rem; }
+.title, .name { font-size: 0.96rem; font-weight: 650; }
+.description, .feedback { font-size: 0.85rem; line-height: 1.4; color: var(--muted-text); }
+.browse { display: flex; align-items: center; gap: 0.4rem; margin-block-start: 0.25rem; font-size: 0.9rem; font-weight: 650; }
+.browse svg { inline-size: 1rem; block-size: 1rem; }
+
+.files { display: grid; gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.file { display: flex; align-items: center; gap: 0.65rem; min-width: 0; padding: 0.4rem 0.5rem; background: var(--canvas); }
+.fileInfo { display: grid; flex: 1; min-width: 0; gap: 0.15rem; overflow-wrap: anywhere; }
+
+.thumbnail {
+  display: grid;
+  flex: none;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  place-items: center;
+  overflow: hidden;
+  background: var(--surface);
+  color: var(--muted-text);
+}
+
+.thumbnail img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dropzone, .fileIcon { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .dropzone[data-dragging] { border-color: Highlight; }
+  .dropzone:focus-visible { outline-color: Highlight; }
+}

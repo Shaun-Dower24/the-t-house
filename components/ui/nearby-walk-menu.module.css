@@ -1,0 +1,400 @@
+.root {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1rem;
+  inline-size: 100%;
+  padding: clamp(1.5rem, 5vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  background: linear-gradient(var(--nw-page), var(--nw-page2, var(--nw-page)));
+  color: var(--nw-fg);
+  font-family: var(--font-sans);
+  container: nearby-walk / inline-size;
+}
+
+.hint,
+.footer {
+  max-inline-size: 42rem;
+  margin: 0;
+  color: var(--nw-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.scene {
+  --scene-inline: clamp(0.5rem, 1.75vw, 1.5rem);
+  --scene-top: clamp(0.625rem, 1.6vw, 1.25rem);
+  --scene-bottom: 1rem;
+  position: relative;
+  isolation: isolate;
+  inline-size: min(100%, 77.5rem);
+  min-inline-size: 0;
+  padding: var(--scene-top) var(--scene-inline) var(--scene-bottom);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--nw-ink) 25%, transparent);
+  border-radius: clamp(0.75rem, 2vw, 1.5rem);
+  background: linear-gradient(var(--nw-bg2, var(--nw-bg)), var(--nw-bg) 82%);
+  box-shadow: 0 15px 36px -24px var(--nw-shadow, transparent);
+}
+
+.art {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 1;
+  pointer-events: none;
+}
+
+.origin {
+  display: table;
+  max-inline-size: 100%;
+  margin: 0 auto;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.5rem;
+  background: var(--nw-pin);
+  color: var(--nw-pin-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.25rem), 1fr));
+  gap: 0.5rem;
+  margin: 0.875rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spot {
+  min-inline-size: 0;
+}
+
+.button,
+.theme {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  border: 1px solid color-mix(in srgb, var(--nw-ink) 40%, transparent);
+  border-radius: 0.5rem;
+  background: var(--nw-bg);
+  color: var(--nw-fg);
+}
+
+button.button,
+.theme {
+  cursor: pointer;
+}
+
+.button {
+  display: grid;
+  align-content: start;
+  gap: 0.2rem;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0.5rem 0.625rem;
+  line-height: 1.2;
+  text-align: start;
+}
+
+button.button:is(:hover, [data-active], [aria-pressed="true"]),
+.theme:is(:hover, [aria-pressed="true"]) {
+  border-color: var(--nw-ink);
+}
+
+.button:focus-visible,
+.theme:focus-visible {
+  outline: 2px solid var(--nw-ink);
+  outline-offset: 2px;
+}
+
+.name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.metric {
+  color: var(--nw-muted);
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+
+.button[aria-pressed="true"] .name {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.themes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding-inline: 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+.theme[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--nw-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.swatch {
+  display: block;
+  flex: none;
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  border: 1px solid color-mix(in srgb, var(--nw-ink) 35%, transparent);
+  border-radius: 50%;
+}
+
+.footer a {
+  color: var(--nw-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.footer a:focus-visible {
+  outline-color: var(--nw-ink);
+}
+
+@media (min-width: 48rem) {
+  @container nearby-walk (min-width: 44rem) {
+    .origin {
+      position: absolute;
+      inset-block-start: calc(var(--scene-top) + (100% - var(--scene-top) - var(--scene-bottom)) * 0.18);
+      inset-inline-start: calc(var(--scene-inline) + (100% - 2 * var(--scene-inline)) * 0.08333);
+      z-index: 1;
+      max-inline-size: 15%;
+      margin: 0;
+      translate: -50% 0;
+    }
+
+    .controls {
+      position: absolute;
+      z-index: 2;
+      inset: var(--scene-top) var(--scene-inline) var(--scene-bottom);
+      display: block;
+      margin: 0;
+      pointer-events: none;
+    }
+
+    .spot {
+      position: absolute;
+      inset-inline-start: var(--spot-x);
+      inset-block-start: var(--spot-y);
+      inline-size: var(--spot-w);
+      block-size: var(--spot-h);
+      pointer-events: auto;
+    }
+
+    .button {
+      align-content: start;
+      justify-items: center;
+      gap: 0.1rem;
+      padding: 0.15rem;
+      border-color: transparent;
+      background: transparent;
+      text-align: center;
+    }
+
+    .name,
+    .metric {
+      padding-inline: 0.2rem;
+      border-radius: 0.125rem;
+      background: var(--nw-bg);
+    }
+  }
+}
+
+.art :is(:global(.nw-line), :global(.nw-thin), :global(.nw-wall), :global(.nw-stone), :global(.nw-roof), :global(.nw-dome), :global(.nw-lit), :global(.nw-win), :global(.nw-door), :global(.nw-ground)) {
+  stroke: var(--nw-ink);
+  stroke-width: var(--nw-stroke, 1.8);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.art :is(:global(.nw-line), :global(.nw-thin), :global(.nw-ground), :global(.nw-route)) {
+  fill: none;
+}
+
+.art :is(:global(.nw-thin), :global(.nw-win), :global(.nw-lit)) {
+  stroke-width: var(--nw-thin, 1.2);
+}
+
+.art :global(.nw-wall) { fill: var(--nw-wall); }
+.art :global(.nw-stone) { fill: var(--nw-stone); }
+.art :is(:global(.nw-roof), :global(.nw-dome), :global(.nw-door)) { fill: var(--nw-roof); }
+.art :global(.nw-hill) { fill: var(--nw-hill); }
+.art :global(.nw-win) { fill: var(--nw-win); }
+.art :is(:global(.nw-lit), :global(.nw-bulb)) { fill: var(--nw-sun); }
+.art :global(.nw-ground) { stroke: var(--nw-ground, var(--nw-ink)); }
+
+.art :global(.nw-bulb) {
+  stroke: var(--nw-ink);
+  stroke-width: 0.8;
+}
+
+.art :global(.nw-route) {
+  stroke: var(--nw-route);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 2 9;
+  opacity: 0.7;
+}
+
+.art :global(.nw-cloud) {
+  fill: var(--nw-cloud);
+  stroke: var(--nw-cloud-line);
+  stroke-width: 1.2;
+}
+
+.art :global(.nw-beacon) {
+  fill: var(--nw-beacon);
+  stroke: var(--nw-ink);
+  stroke-width: 1;
+}
+
+.art :global(.nw-walker) {
+  display: none;
+  fill: var(--nw-walker);
+  stroke: var(--nw-bg);
+  stroke-width: 1.5;
+}
+
+.art :global(.nw-bob) {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+@keyframes rise-landmark {
+  from { opacity: 0.35; transform: translateY(12px); }
+}
+
+@keyframes draw-ground {
+  from { stroke-dashoffset: 1; }
+}
+
+@keyframes walk-route {
+  0% { opacity: 0; offset-distance: 0%; }
+  10%, 88% { opacity: 1; }
+  100% { opacity: 0; offset-distance: 100%; }
+}
+
+@keyframes bounce-landmark {
+  42% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .root[data-animated] .art :global(.nw-rise) {
+    animation: rise-landmark 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms) backwards;
+  }
+
+  .root[data-animated] .art :global(.nw-ground) {
+    stroke-dasharray: 1;
+    animation: draw-ground 800ms ease-out;
+  }
+
+  .art :global(.nw-bob)[data-active] {
+    animation: bounce-landmark 460ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @supports (offset-path: path("M0 0")) {
+    .root[data-animated] .art :global(.nw-walker) {
+      display: block;
+      offset-rotate: 0deg;
+      animation: walk-route 4s linear 350ms both;
+    }
+  }
+
+  :global([data-motion="reduced"]) .root .art :is(:global(.nw-rise), :global(.nw-bob), :global(.nw-ground), :global(.nw-walker)) {
+    animation: none;
+  }
+
+  :global([data-motion="reduced"]) .root .art :global(.nw-ground) {
+    stroke-dasharray: none;
+  }
+
+  :global([data-motion="reduced"]) .root .art :global(.nw-walker) {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .scene[data-cursor-effect][data-lamp]::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: radial-gradient(circle 13rem at var(--mx, 50%) var(--my, 50%), var(--nw-lamp, transparent), transparent 75%);
+    content: "";
+    pointer-events: none;
+  }
+
+  :global([data-motion="reduced"]) .scene[data-cursor-effect][data-lamp]::before {
+    content: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .scene {
+    border-color: CanvasText;
+  }
+
+  .art {
+    --nw-bg: Canvas;
+    --nw-ink: CanvasText;
+    --nw-wall: Canvas;
+    --nw-stone: Canvas;
+    --nw-roof: CanvasText;
+    --nw-hill: Canvas;
+    --nw-win: Canvas;
+    --nw-sun: Highlight;
+    --nw-cloud: Canvas;
+    --nw-cloud-line: CanvasText;
+    --nw-beacon: Highlight;
+    --nw-ground: CanvasText;
+    --nw-route: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .name,
+  .metric {
+    color: ButtonText;
+  }
+
+  .origin {
+    border: 1px solid CanvasText;
+  }
+
+  .button:focus-visible,
+  .theme:focus-visible,
+  .footer a:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .button[aria-pressed="true"],
+  .theme[aria-pressed="true"] {
+    border-color: Highlight;
+  }
+
+  .swatch {
+    border-color: ButtonText;
+  }
+
+  .theme[aria-pressed="true"] .swatch {
+    background: Highlight !important;
+  }
+}

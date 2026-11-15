@@ -1,0 +1,287 @@
+.frame {
+  inline-size: 100%;
+  max-inline-size: 22.5rem;
+  margin-inline: auto;
+  perspective: 900px;
+}
+
+.card {
+  inline-size: min(100%, 15rem);
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 0.625rem);
+  background: var(--surface);
+  color: var(--sign-white);
+  font-family: var(--font-sans);
+}
+
+.card[open] {
+  inline-size: 100%;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "icon action" "label label";
+  align-content: space-between;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  min-block-size: 8.625rem;
+  padding: 0.875rem 1rem;
+  list-style: none;
+  cursor: pointer;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 4%) 1px, transparent 1px);
+  background-size: 1.125rem 1.125rem;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--sign-white);
+  outline-offset: -4px;
+}
+
+.card[open] .summary {
+  min-block-size: 0;
+  background-image: none;
+}
+
+.topIcon {
+  grid-area: icon;
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  color: var(--signature-red);
+}
+
+.label {
+  grid-area: label;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.action {
+  display: inline-flex;
+  grid-area: action;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.summary:is(:hover, :focus-visible) .action {
+  border-color: currentColor;
+}
+
+.collapseText,
+.card[open] .expandText {
+  display: none;
+}
+
+.card[open] .collapseText {
+  display: inline;
+}
+
+.chevron {
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  flex: none;
+}
+
+.card[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.panel {
+  border-block-start: 1px solid var(--line);
+}
+
+.atlas {
+  position: relative;
+  min-block-size: 10rem;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.blocks {
+  fill: var(--surface);
+  stroke: color-mix(in srgb, var(--sign-white) 22%, transparent);
+  stroke-width: 1;
+}
+
+.minorRoads,
+.majorRoads {
+  fill: none;
+  stroke: var(--sign-white);
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.minorRoads {
+  stroke-width: 1.25;
+  stroke-opacity: 0.29;
+}
+
+.majorRoads {
+  stroke-width: 2.5;
+  stroke-opacity: 0.56;
+}
+
+.pin {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 2.125rem;
+  block-size: 2.125rem;
+  overflow: visible;
+  translate: -50% -100%;
+  color: var(--signature-red);
+  filter: drop-shadow(0 2px 4px var(--canvas));
+}
+
+.pin path {
+  fill: currentColor;
+}
+
+.pin circle {
+  fill: var(--sign-white);
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+  min-block-size: 2.3125rem;
+  padding: 0.5rem 1rem;
+  border-block-start: 1px solid var(--line);
+  color: var(--muted-text);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.coordinates {
+  color: var(--sign-white);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes draw-map-roads {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes reveal-map-pin {
+  from { opacity: 0; transform: translateY(-0.35rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .card {
+    transition: inline-size 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .card[open] :is(.minorRoads, .majorRoads) {
+    stroke-dasharray: 1;
+    animation: draw-map-roads 450ms ease-out both;
+  }
+
+  .card[open] .minorRoads {
+    animation-delay: 120ms;
+  }
+
+  .card[open] .pin {
+    animation: reveal-map-pin 240ms ease-out 260ms both;
+  }
+
+  :global([data-motion="reduced"]) .card {
+    transition: none;
+  }
+
+  :global([data-motion="reduced"]) .card[open] :is(.minorRoads, .majorRoads, .pin) {
+    animation: none;
+  }
+
+  :global([data-motion="reduced"]) .card[open] :is(.minorRoads, .majorRoads) {
+    stroke-dasharray: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .card {
+    transition:
+      inline-size 320ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 150ms ease-out;
+  }
+
+  .card:hover:not(:has(:focus-visible)) {
+    transform:
+      rotateX(clamp(-4deg, var(--map-tilt-x, 0deg), 4deg))
+      rotateY(clamp(-4deg, var(--map-tilt-y, 0deg), 4deg));
+  }
+
+  :global([data-motion="reduced"]) .card:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .card,
+  .panel,
+  .caption {
+    border-color: CanvasText;
+  }
+
+  .action,
+  .summary:is(:hover, :focus-visible) .action {
+    border-color: ButtonText;
+    color: ButtonText;
+  }
+
+  .summary:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .atlas {
+    background: Canvas;
+  }
+
+  .blocks {
+    fill: Canvas;
+    stroke: GrayText;
+  }
+
+  .minorRoads,
+  .majorRoads {
+    stroke: CanvasText;
+    stroke-opacity: 1;
+  }
+
+  .pin {
+    color: Highlight;
+    filter: none;
+  }
+
+  .pin circle {
+    fill: HighlightText;
+  }
+}

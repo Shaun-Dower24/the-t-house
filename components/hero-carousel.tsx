@@ -3,17 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { featuredVideo } from "../content/studio";
 import { useCardRouteTransition } from "./card-route-transition";
 import { HouseOutline } from "./house-outline";
+import { GraffitiArrow } from "./ui/graffiti-arrow";
+import { WarpCarousel } from "./ui/warp-carousel";
 import styles from "./hero-carousel.module.css";
 
 const destinations = [
-  { id: "watch", label: "Watch", href: "/watch", image: featuredVideo.thumbnail, tone: "#1d140f" },
-  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/threshold-detail.webp", tone: "#19110d" },
-  { id: "about", label: "About", href: "/about", tone: "#211712" },
-  { id: "connect", label: "Connect", href: "/connect", tone: "#251810" },
+  { id: "watch", label: "Watch", href: "/watch", image: featuredVideo.thumbnail },
+  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/threshold-detail.webp" },
+  { id: "about", label: "About", href: "/about" },
+  { id: "connect", label: "Connect", href: "/connect" },
 ] as const;
 
 const historyKey = "tHouseHeroCard";
@@ -60,12 +62,13 @@ export function HeroCarousel() {
     if (!list) return;
     const preferences = list.closest<HTMLElement>("[data-motion], .prototype");
     const media = window.matchMedia("(prefers-reduced-motion: reduce), (forced-colors: active)");
-    const supported = CSS.supports("translate: calc(sin(45deg) * 1px)") && "registerProperty" in CSS;
+    const supported = CSS.supports("transform", "perspective(100px) translate3d(0, 0, -1px) rotateY(1deg)");
     const saved: unknown = window.history.state?.[historyKey];
     if (typeof saved === "number" && list.children[saved]) browsed.current = saved;
 
     function updateMode() {
       drag.current = null;
+      list?.removeAttribute("data-dragging");
       setActive(browsed.current);
       setRotation({ angle: browsed.current * step, instant: true });
       setOrbit(supported && preferences?.dataset.motion === "full" && !media.matches);
@@ -182,6 +185,7 @@ export function HeroCarousel() {
       if (Number.isFinite(shown)) current.angle = shown;
       current.moved = true;
       ignoreClick.current = true;
+      event.currentTarget.setAttribute("data-dragging", "");
       event.currentTarget.setPointerCapture(event.pointerId);
     }
     setRotation({ angle: current.angle - dx / current.distance * step, instant: true });
@@ -192,6 +196,7 @@ export function HeroCarousel() {
     if (!current || current.pointer !== event.pointerId) return;
     drag.current = null;
     if (!current.moved) return;
+    event.currentTarget.removeAttribute("data-dragging");
     const dx = current.x - event.clientX;
     const from = Math.round(current.angle / step);
     const nearest = Math.round(current.angle / step + dx / current.distance);
@@ -203,8 +208,8 @@ export function HeroCarousel() {
   return (
     <nav className={styles.carousel} aria-label="Explore The T-House" data-enhanced={enhanced}>
       <div className={styles.stage}>
-        <ul className={styles.rail} ref={rail} data-carousel-rail data-hero-orbit={orbit || undefined}
-          data-instant={rotation.instant || undefined} style={{ "--t-house-orbit-angle": `${rotation.angle}deg` } as CSSProperties}
+        <WarpCarousel className={styles.rail} data-carousel-rail aria-busy={busy || undefined}
+          navigation={{ railRef: rail, enabled: orbit, position: rotation.angle / step, motion: !rotation.instant }}
           onKeyDown={browseWithKeys} onPointerDown={beginDrag} onPointerMove={moveDrag} onPointerUp={endDrag}
           onPointerCancel={endDrag}
           onLostPointerCapture={(event) => { if (event.target === event.currentTarget) endDrag(event); }}
@@ -216,9 +221,7 @@ export function HeroCarousel() {
             }
           }}>
           {destinations.map((card, index) => (
-            <li key={card.id} className={styles.slide} data-carousel-slide data-active={index === active}
-              data-rear={orbit && wrap(index - active) === destinations.length / 2 ? true : undefined}
-              style={{ "--card-angle": `${index * step}deg` } as CSSProperties}>
+            <li key={card.id} className={styles.slide} data-carousel-slide data-active={index === active}>
               <Link
                 href={card.href}
                 className={styles.card}
@@ -243,29 +246,34 @@ export function HeroCarousel() {
               >
                 <span className={styles.art} aria-hidden="true">
                   {"image" in card ? (
-                    <Image src={card.image} alt="" fill draggable={false} sizes="(min-width: 768px) 192px, (min-width: 400px) 184px, 46vw" unoptimized={card.id === "watch"} />
+                    <Image
+                      src={card.image}
+                      alt=""
+                      fill
+                      draggable={false}
+                      sizes="(min-width: 576px) and (hover: hover) and (pointer: fine) min(683px, calc(100vw - 40px)), (min-width: 768px) 192px, (min-width: 400px) 184px, 46vw"
+                      unoptimized={card.id === "watch"}
+                    />
                   ) : <HouseOutline />}
-                <span className={styles.glint} data-card-glint />
                 </span>
                 <span>
                   {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}
                   <span className={styles.label}>{card.label}</span>
                 </span>
-                <span className={styles.arrow} aria-hidden="true">↗</span>
               </Link>
             </li>
           ))}
-        </ul>
+        </WarpCarousel>
       </div>
       <div className={styles.controls}>
         <button className={styles.control} type="button" aria-label="Previous destination"
           aria-disabled={busy || (!orbit && active === 0)} onClick={() => browse(active - 1, true)}>
-          <span aria-hidden="true">←</span>
+          <GraffitiArrow direction="left" />
         </button>
         <span className={styles.position} aria-hidden="true">{active + 1} / {destinations.length}</span>
         <button className={styles.control} type="button" aria-label="Next destination"
           aria-disabled={busy || (!orbit && active === destinations.length - 1)} onClick={() => browse(active + 1, true)}>
-          <span aria-hidden="true">→</span>
+          <GraffitiArrow direction="right" />
         </button>
       </div>
       <span className="sr-only" role="status">{enhanced ? `${destinations[active].label}, ${active + 1} of ${destinations.length}` : ""}</span>

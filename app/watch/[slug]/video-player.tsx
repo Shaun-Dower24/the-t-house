@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useEnhancedControls } from "./use-enhanced-controls";
+import { useEnhancedControls } from "@/lib/use-enhanced-controls";
 
 type Props = {
   title: string;

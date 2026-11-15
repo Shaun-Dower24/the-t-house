@@ -1,0 +1,18 @@
+.link {
+  position: relative;
+  display: inline-block;
+  max-inline-size: 100%;
+}
+
+.underline {
+  position: absolute;
+  inset-block-start: calc(100% - 0.16em);
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 0.55em;
+  color: var(--signature-red, #e55050);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.underline[data-initial] { visibility: visible; }

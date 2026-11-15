@@ -2,31 +2,35 @@
 
 ## Visual direction
 
-The supplied studio mark governs the visual identity. Its white rooflines and overlapping elevations inform the large homepage drawing and thin frames. Red script titles carry the signature into destination pages. Walnut shadows keep the simple linework prominent and provide depth behind the copper carousel.
+The supplied studio mark governs the visual identity. Its white rooflines and overlapping elevations inform the large homepage drawing and thin frames. Red brush-script titles carry the signature’s energy into destination pages. Neutral charcoal keeps the linework prominent and provides depth behind the carousel.
 
 The reference uses thin illuminated edges and panels that gain or recede in depth as a user explores. Use that principle to give an active surface weight, with the current action always apparent in the text and focus treatment. [Recorded reference](https://www.landing.love/sites/fabiantjoeaon/)
 
-The hero adapts Warp Carousel’s rotating ring to the white and red accents of the logo. The T-House cards are HTML links whose artwork and labels move together through the shared 3D scene. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
+The hero uses Warp Carousel’s fitted camera, card path and spin timing with the white and red accents of the logo. The T-House cards are HTML links whose artwork and labels move together through the shared 3D scene. [Warp Carousel by Louis Studios](https://21st.dev/@louisstudios/components/warp-carousel)
 
-The hero cards use the Engraved Copper finish. Fine brushed lines sit over warm artwork and the house motif reads as etched copper. A single glint crosses the front card as it comes into focus. The brushed finish continues across both faces during the page transition. [Grain Light Card](https://21st.dev/@fransederr/components/grain-light-card)
+The hero cards show artwork in colour on matte charcoal. The Watch card reframes the episode thumbnail around the person and reduces its bright backdrop. The reverse face carries the same colour and framing through the flip. A dark fade behind the labels keeps the text legible.
+
+The carousel uses white, hand-drawn arrows based on the logo lettering. A rough red underline with spray speckles draws in beneath an arrow on hover or keyboard focus.
+
+On desktop, a hovered portrait card expands into a 16:9 artwork frame. Its height stays steady, and a side card levels out and stays within the carousel. Watch opens its landscape thumbnail within the frame. Selecting the preview begins the existing flip and zoom. [Expanding Cards on 21st.dev](https://21st.dev/@vaib215/components/expanding-cards)
 
 ## Colour and type
 
-- Use `#120E0B` for the canvas, walnut `#221911` for surfaces and charcoal `#2D241D` for background depth. Sign white `#E1E8EB` defines architectural strokes, frames and focus. Concentrate the warmer copper on the carousel.
-- Use signature red `#BC3728` for decorative details and brighter `#F46A57` for short display titles and selected details. Check contrast against actual backgrounds and use an outline, underline or label to show interaction state.
-- Use Explora for short display titles and Barlow for long episode titles, navigation, labels, controls and body. Barlow metadata uses uppercase letters and wider spacing. The original 150 × 150 JPEG supplies the signature used as the mark. Explora takes its direction from that lettering. [Explora](https://fontsource.org/fonts/explora) · [Barlow](https://fontsource.org/fonts/barlow)
+- Use `#0B0B0B` for the canvas, `#171717` for surfaces and `#232323` for depth. Sign white `#F5F5F5` defines architectural strokes, frames and focus.
+- Use `#C83838` for short display titles, the signature and the carousel’s spray underline. The colour comes from pixel (116, 115) in the red lettering of the original JPEG, measured from its top-left corner. Its green and blue channels are equal. Use white for small text, current-page underlines and visible focus outlines.
+- Use Hurricane for short display titles and Barlow for long episode titles, navigation, labels, controls and body. Hurricane was closest among the rendered specimens in the long T crossbar, slanted H and compact joined lowercase. The underlying typeface of the original 150 × 150 JPEG signature remains unverified. [Hurricane](https://fonts.google.com/specimen/Hurricane) · [Official release](https://www.youtube.com/watch?v=9adqs1vgcMA) · [Barlow](https://fontsource.org/fonts/barlow)
 - Keep links and controls readable over artwork, dimmed gradients or in reduced-motion mode. Reserve media dimensions. Give pointer hover and keyboard focus comparable emphasis.
 
 ## Shared surfaces
 
 | Surface | Design behaviour |
 | --- | --- |
-| Header, menu and footer | The original compact mark, white navigation labels, fine dividers and a red script footer heading. |
-| Opening | A large white house elevation behind the 3D carousel. Four upright 1:2 cards keep their copper surfaces. The active card comes forward, with a pale rim and red mark. Reduced motion and no JavaScript use the scroll-snap rail. |
-| Watch and episode | Red script identifies the Watch library. The official art and privacy-enhanced player sit in white projection frames. Full episode titles use Barlow. |
-| Studio and profile | Script titles, pale elevation detail, a ruled image caption and one outlined profile panel. |
-| Connect | A red script title leads into outlined panels for the official channels. |
+| Header, menu and footer | The white house and red handwriting from the supplied mark, white navigation labels and fine dividers. The compact footer groups the logo with site navigation and social links. |
+| Opening | A large white house elevation behind the 3D carousel. Four upright 1:2 cards use artwork in colour on matte charcoal. The active card comes forward with a muted border. Reduced motion and no JavaScript use the scroll-snap rail. |
+| Watch and episode | Red script identifies the Watch library. Grayscale video posters and the full-colour privacy-enhanced player sit in white projection frames. Full episode titles use Barlow. |
+| Studio and profile | Script titles, pale elevation detail and one outlined profile panel. The home preview uses image-filled rails with a horizontal caption on the expanded image. The studio exhibit pairs the same concept images with a ruled caption and separate vertical label rails. Both use stacked disclosure rows in narrow layouts. |
+| Connect | Thin side rules frame the layout on wide screens. A red script title and overlapping monochrome concept artwork sit above the link grid, with a muted dot texture beside its heading. A static red waveform marks the episode frame. The message draft spans the full grid in a single frame with corner marks. Write and Preview share one panel when space is limited and sit side by side when it is wide enough. |
 
 ## Artwork and rights
 
-The studio mark displays the supplied 150 × 150 px JPEG with a soft edge mask that blends it into dark surfaces. The white drawing and red handwriting come directly from the image. Use it at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview.
+The studio mark uses the supplied 150 × 150 px JPEG as its source. The displayed mark isolates the white drawing and red handwriting over a transparent background. Use it at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview.

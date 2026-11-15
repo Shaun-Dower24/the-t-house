@@ -1,0 +1,31 @@
+.positioner {
+  z-index: 10;
+  max-inline-size: min(18rem, calc(100vw - 2rem));
+}
+
+.toast {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.arrow {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  transform: rotate(45deg);
+  background: var(--popover);
+}
+
+.arrow[data-side="top"] { bottom: -0.25rem; }
+.arrow[data-side="bottom"] { top: -0.25rem; }
+.arrow[data-side="left"] { right: -0.25rem; }
+.arrow[data-side="right"] { left: -0.25rem; }
+
+.close {
+  margin-inline-start: 0.5rem;
+  cursor: pointer;
+}

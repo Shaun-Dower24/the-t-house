@@ -1,12 +1,12 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { HouseOutline } from "./house-outline";
 import styles from "./card-route-transition.module.css";
 
-type Card = { href: string; label: string; image?: string; tone: string };
+type Card = { href: string; label: string; image?: string };
 type Phase = "flip" | "zoom" | "navigate" | "reveal";
 type Gsap = typeof import("gsap").gsap;
 type OrbitPose = {
@@ -22,7 +22,8 @@ type Visual = {
   card: Card;
   bounds: DOMRect;
   orbit?: OrbitPose;
-  frontImage?: string;
+  artwork?: CSSProperties;
+  videoStill?: { src: string; objectFit: string };
 };
 type Motion = {
   visual: Visual;
@@ -66,7 +67,38 @@ function readOrbitPose(source: HTMLAnchorElement): OrbitPose | undefined {
   };
 }
 
-function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement) {
+function captureVideoFrame(video: HTMLVideoElement) {
+  if (!video.currentSrc || video.readyState < video.HAVE_CURRENT_DATA || !video.videoWidth || !video.videoHeight) return;
+
+  try {
+    if (new URL(video.currentSrc).origin !== window.location.origin) return;
+    const canvas = document.createElement("canvas");
+    const scale = Math.min(1, 1280 / Math.max(video.videoWidth, video.videoHeight));
+    canvas.width = Math.max(1, Math.round(video.videoWidth * scale));
+    canvas.height = Math.max(1, Math.round(video.videoHeight * scale));
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL("image/jpeg", 0.92);
+  } catch {
+    // The poster covers browsers that cannot copy the current video frame.
+    return;
+  }
+}
+
+function cloneWithoutVideo(node: Node, video: HTMLVideoElement | null): Node | null {
+  if (node === video) return null;
+  if (!video || !node.contains(video)) return node.cloneNode(true);
+
+  const wrapper = node.cloneNode(false);
+  for (const child of node.childNodes) {
+    const copy = cloneWithoutVideo(child, video);
+    if (copy) wrapper.appendChild(copy);
+  }
+  return wrapper;
+}
+
+function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement, visual: Visual) {
   const originalSlide = source.parentElement;
   if (!originalSlide) return;
 
@@ -80,17 +112,32 @@ function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement) {
   front.style.transform = "none";
   front.style.transition = "none";
 
-  for (const child of source.childNodes) front.append(child.cloneNode(true));
-  const sourceGlint = source.querySelector<HTMLElement>("[data-card-glint]");
-  const glint = front.querySelector<HTMLElement>("[data-card-glint]");
-  if (sourceGlint && glint) glint.style.transform = getComputedStyle(sourceGlint).transform;
-
+  const video = source.querySelector<HTMLVideoElement>("video[data-hero-video]");
+  for (const child of source.childNodes) {
+    const copy = cloneWithoutVideo(child, video);
+    if (copy) front.append(copy);
+  }
   const image = front.querySelector("img");
-  const sourceImage = source.querySelector("img");
-  if (image && sourceImage?.currentSrc) {
+  const sourceUrl = visual.videoStill?.src || source.querySelector("img")?.currentSrc;
+  if (image && sourceUrl) {
     image.removeAttribute("srcset");
     image.removeAttribute("sizes");
-    image.src = sourceImage.currentSrc;
+    image.src = sourceUrl;
+  }
+  if (image && visual.artwork) {
+    Object.assign(image.style, {
+      objectPosition: visual.artwork.backgroundPosition,
+      filter: visual.artwork.filter,
+      transform: visual.artwork.transform,
+      transformOrigin: visual.artwork.transformOrigin,
+    });
+  }
+  if (image && visual.videoStill) {
+    image.hidden = false;
+    image.style.display = "block";
+    image.style.opacity = "1";
+    image.style.visibility = "visible";
+    image.style.objectFit = visual.videoStill.objectFit;
   }
 
   slide.append(front);
@@ -184,10 +231,25 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
       || bounds.left >= viewport.clientWidth || bounds.top >= viewport.clientHeight) return false;
 
     const image = source.querySelector("img");
+    const video = source.querySelector<HTMLVideoElement>("video[data-hero-video]");
+    const videoStyle = video && getComputedStyle(video);
+    const stillUrl = video && videoStyle
+      && videoStyle.display !== "none" && videoStyle.visibility === "visible" && Number(videoStyle.opacity) > 0
+      ? captureVideoFrame(video) || video.poster
+      : undefined;
+    const imageUrl = stillUrl || image?.currentSrc || image?.src || card.image;
+    const artStyle = stillUrl ? videoStyle : image && getComputedStyle(image);
     const nextVisual = {
       card, bounds,
       orbit: readOrbitPose(source),
-      frontImage: image?.currentSrc || image?.src || card.image,
+      videoStill: stillUrl && videoStyle ? { src: stillUrl, objectFit: videoStyle.objectFit } : undefined,
+      artwork: imageUrl ? {
+        backgroundImage: `url("${imageUrl}")`,
+        backgroundPosition: artStyle?.objectPosition,
+        filter: artStyle?.filter,
+        transform: artStyle?.transform,
+        transformOrigin: artStyle?.transformOrigin,
+      } : undefined,
     };
     active.current = { visual: nextVisual, source, preferences, pathname, phase: "flip", originalOpacity: source.style.opacity };
     setSlow(null);
@@ -225,7 +287,7 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
     const zoom = lift + 0.3;
 
     try {
-      copyFrontFace(current.source, front);
+      copyFrontFace(current.source, front, visual);
       current.source.style.opacity = "0";
       const fitTitle = gsap.quickSetter(title, "scale");
 
@@ -365,8 +427,8 @@ export function CardRouteTransitionProvider({ children }: { children: ReactNode 
               <div className={styles.panel} data-card-route-panel>
                 <div className={styles.rotator} data-card-route-rotator>
                   <div className={styles.front} data-card-route-front />
-                  <div className={styles.back} style={{ backgroundColor: visual.card.tone }}>
-                    {visual.frontImage ? <div className={styles.image} style={{ backgroundImage: `url("${visual.frontImage}")` }} /> : <HouseOutline />}
+                  <div className={styles.back}>
+                    {visual.artwork ? <div className={styles.image} style={visual.artwork} /> : <HouseOutline />}
                     <span data-card-route-title>{visual.card.label}</span>
                   </div>
                 </div>

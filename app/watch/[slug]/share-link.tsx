@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useEnhancedControls } from "./use-enhanced-controls";
+import { useEnhancedControls } from "@/lib/use-enhanced-controls";
 
 export function ShareLink({ canonicalUrl }: { canonicalUrl?: string }) {
   const [copied, setCopied] = useState(false);

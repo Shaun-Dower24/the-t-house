@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import InteractiveImageAccordion from "@/components/ui/interactive-image-accordion";
 import { HouseElevation } from "../components/house-elevation";
 import { HeroCarousel } from "../components/hero-carousel";
 import { routeMetadata } from "../content/site";
@@ -23,14 +24,9 @@ export default function HomePage() {
         <div className="page-grid arrival-grid">
           <div className="arrival-copy">
             <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
-            <p className="meta location"><span aria-hidden="true" />{studio.location}</p>
-            <p className="intro">A creative music studio in East London.</p>
           </div>
         </div>
         <div className="arrival-carousel"><HeroCarousel /></div>
-        <div className="page-grid arrival-foot">
-          <a className="meta scroll-link" href="#watch"><span aria-hidden="true">↓</span> Featured video</a>
-        </div>
       </section>
 
       <section id="watch" className="watch section-space" aria-labelledby="watch-heading" tabIndex={-1}>
@@ -62,16 +58,12 @@ export default function HomePage() {
         <div className="page-grid home-studio">
           <div className="home-studio-copy">
             <h2 id="inside-heading" className="script-title section-title">Inside the house</h2>
-            <p>The T-House is a creative music studio in Leyton, East London, associated with producer SV on the Beat.</p>
+            <p>The T-House is a creative music studio in {studio.location}, associated with producer SV on the Beat.</p>
             <Link className="text-action" href="/inside-the-house">Step inside <span aria-hidden="true">↗</span></Link>
           </div>
           <figure className="home-studio-image">
-            <div className="studio-frame">
-              <div className="studio-art" data-studio-art>
-                <Image src="/images/threshold-detail.webp" alt="" fill sizes="(min-width: 82rem) 52rem, (min-width: 48rem) 60vw, 94vw" />
-              </div>
-            </div>
-            <figcaption className="meta">Entrance concept artwork</figcaption>
+            <InteractiveImageAccordion />
+            <figcaption className="meta">Studio concept artwork</figcaption>
           </figure>
         </div>
       </section>

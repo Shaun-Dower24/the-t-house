@@ -1,0 +1,34 @@
+.root {
+  position: relative;
+  display: block;
+  text-align: var(--stroke-draw-align, center);
+}
+
+.baseline {
+  display: inline-block;
+  inline-size: 0;
+  block-size: 0;
+  vertical-align: baseline;
+}
+
+.graphic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.root[data-stroke-active] .label { opacity: 0; }
+.root[data-stroke-active] .graphic { visibility: visible; }
+
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .root[data-stroke-active] .label { opacity: 1; }
+  .root[data-stroke-active] .graphic { visibility: hidden; }
+}
+
+:global([data-motion="reduced"]) .root[data-stroke-active] .label { opacity: 1; }
+:global([data-motion="reduced"]) .root[data-stroke-active] .graphic { visibility: hidden; }

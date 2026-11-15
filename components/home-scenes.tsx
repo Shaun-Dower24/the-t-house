@@ -72,21 +72,14 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
         gsap.registerPlugin(ScrollTrigger);
         const media = gsap.matchMedia(scope);
 
-        media.add({ desktop: "(min-width: 48rem)", all: "(min-width: 0px)" }, ({ conditions }) => {
-          gsap.to("[data-scroll-progress]", {
-            scaleX: 1,
-            ease: "none",
-            scrollTrigger: { trigger: scope, start: "top top", end: "bottom bottom", scrub: true },
-          });
-
-          if (!conditions?.desktop) return;
+        media.add("(min-width: 48rem)", () => {
           const entrance = { trigger: "#arrival", start: "top top", end: "bottom 42%", scrub: true };
 
           gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: entrance })
             .to("[data-house-art] [data-house-detail]", { opacity: 0, stagger: 0.03 }, 0)
             .to("[data-house-art]", { yPercent: 8, scale: 0.94, opacity: 0.24 }, 0);
 
-          gsap.fromTo("[data-studio-art]", { yPercent: -5 }, {
+          gsap.fromTo("#inside [data-slot='gallery-image']", { yPercent: -5 }, {
             yPercent: 5,
             ease: "none",
             scrollTrigger: { trigger: "#inside", start: "top bottom", end: "bottom top", scrub: true },
@@ -114,7 +107,6 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
 
   return (
     <div ref={root} className="prototype" data-motion={reduced === undefined ? undefined : reduced ? "reduced" : "full"}>
-      {pathname === "/" && <div className="scroll-progress" aria-hidden="true" data-scroll-progress />}
       <CardRouteTransitionProvider>
         <SiteHeader reduceMotion={reduced === true} toggleMotion={toggleMotion} systemReduced={systemReduced} />
         <main id="main-content" tabIndex={-1}>{children}</main>

@@ -1,11 +1,6 @@
-@property --t-house-orbit-angle {
-  syntax: "<angle>";
-  inherits: true;
-  initial-value: 0deg;
-}
-
 .carousel {
-  --card-width: clamp(9rem, min(17vw, 20svh), 12rem);
+  --portrait-width: clamp(9rem, min(17vw, 20svh), 12rem);
+  --card-width: var(--portrait-width);
   --card-gap: clamp(0.75rem, 2vw, 1.75rem);
   position: relative;
   z-index: 1;
@@ -16,15 +11,6 @@
 .stage {
   position: relative;
   overflow: clip;
-}
-
-.stage:has([data-hero-orbit])::before {
-  position: absolute;
-  inset: auto 8% 3% 8%;
-  height: 27%;
-  background: radial-gradient(ellipse, color-mix(in srgb, var(--sign-white) 11%, transparent), transparent 68%);
-  content: "";
-  pointer-events: none;
 }
 
 .rail {
@@ -48,8 +34,6 @@
 }
 
 .rail[data-hero-orbit] {
-  --orbit-radius: calc(var(--card-width) * 1.5);
-  --orbit-perspective: 54rem;
   position: relative;
   display: grid;
   place-items: center;
@@ -59,11 +43,6 @@
   scroll-snap-type: none;
   touch-action: pan-y pinch-zoom;
   user-select: none;
-  transition: --t-house-orbit-angle 700ms cubic-bezier(0.2, 0.82, 0.24, 1);
-}
-
-.rail[data-instant] {
-  transition: none;
 }
 
 .slide {
@@ -73,16 +52,15 @@
 }
 
 .rail[data-hero-orbit] .slide {
-  --orbit-position: calc(var(--card-angle) - var(--t-house-orbit-angle));
-  --orbit-depth: cos(var(--orbit-position));
   grid-area: 1 / 1;
   width: var(--card-width);
-  z-index: calc(1001 + 1000 * var(--orbit-depth));
-  transform: perspective(var(--orbit-perspective)) translate3d(
-    calc(sin(var(--orbit-position)) * var(--orbit-radius)),
+  z-index: var(--warp-layer, 0);
+  opacity: var(--warp-opacity, 1);
+  transform: perspective(calc(var(--card-width) * var(--warp-focal, 2.87))) translate3d(
+    calc(var(--card-width) * var(--warp-x, 0)),
     0,
-    calc((var(--orbit-depth) - 1) * var(--orbit-radius))
-  ) rotateY(calc(sin(var(--orbit-position)) * 37deg));
+    calc(var(--card-width) * var(--warp-depth, 0))
+  ) rotateY(var(--warp-yaw, 0rad));
 }
 
 .rail[data-hero-orbit] .slide[data-rear] {
@@ -99,29 +77,16 @@
   height: 100%;
   aspect-ratio: 1 / 2;
   padding: clamp(0.8rem, 2vw, 1.15rem);
-  border: 1px solid color-mix(in srgb, var(--sign-white) 47%, transparent);
-  background: #40211a;
+  border: 1px solid color-mix(in srgb, var(--sign-white) 32%, transparent);
+  background: var(--surface);
   color: var(--sign-white);
   text-decoration: none;
-  box-shadow: inset 0 1px 0 rgb(225 232 235 / 32%), inset 0 0 0 2px rgb(255 165 103 / 12%),
-    0 1rem 1.5rem rgb(10 5 3 / 42%);
-  transition: border-color 250ms ease-out, box-shadow 250ms ease-out;
+  box-shadow: 0 1rem 1.5rem rgb(0 0 0 / 42%);
+  transition: border-color 250ms ease-out;
 }
 
 .slide[data-active="true"] .card {
-  border-color: var(--sign-white);
-  box-shadow: inset 0 0 0 2px rgb(225 232 235 / 32%), 0 0 0.62rem rgb(225 232 235 / 28%),
-    0 0 1.65rem rgb(225 232 235 / 13%), 0 1rem 1.5rem rgb(10 5 3 / 52%);
-}
-
-.slide[data-active="true"] .card::before {
-  position: absolute;
-  inset: 0.68rem auto auto 0.68rem;
-  width: 1rem;
-  height: 2px;
-  background: var(--display-red);
-  content: "";
-  pointer-events: none;
+  border-color: color-mix(in srgb, var(--sign-white) 68%, var(--surface));
 }
 
 .card:focus-visible {
@@ -129,7 +94,6 @@
   outline: 2px solid var(--sign-white);
   outline-offset: 4px;
   border-color: var(--sign-white);
-  box-shadow: 0 0 1rem rgb(225 232 235 / 27%);
 }
 
 .art,
@@ -143,11 +107,7 @@
   z-index: -2;
   display: block;
   overflow: hidden;
-  background-color: #40211a;
-  background-image: radial-gradient(ellipse at 62% 36%, #704024, transparent 65%),
-    linear-gradient(135deg, #4a2a1d, #23140e 76%);
-  background-size: cover;
-  background-position: center;
+  background: var(--surface);
 }
 
 .art img {
@@ -155,11 +115,13 @@
   height: 100%;
   object-fit: cover;
   object-position: center 55%;
-  filter: sepia(0.68) brightness(0.84) saturate(0.8);
 }
 
 .card[data-destination="watch"] .art img {
-  object-position: 72% 55%;
+  object-position: 65.8% 55%;
+  transform: scale(2.35);
+  transform-origin: center bottom;
+  filter: contrast(0.82) brightness(0.62);
 }
 
 .art svg {
@@ -174,16 +136,6 @@
 .art :global(.house-door),
 .art :global(.house-datum) { stroke: currentColor; }
 
-.card[data-destination="about"] .art {
-  background-image: radial-gradient(ellipse at 62% 38%, #754628, transparent 63%),
-    linear-gradient(115deg, #2b1a13 7%, #4a2c20);
-}
-
-.card[data-destination="connect"] .art {
-  background-image: radial-gradient(ellipse at 67% 44%, #694026, transparent 68%),
-    linear-gradient(115deg, #26170f 7%, #41261a);
-}
-
 .card[data-destination="connect"] .art svg {
   inset: -11% auto auto -14%;
   width: 128%;
@@ -194,31 +146,7 @@
 .card::after {
   z-index: -1;
   content: "";
-  background: repeating-linear-gradient(92deg, rgb(255 217 179 / 7%) 0 1px, rgb(35 17 9 / 7%) 1px 4px),
-    linear-gradient(0deg, rgb(18 10 7 / 98%), rgb(30 14 8 / 72%) 22%, rgb(46 24 12 / 27%) 62%, rgb(149 83 47 / 24%));
-}
-
-.slide[data-active="true"] .card::after,
-.card:focus-visible::after {
-  background: repeating-linear-gradient(92deg, rgb(255 217 179 / 8%) 0 1px, rgb(35 17 9 / 7%) 1px 4px),
-    linear-gradient(0deg, rgb(18 10 7 / 99%), rgb(30 14 8 / 74%) 23%, rgb(46 24 12 / 13%) 63%, rgb(149 83 47 / 20%));
-}
-
-.glint {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(121deg, transparent 32%, rgb(255 219 170 / 39%) 50%, transparent 68%);
-  transform: translateX(-116%);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .rail[data-hero-orbit] .slide[data-active="true"] .glint {
-    animation: copper-glint 1.2s ease-out both;
-  }
-}
-
-@keyframes copper-glint {
-  to { transform: translateX(116%); }
+  background: linear-gradient(0deg, rgb(0 0 0 / 95%), rgb(0 0 0 / 72%) 22%, transparent 58%);
 }
 
 .label {
@@ -228,7 +156,7 @@
   line-height: 1.08;
   overflow-wrap: anywhere;
   text-wrap: balance;
-  text-shadow: 0 1px 0 #0c0908, 0 0 0.7rem #0c0908;
+  text-shadow: 0 1px 0 var(--canvas), 0 0 0.7rem var(--canvas);
 }
 
 .caption {
@@ -240,20 +168,6 @@
   font: 600 0.65rem/1.15 var(--font-sans);
   letter-spacing: 0.075em;
   text-transform: uppercase;
-}
-
-.arrow {
-  position: absolute;
-  inset: 0.65rem 0.65rem auto auto;
-  display: grid;
-  place-items: center;
-  width: 1.8rem;
-  height: 1.8rem;
-  border: 1px solid color-mix(in srgb, var(--sign-white) 46%, transparent);
-  background: var(--surface);
-  color: var(--sign-white);
-  font-size: 0.95rem;
-  line-height: 1;
 }
 
 .controls {
@@ -271,16 +185,13 @@
 .control {
   display: inline-grid;
   place-items: center;
-  min-inline-size: 2.75rem;
+  min-inline-size: 3.125rem;
   min-block-size: 2.75rem;
-  padding: 0.3rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--sign-white) 46%, transparent);
-  background: var(--surface);
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--sign-white);
-  font-size: 1.1rem;
-  line-height: 1;
   cursor: pointer;
-  transition: background-color 180ms ease-out, border-color 180ms ease-out;
 }
 
 .control:focus-visible {
@@ -288,56 +199,106 @@
   outline-offset: 4px;
 }
 
+.control:not(:disabled, [aria-disabled="true"]):focus-visible {
+  --graffiti-spray-remaining: 0%;
+}
+
 .control:disabled,
 .control[aria-disabled="true"] {
-  color: var(--muted);
-  border-color: var(--line);
+  color: var(--muted-text);
   cursor: default;
 }
 
 .position {
   min-inline-size: 5.4rem;
-  padding: 0.46rem 0.7rem;
-  color: var(--sign-white);
-  font: 600 0.78rem/1.2 var(--font-sans);
-  font-variant-numeric: tabular-nums;
+  padding: 0.125rem 0.7rem;
+  color: var(--signature-red);
+  font: 400 1.875rem/1 var(--font-script);
   text-align: center;
 }
 
 @media (hover: hover) {
-  .control:not(:disabled, [aria-disabled="true"]):hover,
-  .card:hover .arrow {
-    border-color: var(--sign-white);
-    background-color: var(--walnut-charcoal);
+  .control:not(:disabled, [aria-disabled="true"]):hover {
+    --graffiti-spray-remaining: 0%;
   }
 
   .card:hover { border-color: var(--sign-white); }
 }
 
+@media (min-width: 36rem) and (hover: hover) and (pointer: fine) {
+  .carousel {
+    --card-width: min(var(--portrait-width), calc((100vw - 2.5rem) * 9 / 32));
+  }
+
+  .rail[data-hero-orbit] {
+    --preview-width: calc(var(--card-width) * 32 / 9);
+    --preview-travel: max(0px, calc((100vw - var(--preview-width)) / 2 - 1.25rem));
+    --preview-motion: 300ms cubic-bezier(0.2, 0.72, 0.25, 1);
+  }
+
+  .rail[data-hero-orbit] .slide {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    height: calc(var(--card-width) * 2);
+  }
+
+  .rail[data-hero-orbit] .card {
+    width: var(--card-width);
+  }
+
+  .rail[data-hero-orbit]:not([data-warp-moving], [data-dragging], [aria-busy="true"]) {
+    & .slide {
+      transition: transform var(--preview-motion);
+    }
+
+    & .card {
+      transition: width var(--preview-motion), border-color 250ms ease-out;
+    }
+
+    & .card[data-destination="watch"] .art img {
+      transition: transform var(--preview-motion), object-position var(--preview-motion);
+    }
+
+    & .slide:not([data-rear]):hover {
+      z-index: 3000;
+      transform: perspective(calc(var(--card-width) * var(--warp-focal, 2.87))) translate3d(
+        clamp(calc(-1 * var(--preview-travel)), calc(var(--card-width) * var(--warp-preview-x, 0)), var(--preview-travel)),
+        0,
+        0
+      ) rotateY(0rad);
+    }
+
+    & .slide:not([data-rear]):hover .card {
+      width: var(--preview-width);
+    }
+
+    & .slide:not([data-rear]):hover .card[data-destination="watch"] .art img {
+      object-position: center;
+      transform: none;
+    }
+  }
+}
+
 @media (max-width: 47.999rem) {
   .carousel {
-    --card-width: clamp(6.5rem, min(46vw, calc(27svh - 3rem)), 11.5rem);
+    --portrait-width: clamp(6.5rem, min(46vw, calc(27svh - 3rem)), 11.5rem);
     --card-gap: 0.65rem;
   }
 
   .rail { padding-block: 0.65rem 0.95rem; }
-
-  .rail[data-hero-orbit] { --orbit-radius: calc(var(--card-width) * 1.12); --orbit-perspective: 36rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .control { transition: none; }
+  .card { transition: none; }
 }
 
-:global([data-motion="reduced"]) .card,
-:global([data-motion="reduced"]) .control { transition: none; }
+:global([data-motion="reduced"]) .card { transition: none; }
 
 @media (forced-colors: active) {
   .slide[data-active="true"] .card,
   .control:focus-visible,
   .card:focus-visible { outline: 2px solid Highlight; }
 
-  .card,
-  .control { border-color: ButtonText; }
+  .card { border-color: ButtonText; }
 }

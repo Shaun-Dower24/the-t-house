@@ -3,15 +3,15 @@
   --watch-raised: var(--surface);
   --watch-border: var(--line);
   --watch-frame: color-mix(in srgb, var(--sign-white) 64%, transparent);
-  --watch-quiet: var(--muted, #c6b7aa);
-  --watch-paper: var(--paper, #f4ede4);
+  --watch-quiet: var(--muted-text);
+  --watch-paper: var(--paper);
   position: relative;
   isolation: isolate;
   min-height: 60svh;
   padding-block: clamp(2.75rem, 6vw, 6rem);
   color: var(--watch-paper);
   background:
-    radial-gradient(ellipse at 74% 16%, var(--walnut-charcoal), transparent 66%),
+    radial-gradient(ellipse at 74% 16%, var(--charcoal), transparent 66%),
     var(--watch-offblack);
 }
 
@@ -61,7 +61,7 @@
   display: block;
   border: 1px solid var(--watch-frame);
   background-color: var(--watch-raised);
-  box-shadow: 0 0 1.4rem rgb(225 232 235 / 7%), 0 1.1rem 2.8rem rgb(0 0 0 / 36%);
+  box-shadow: 0 0 1.4rem rgb(255 255 255 / 7%), 0 1.1rem 2.8rem rgb(0 0 0 / 36%);
 }
 
 .watch-card-link::before,
@@ -87,7 +87,7 @@
 .watch-card-link:hover,
 .watch-card-link:focus-visible {
   border-color: var(--sign-white);
-  box-shadow: 0 0 2rem rgb(225 232 235 / 19%), 0 1.1rem 2.8rem rgb(0 0 0 / 36%);
+  box-shadow: 0 0 2rem rgb(255 255 255 / 19%), 0 1.1rem 2.8rem rgb(0 0 0 / 36%);
 }
 
 .watch-poster {
@@ -97,19 +97,20 @@
   place-items: center;
   overflow: clip;
   aspect-ratio: 16 / 9;
-  background: radial-gradient(ellipse at 50% 45%, var(--walnut-charcoal), var(--canvas) 70%);
+  background: radial-gradient(ellipse at 50% 45%, var(--charcoal), var(--canvas) 70%);
 }
 
 .watch-poster::after {
   position: absolute;
   z-index: -1;
   inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgb(17 13 9 / 60%));
+  background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 60%));
   content: "";
 }
 
 .watch-poster img {
   z-index: -2;
+  filter: grayscale(1);
   object-fit: cover;
   transition: transform 320ms ease;
 }
@@ -127,7 +128,7 @@
   border: 1px solid var(--watch-frame);
   border-radius: 50%;
   background: var(--canvas);
-  box-shadow: 0 0 1.1rem rgb(225 232 235 / 17%);
+  box-shadow: 0 0 1.1rem rgb(255 255 255 / 17%);
   color: var(--sign-white);
 }
 
@@ -310,7 +311,7 @@
   min-height: 44px;
   padding: 0.45rem 0.65rem;
   border: 1px solid var(--watch-border);
-  background: var(--walnut-charcoal);
+  background: var(--charcoal);
   color: var(--watch-paper);
   cursor: pointer;
 }

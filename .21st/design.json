@@ -24,14 +24,13 @@
   "design": {
     "colorMode": "dark",
     "colors": {
-      "--canvas": { "value": "#120e0b", "source": "app/globals.css" },
-      "--surface": { "value": "#221911", "source": "app/globals.css" },
-      "--walnut-charcoal": { "value": "#2d241d", "source": "app/globals.css" },
-      "--sign-white": { "value": "#e1e8eb", "source": "app/globals.css" },
-      "--signature-red": { "value": "#bc3728", "source": "app/globals.css" },
-      "--display-red": { "value": "#f46a57", "source": "app/globals.css" },
-      "--muted": {
-        "value": "#c4b8ad",
+      "--canvas": { "value": "#0b0b0b", "source": "app/globals.css" },
+      "--surface": { "value": "#171717", "source": "app/globals.css" },
+      "--charcoal": { "value": "#232323", "source": "app/globals.css" },
+      "--sign-white": { "value": "#f5f5f5", "source": "app/globals.css" },
+      "--signature-red": { "value": "#c83838", "source": "app/globals.css" },
+      "--muted-text": {
+        "value": "#bcbcbc",
         "source": "app/globals.css"
       }
     },
@@ -40,7 +39,7 @@
         "value": "\"Barlow\", Arial, sans-serif",
         "source": "app/globals.css"
       },
-      "--font-script": { "value": "\"Explora\", var(--font-sans)", "source": "app/globals.css" }
+      "--font-script": { "value": "\"Hurricane\", var(--font-sans)", "source": "app/globals.css" }
     },
     "spacing": {
       "--gutter": {
@@ -64,16 +63,80 @@
   },
   "decisions": [{
     "id": "hero-carousel-navigation",
-    "decision": "Adapt Warp Carousel's ring motion for four upright 1:2 portrait links. Warm copper surfaces have pale rims and a red front-card accent. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback.",
+    "decision": "Use the supplied Warp Carousel's fitted projection and spin timing for four upright 1:2 portrait links with white rims. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback.",
     "source": "https://21st.dev/@louisstudios/components/warp-carousel"
   }, {
     "id": "hero-carousel-finish",
-    "decision": "Use the Engraved Copper finish with a brushed bronze grain, warm artwork, etched house lines and one light sweep on the front card.",
-    "source": "https://21st.dev/@fransederr/components/grain-light-card"
+    "decision": "Use matte charcoal surfaces with artwork in colour and a dark fade behind card labels. Frame the Watch card around the person with a darker backdrop. Play the source video in full colour.",
+    "source": "User-approved T-House palette and carousel revisions"
+  }, {
+    "id": "hero-carousel-arrows",
+    "decision": "Use white hand-drawn arrows and reveal a textured signature-red underline on hover or keyboard focus.",
+    "source": "User-supplied sketch tabs component and T-House logo"
+  }, {
+    "id": "hero-carousel-hover-preview",
+    "decision": "Widen the hovered desktop card to a 16:9 artwork frame and begin the flip from its current size and crop.",
+    "source": "https://21st.dev/@vaib215/components/expanding-cards"
   }, {
     "id": "studio-image-style-and-type",
-    "decision": "Build the site around the supplied logo's white house elevation, red lettering and dark walnut backdrop. Keep the source mark at a compact size. Use Explora for short red display titles and Barlow for navigation, body text, full episode titles and metadata.",
-    "source": "User-supplied T-House JPEG and approved logo-led website restyle plan"
+    "decision": "Use the original mark and a white and red brand palette on neutral charcoal. Set short display titles in Hurricane, the closest script in the visual comparison. Use Barlow for navigation, body text, full episode titles and metadata. The original signature's typeface remains unverified.",
+    "source": "User-supplied T-House JPEG, official episode thumbnail and rendered Hurricane specimens"
+  }, {
+    "id": "connect-editorial-collage",
+    "decision": "Frame the Hurricane title and the link to the Bento Grid with an overlapping monochrome artwork stack. Let the foreground frame swap positions with the other image via horizontal swipe or the Next image button. Reveal the Connect title once in its existing signature-red ink, then show the real text. Put static graphite paper grain behind the framed images, and keep the Old Television Shader's monochrome waves and scanlines behind the hero. Reveal the Bento heading word by word when the section enters view. Use a wide episode tile beside stacked Instagram and YouTube tiles. On phones, place both channels in a row beneath the episode. Give the message draft the full row above the native FAQ. Draw its heading once with white outlines, white fill and a signature-red pen tip. Use the signature-red graffiti stroke for hover and keyboard focus.",
+    "source": "docs/CONNECT-PAGE-PLAN.md"
+  }, {
+    "id": "connect-social-logos",
+    "decision": "Use the Instagram gradient camera with its current script wordmark and the full-color YouTube logo with white lettering in the Connect channel tiles. Give each link an accessible action label and keep the signature-red hover and focus underline.",
+    "source": "User direction, Meta's Instagram brand pack, the Instagram website wordmark, and YouTube's brand pack"
+  }, {
+    "id": "connect-contact-page-frame",
+    "decision": "Use the Contact Page layout for the studio intro, link grid and FAQ. Add thin side rules on wide screens and a muted dot texture beside the links heading on tablet and desktop.",
+    "source": "User-supplied Contact Page"
+  }, {
+    "id": "connect-contact-form-layout",
+    "decision": "Use one Contact Card frame with four corner marks around the Instagram draft. Place the animated heading, instructions and enquiry choices in the introduction. The message, preview and copy actions sit beside that introduction on wide screens and below it on narrow screens.",
+    "source": "User-supplied Contact Form, Contact Card and Contact 01"
+  }, {
+    "id": "connect-choicebox",
+    "decision": "Use the titles-only Choicebox for enquiry topics. Keep native selection, a visible white keyboard outline and a signature-red selected marker. Use compact paired cards in stacked layouts when the topic pane has room.",
+    "source": "User-supplied Choicebox"
+  }, {
+    "id": "connect-draft-tabs",
+    "decision": "Use Write and Preview segmented tabs when the draft panel is narrow. Show both fields side by side when the panel is wide enough and keep the copy and Instagram actions with the fields.",
+    "source": "User-supplied Segmented Control Tabs"
+  }, {
+    "id": "connect-live-preview-form",
+    "decision": "Show the exact outgoing text in a read-only live preview. A signature-red edge indicates that the draft is ready to copy. Respect reduced motion and keep the preview selectable.",
+    "source": "User-supplied Live Preview Form"
+  }, {
+    "id": "connect-image-picker",
+    "decision": "Use a collapsed Preview images option for JPG and PNG files. Show thumbnails in the browser and let the visitor attach the originals in Instagram.",
+    "source": "User-supplied File Upload"
+  }, {
+    "id": "connect-slit-type-faq",
+    "decision": "Keep the verified Connect questions in native disclosures. Reveal the Barlow heading through a slit and flood the open row in signature red with sign-white text. Search across the questions and answers, and allow copying links to each question.",
+    "source": "User-supplied Slit Type FAQ"
+  }, {
+    "id": "connect-faq-layout",
+    "decision": "Use the shared FAQ section for the Connect heading and message-draft link. Place the native searchable Slit Type questions beside the heading on wide screens and below it on phones.",
+    "source": "User-supplied FAQ"
+  }, {
+    "id": "connect-liquid-faq",
+    "decision": "Apply the Liquid Accordion's circular opening reveal to the existing question list in signature red with sign-white text. Let a neutral highlight follow the pointer along the list edges. Skip the effects in reduced motion and forced colors.",
+    "source": "User-supplied FAQ Liquid Accordion"
+  }, {
+    "id": "connect-waveform-mark",
+    "decision": "Place a small static waveform in signature red on the Connect episode frame. The waveform uses illustrative peaks and acts as a print detail.",
+    "source": "User-supplied chatcn Waveform"
+  }, {
+    "id": "home-studio-image-accordion",
+    "decision": "Use image-filled rails in the homepage studio preview. The active artwork expands with a horizontal caption. Captions stay fixed while the artwork retains its scroll motion. Stack the controls in narrow layouts.",
+    "source": "User-supplied Interactive Image Accordion"
+  }, {
+    "id": "studio-artwork-gallery",
+    "decision": "Show two monochrome studio concept images in the Inside the House exhibit. Expand vertical label rails where the exhibit has room and use disclosure rows in narrower layouts.",
+    "source": "User-supplied Hover Expand Gallery"
   }],
   "evidence": [
     {

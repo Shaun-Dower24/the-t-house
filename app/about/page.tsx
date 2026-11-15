@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { routeMetadata } from "../../content/site";
-import { featuredVideo, studio } from "../../content/studio";
+import { featuredVideo } from "../../content/studio";
 import styles from "../inside-the-house/studio-pages.module.css";
 
 export const metadata = routeMetadata(
@@ -14,7 +14,6 @@ export default function AboutPage() {
     <div className={styles.about}>
       <div className={`page-grid ${styles.aboutLayout}`}>
         <header className={styles.intro}>
-          <p className={styles.location}>{studio.location}</p>
           <h1 className={styles.title}>About The T-House</h1>
           <p className={styles.lead}>The T-House is a creative music studio in East London sharing music, conversation and video.</p>
           <Link href="/inside-the-house" className={styles.textLink}>Inside the House <span aria-hidden="true">→</span></Link>
