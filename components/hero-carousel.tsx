@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { featuredVideo } from "../content/studio";
 import { useCardRouteTransition } from "./card-route-transition";
 import { HouseOutline } from "./house-outline";
 import { GraffitiArrow } from "./ui/graffiti-arrow";
@@ -12,7 +11,7 @@ import { WarpCarousel } from "./ui/warp-carousel";
 import styles from "./hero-carousel.module.css";
 
 const destinations = [
-  { id: "watch", label: "Watch", href: "/watch", image: featuredVideo.thumbnail },
+  { id: "watch", label: "Watch", href: "/watch", image: "/images/arrival-poster.jpg" },
   { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/threshold-detail.webp" },
   { id: "about", label: "About", href: "/about" },
   { id: "connect", label: "Connect", href: "/connect" },
@@ -245,6 +244,9 @@ export function HeroCarousel() {
                 }}
               >
                 <span className={styles.art} aria-hidden="true">
+                  {card.id === "watch" && <span data-arrival-media className={styles.videoFrame}>
+                    <video data-hero-video muted loop playsInline preload="none" poster="/images/arrival-poster.jpg" disablePictureInPicture />
+                  </span>}
                   {"image" in card ? (
                     <Image
                       src={card.image}

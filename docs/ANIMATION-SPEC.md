@@ -4,7 +4,7 @@
 
 | Scene | Trigger | Visual change | Baseline |
 | --- | --- | --- | --- |
-| Arrival | First view and native scroll | White lines trace the house elevation. Its detail recedes as the visitor scrolls toward the framed release. | The initial HTML gives the page title, studio context, visible drawing and navigation immediately. |
+| Arrival | First view and native scroll | A silent video below the header shrinks into the real Watch artwork slot in a sticky stage. GSAP ScrollTrigger updates only DOM geometry; the house and neighbouring cards emerge. Reverse scroll expands it until intentional browsing settles the scene. | A static matching poster and native carousel rail remain in normal flow without scripts, in forced colours or with system/site reduced motion. |
 | Hero browsing | Drag, swipe, previous or next control, or keyboard navigation | Warp Carousel’s fitted 3D path moves upright charcoal cards through the shared stage. The front card comes forward, neighbours recede into depth, and button turns use Warp’s fitted timing. | A native scroll-snap rail displays the same links in reduced motion and without JavaScript. |
 | Hero navigation | A visitor activates a destination card | An angled card comes forward from its current pose. The selected card turns 180° on its vertical axis over 300 ms. Its reverse face then expands for 320 ms, and fades after the destination renders. | Ordinary links open their destinations with system or site reduced motion, or with JavaScript disabled. |
 | Latest release | Native scroll | Architectural lines and lighting guide attention from the opening to the framed release. | Real video information and links stay in the document flow. |
@@ -29,7 +29,7 @@
 - Keep carousel browsing manual. Arrows, keyboard focus and swipes browse destinations without opening a page. Escape during the outgoing card animation cancels it and returns focus to the selected card.
 - On desktop pointer hover, widen a resting card to 16:9 over 300 ms. Pause the preview during turns and dragging. Use the current card size and artwork as the first frame of the flip.
 - Reveal the spray underline beneath the carousel arrows on pointer hover or visible keyboard focus. Show the full mark immediately in reduced motion.
-- Decorative motion remains silent. Video is a separate, user-initiated action.
+- The silent homepage background loop is decorative and has an explicit pause control. It pauses offscreen, in hidden tabs, after user pause and when Watch is not active. Autoplay failure retains the poster. Episode playback remains a separate, user-initiated action.
 
 ## Verify
 

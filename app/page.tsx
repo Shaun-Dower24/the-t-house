@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import InteractiveImageAccordion from "@/components/ui/interactive-image-accordion";
-import { HouseElevation } from "../components/house-elevation";
-import { HeroCarousel } from "../components/hero-carousel";
+import { ScrollExpansionHero } from "../components/ui/scroll-expansion-hero";
 import { routeMetadata } from "../content/site";
 import { featuredVideo, studio } from "../content/studio";
 
@@ -15,19 +14,7 @@ export const metadata = routeMetadata(
 export default function HomePage() {
   return (
     <>
-      <section className="arrival" id="arrival" aria-labelledby="arrival-heading">
-        <div className="hero-environment" aria-hidden="true">
-          <div className="arrival-art" data-house-art>
-            <HouseElevation />
-          </div>
-        </div>
-        <div className="page-grid arrival-grid">
-          <div className="arrival-copy">
-            <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
-          </div>
-        </div>
-        <div className="arrival-carousel"><HeroCarousel /></div>
-      </section>
+      <ScrollExpansionHero />
 
       <section id="watch" className="watch section-space" aria-labelledby="watch-heading" tabIndex={-1}>
         <div className="page-grid">

@@ -15,6 +15,17 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ## Verification
 
+### Homepage video arrival — 15 November 2026
+
+- Implemented plan steps 1, 2, 3 and 5: a native-scroll sticky stage, one persistent Watch video, measured full-stage-to-artwork geometry, Explore focus handoff, reversible entrance before browsing and ordinary Warp navigation afterwards. The previous arrival scrub is retired; feature and studio triggers are unchanged.
+- The supplied demo is served locally: `public/videos/arrival.mp4` (3,551,929 bytes) and `public/images/arrival-poster.jpg` (179,976 bytes). Confirm footage rights or replace it with an approved studio loop before production. Set `--arrival-focal-point` on the arrival scene to adjust the portrait and landscape crop.
+- `npm ci`, lint, TypeScript and the production build passed on Node 24.22.2. Install reported 13 dependency vulnerabilities (2 low, 11 moderate); no dependency or lockfile changes were made.
+- Chrome screenshots on the local development server: `/home/ubuntu/shots/arrival-{390,768,1440}-{top,mid,landed}.png` and `/home/ubuntu/shots/arrival-reduced-motion.png`. Viewports: 390×844, 768×1024 and 1440×900. Visual review confirmed proportional footage, full-bleed opening, intermediate crop and landed card. The screenshots include Next's development indicator.
+- Landing media and actual art bounds matched exactly (x, y, width, height): phone `(106.296875, 243.203125, 177.390625, 356.78125)`; tablet `(313, 367.40625, 142, 286)`; desktop `(631, 269.40625, 178, 358)`. The same video DOM node survived every handoff. Document scroll/client widths were 390/390, 768/768 and 1440/1440; no console errors. Video was playing initially and at landing, and paused after the scene scrolled offscreen at every size.
+- Chrome interaction checks passed: persistent user pause/resume, a simulated hidden-document visibility event, reverse scroll, Explore focus, intentional browse settlement, inactive-card pausing, desktop 16:9 hover, Watch flip/zoom navigation and Back, phone resize/rotation, no-JavaScript rail, system/site reduced motion, forced colours, blocked autoplay and a failed video request. Scripts are saved at `/home/ubuntu/shots/check-arrival.cjs` and `check-arrival-states.cjs`.
+- Step 4 needs no new implementation: the existing route transition already captures same-origin `video[data-hero-video]` frames and falls back to `video.poster` on both faces. The new Watch slot uses that existing contract; Watch navigation passed without changing the transition component.
+- Open verification: Safari, Firefox, real iOS playback, real tab backgrounding (rather than the simulated visibility event), physical touch/fling, and all destination flip/Escape regressions were not exercised in this handoff. No deployment or push was performed.
+
 | Check | Rebuild result |
 | --- | --- |
 | Lint, type checking and production build | Passed on Node.js 24. The build prerenders six content pages. |
