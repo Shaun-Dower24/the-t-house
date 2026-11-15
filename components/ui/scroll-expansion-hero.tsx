@@ -93,7 +93,8 @@ export function ScrollExpansionHero() {
           return;
         }
         if (frame.parentElement !== stage) { stage.append(frame); playback(); }
-        const mix = (from: number, to: number) => from + (to - from) * progress;
+        const eased = 1 - (1 - progress) ** 2;
+        const mix = (from: number, to: number) => from + (to - from) * eased;
         Object.assign(frame.style, {
           position: "absolute", zIndex: "5", left: `${mix(0, landing.left)}px`,
           top: `${mix(0, landing.top)}px`, width: `${mix(stage.clientWidth, landing.width)}px`,
@@ -118,6 +119,8 @@ export function ScrollExpansionHero() {
       draw(trigger.progress);
       const resize = new ResizeObserver(() => { measure(); trigger.refresh(); });
       resize.observe(stage);
+      const rail = scene.querySelector("[data-carousel-rail]");
+      if (rail) resize.observe(rail);
       settle.current = () => { chosen = true; draw(1); };
       // History restores the browsed selection rather than replaying its entrance.
       if (scene.querySelector('[data-carousel-slide][data-active="true"] [data-destination]:not([data-destination="watch"])')) settle.current();
