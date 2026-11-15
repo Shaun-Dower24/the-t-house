@@ -31,6 +31,10 @@ On desktop, a hovered portrait card expands into a 16:9 artwork frame. Its heigh
 | Studio and profile | Script titles, pale elevation detail and one outlined profile panel. The home preview uses image-filled rails with a horizontal caption on the expanded image. The studio exhibit pairs the same concept images with a ruled caption and separate vertical label rails. Both use stacked disclosure rows in narrow layouts. |
 | Connect | Thin side rules frame the layout on wide screens. A red script title and overlapping monochrome concept artwork sit above the link grid, with a muted dot texture beside its heading. A static red waveform marks the episode frame. The message draft spans the full grid in a single frame with corner marks. Write and Preview share one panel when space is limited and sit side by side when it is wide enough. |
 
+## Homepage entrance
+
+The homepage's optional “Lights on” entrance uses the vector `HouseElevation`, not an enlarged raster mark. White architectural strokes draw over canvas black, a signature-red door blinks twice and “The T-House” appears in Hurricane. A measured door aperture opens onto the existing full-bleed arrival video or matching poster without a second reveal. It lasts about 1.55 seconds, capped at 1.6 seconds, once per tab session. The header remains present, briefly dimmed; input immediately restores the ordinary page. Reduced motion, forced colours, no JavaScript, restored history and internal navigation home retain the existing arrival without the entrance. The decorative overlay never blocks links, focus or native scrolling.
+
 ## Artwork and rights
 
 The studio mark uses the supplied 150 × 150 px JPEG as its source. The displayed mark isolates the white drawing and red handwriting over a transparent background. Use it at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview.

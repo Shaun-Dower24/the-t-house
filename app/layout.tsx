@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { HomeScenes } from "../components/home-scenes";
 import { SiteFooter } from "../components/site-footer";
 import { siteUrl } from "../content/site";
+import { homeIntroBootstrap, homeIntroFailsafe } from "../components/ui/home-intro-bootstrap";
 import "@fontsource/barlow/latin-400.css";
 import "@fontsource/barlow/latin-500.css";
 import "@fontsource/barlow/latin-600.css";
@@ -25,7 +26,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB" className="dark">
+    <html lang="en-GB" className="dark" suppressHydrationWarning>
+      <head>
+        <link rel="preload" as="image" href="/images/arrival-poster.jpg" />
+        <style dangerouslySetInnerHTML={{ __html: homeIntroFailsafe }} />
+        <script dangerouslySetInnerHTML={{ __html: homeIntroBootstrap }} />
+      </head>
       <body>
         <svg className="absolute" width="0" height="0" aria-hidden="true" focusable="false">
           <defs>

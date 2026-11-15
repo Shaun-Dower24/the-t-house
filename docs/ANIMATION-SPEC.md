@@ -4,6 +4,7 @@
 
 | Scene | Trigger | Visual change | Baseline |
 | --- | --- | --- | --- |
+| Lights on | First eligible homepage document in a browser session | HouseElevation draws in sign white, the door blinks signature red twice and The T-House appears in Hurricane. At about 950 ms the real arrival media opens through a door-sized inset clip to the full stage. The overlay leaves at about 1550 ms, with a 1600 ms deadline. | No overlay without JavaScript, with either reduced-motion preference, forced colours, an already-seen session, restored history, scroll/hash entry or internal navigation home. Input ends it immediately without consuming the action. |
 | Arrival | First view and native scroll | A silent video below the header shrinks into the real Watch artwork slot in a sticky stage. GSAP ScrollTrigger updates only DOM geometry; the house and neighbouring cards emerge. Reverse scroll expands it until intentional browsing settles the scene. | A static matching poster and native carousel rail remain in normal flow without scripts, in forced colours or with system/site reduced motion. |
 | Hero browsing | Drag, swipe, previous or next control, or keyboard navigation | Warp Carousel’s fitted 3D path moves upright charcoal cards through the shared stage. The front card comes forward, neighbours recede into depth, and button turns use Warp’s fitted timing. | A native scroll-snap rail displays the same links in reduced motion and without JavaScript. |
 | Hero navigation | A visitor activates a destination card | An angled card comes forward from its current pose. The selected card turns 180° on its vertical axis over 300 ms. Its reverse face then expands for 320 ms, and fades after the destination renders. | Ordinary links open their destinations with system or site reduced motion, or with JavaScript disabled. |
@@ -23,6 +24,7 @@
 ## Interaction rules
 
 - Tie scroll motion to document travel and keep the browser’s normal scrolling, navigation and history.
+- The once-per-session entrance is decorative: its fixed overlay is hidden from assistive technology, ignores pointer input and never changes focus. A pre-paint gate records `sessionStorage.tHouseIntroSeen`; passive input listeners and hidden-tab handling end it immediately. A 2.5-second CSS failsafe also restores the underlying view if scripts stop. The poster is preloaded; playback starts only when the door aperture opens, or when the entrance is skipped. Poster decode may delay the aperture, never the 1600 ms deadline. No loading percentage or media-ready gate blocks navigation.
 - Use CSS for brief state changes and GSAP ScrollTrigger for choreographed movement. Keep animation tied to visible layers and clean up when leaving the page.
 - Follow the visitor’s system preference. The site’s motion control can further reduce movement. Keep navigation and video controls available from the first view with JavaScript disabled or motion reduced.
 - The full-screen menu supports keyboard focus, Escape and returning focus to its opener. Navigation through the menu leads directly to the requested page.
