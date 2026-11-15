@@ -65,8 +65,8 @@ export function HomeIntro() {
         const light = overlay!.querySelector(`.${styles.door}`);
         const figure = overlay!.querySelector(`.${styles.figure}`);
         draw = gsap.timeline()
-          .to(outlines, { strokeDashoffset: 0, duration: 0.48, stagger: 0.04, ease: "power2.out" }, 0.1)
-          .to(details, { strokeDashoffset: 0, duration: 0.3, stagger: 0.015, ease: "power2.out" }, 0.4)
+          .to(outlines, { strokeDashoffset: 0, autoRound: false, duration: 0.48, stagger: 0.04, ease: "power2.out" }, 0.1)
+          .to(details, { strokeDashoffset: 0, autoRound: false, duration: 0.3, stagger: 0.015, ease: "power2.out" }, 0.4)
           .set(light, { opacity: 1 }, 0.65).set(light, { opacity: 0 }, 0.71)
           .set(light, { opacity: 1 }, 0.77).set(light, { opacity: 0 }, 0.83)
           .set(light, { opacity: 1 }, 0.89)

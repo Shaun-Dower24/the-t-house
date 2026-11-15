@@ -15,6 +15,13 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ## Verification
 
+### Entrance stroke interpolation follow-up
+
+- Disabled GSAP CSS pixel rounding for the normalized outline and detail dash offsets. The existing draw timings, easing, aperture and playback handoff are unchanged. Before the fix Chrome produced no fractional outline offsets; GSAP's CSS plugin selects its integer pixel renderer unless `autoRound` is false.
+- Playwright sampled computed offsets every 16 ms in Chrome and Firefox: all four outlines decreased monotonically from 1 through fractional values to 0 within the drawing window. Chrome recorded 12/14/16/19 distinct fractional offsets per outline; Firefox recorded 15/17/19/22. Both had no page exceptions. The installed Firefox 142 binary requires Playwright 1.56.1 rather than the newer cached runner; no project dependencies changed.
+- All five stationary-poster handoff comparisons remain byte-identical at 390/768/1280/1440/844 widths. `check-handoff.cjs` passed all 12 forward/reverse samples with a maximum geometry difference of 0.015625 px. Lint, typecheck and the production build passed (11 static pages).
+- Evidence under `/home/ubuntu/shots/`: `check-intro-strokes.cjs`, `intro-strokes-{chrome,firefox}.json`, `intro-strokes.log`, `check-intro-pixels.cjs`, `intro-stroke-pixels.log`, `intro-stroke-handoff.log` and refreshed `intro-*-comparison-{handoff,no-intro}.png`. Firefox verification here covers stroke interpolation only, not the complete entrance/history matrix below.
+
 ### Homepage Lights on entrance — 15 November 2026
 
 - Implemented the approved Concept A from `HOME-ENTRANCE-PLAN.md`: the vector HouseElevation draws in white, its door blinks twice in signature red and “The T-House” appears in Hurricane. A measured `inset()` clip on the same arrival media opens from the door to the full stage. GSAP is imported dynamically; there are no per-frame React updates or extra video elements.
