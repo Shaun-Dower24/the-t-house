@@ -159,6 +159,13 @@
   text-shadow: 0 1px 0 var(--canvas), 0 0 0.7rem var(--canvas);
 }
 
+@media (max-height: 32rem) {
+  :global([data-arrival-enhanced]) .label {
+    font-size: 0.75rem;
+    overflow-wrap: normal;
+  }
+}
+
 .caption {
   display: inline-block;
   margin-block-end: 0.4rem;
