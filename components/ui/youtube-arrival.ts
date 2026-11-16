@@ -43,7 +43,7 @@ function loadAPI() {
   return api;
 }
 
-export function createYouTubeArrival(frame: HTMLElement, blocked: () => void, failed: () => void) {
+export function createYouTubeArrival(frame: HTMLElement, failed: () => void) {
   let player: Player | undefined;
   let iframe: HTMLIFrameElement | undefined;
   let ready = false;
@@ -59,6 +59,11 @@ export function createYouTubeArrival(frame: HTMLElement, blocked: () => void, fa
     iframe?.remove();
     iframe = undefined;
     delete frame.dataset.playing;
+  }
+
+  function fail() {
+    remove();
+    failed();
   }
 
   function update(playing: boolean, eligible: boolean) {
@@ -112,10 +117,10 @@ export function createYouTubeArrival(frame: HTMLElement, blocked: () => void, fa
             else frame.dataset.playing = "true";
           }
         },
-        onAutoplayBlocked: blocked,
-        onError: () => { remove(); failed(); },
+        onAutoplayBlocked: fail,
+        onError: fail,
       } });
-    }).catch(() => { loading = false; if (!disposed && enabled) { remove(); failed(); } });
+    }).catch(() => { loading = false; if (!disposed && enabled) fail(); });
   }
 
   return {

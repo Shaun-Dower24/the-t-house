@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { HeroCarousel } from "../hero-carousel";
 import { HouseElevation } from "../house-elevation";
 import { HomeIntro } from "./home-intro";
@@ -12,9 +12,6 @@ const historyKey = "tHouseArrivalSettled";
 export function ScrollExpansionHero() {
   const root = useRef<HTMLElement>(null);
   const settle = useRef<() => void>(() => {});
-  const userPaused = useRef(false);
-  const [paused, setPaused] = useState(false);
-  const [playable, setPlayable] = useState(false);
 
   useEffect(() => {
     const scene = root.current;
@@ -29,9 +26,7 @@ export function ScrollExpansionHero() {
     let failed = false;
     let teardown: (() => void) | undefined;
     let generation = 0;
-    const player = createYouTubeArrival(frame, () => {
-      userPaused.current = true; setPaused(true); playback();
-    }, () => { failed = true; setPlayable(false); });
+    const player = createYouTubeArrival(frame, () => { failed = true; });
 
     function eligible() {
       return preferences?.dataset.motion === "full" && !query.matches;
@@ -43,8 +38,7 @@ export function ScrollExpansionHero() {
       const intro = document.documentElement.dataset.intro;
       const waitingForIntro = (intro === "pending" || intro === "running" || intro === "ready") && !window.history.state?.[historyKey];
       const canPlay = eligible() && visible && !!watchActive && !document.hidden && !failed && !waitingForIntro;
-      setPlayable(eligible() && !failed);
-      player.update(canPlay && !userPaused.current, eligible() && !failed);
+      player.update(canPlay, eligible() && !failed);
     }
 
     const visibility = new IntersectionObserver(([entry]) => {
@@ -55,7 +49,6 @@ export function ScrollExpansionHero() {
     document.addEventListener("visibilitychange", playback);
     window.addEventListener("t-house:intro-aperture", playback);
     window.addEventListener("t-house:intro-done", playback);
-    scene.addEventListener("arrival-playback", playback);
     const selection = new MutationObserver(playback);
     selection.observe(scene, { subtree: true, attributes: true, attributeFilter: ["data-active"] });
 
@@ -142,7 +135,6 @@ export function ScrollExpansionHero() {
       document.removeEventListener("visibilitychange", playback);
       window.removeEventListener("t-house:intro-aperture", playback);
       window.removeEventListener("t-house:intro-done", playback);
-      scene.removeEventListener("arrival-playback", playback);
     };
   }, []);
 
@@ -151,27 +143,11 @@ export function ScrollExpansionHero() {
     settle.current();
   }
 
-  function explore() {
-    settleArrival();
-    const scene = root.current;
-    const stage = scene?.querySelector<HTMLElement>("[data-arrival-stage]");
-    if (scene?.dataset.arrivalEnhanced && stage) window.scrollTo({ top: scene.offsetTop + scene.offsetHeight - stage.offsetHeight, behavior: "instant" });
-    scene?.querySelector<HTMLElement>('[data-active="true"] a')?.focus({ preventScroll: true });
-  }
-
   return <section id="arrival" ref={root} className={styles.scene} aria-labelledby="arrival-heading">
     <div className={styles.stage} data-arrival-stage>
       <HomeIntro />
       <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
       <div className={`hero-environment ${styles.house}`} aria-hidden="true"><div className="arrival-art"><HouseElevation /></div></div>
-      <div className={styles.actions} data-arrival-actions>
-        <a href="#arrival-carousel" onClick={(event) => { event.preventDefault(); explore(); }}>Explore carousel ↓</a>
-        {playable && <button type="button" onClick={() => {
-          userPaused.current = !userPaused.current;
-          setPaused(userPaused.current);
-          root.current?.dispatchEvent(new Event("arrival-playback"));
-        }}>{paused ? "Play video" : "Pause video"}</button>}
-      </div>
       <div id="arrival-carousel" className={styles.carousel}
         onFocusCapture={settleArrival}
         onPointerDownCapture={(event) => { if (event.pointerType === "mouse") settleArrival(); }}
