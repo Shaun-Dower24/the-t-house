@@ -1,6 +1,13 @@
 # Carousel background fit — diagnosis and proposed fix
 
-Status: **approved and implemented**. At 48rem and up, the single video and static poster use centred contain over a blurred, overscanned poster fill; phones retain cover. Baseline diagnosis: `773af81`, branch `devin/1794833551-youtube-hero`. Verification results are recorded in `IMPLEMENTATION-STATUS.md`.
+Status: **inside-the-house treatment selected and implemented**. The user rejected the contain/blur composition in `bfd7ee4`. At 48rem and up, the single reel and poster cover the elevation's box but are visible only through its window and door openings; everything outside is plain canvas. Phones retain full-bleed cover with the original 72% scrim. Baseline diagnosis: `773af81`, branch `devin/1794833551-youtube-hero`. Verification results are recorded in `IMPLEMENTATION-STATUS.md`.
+
+## Chosen approach: inside the house
+
+- `HouseElevation` now shares the exact inner-frame path data for nine windows and the door with an SVG alpha mask. Its rendered lines remain geometrically identical. Both SVGs use `viewBox="0 0 1000 540"` and `preserveAspectRatio="xMidYMid meet"`; the desktop masked layer shares the elevation's width, centre and 48% vertical anchor. This is responsive CSS, not a JavaScript measurement loop.
+- One cover-fitted video and its identically positioned cover poster sit beneath a 35% canvas tint inside the openings. No blurred underlay, contained-poster element or full-stage desktop footage remains. The house strokes/mullions stay above the mask and cards above the house; card occlusion is intentional. Masking reveals the interior, not the walls or roof.
+- The mask also applies without JavaScript and on reduced motion, blocked autoplay or media failure. Forced colours hide the entire backdrop. Existing source eligibility, pause/resume, gate, history, native scrolling, reveal and Watch morph geometry remain unchanged; no media was added.
+- Review `/home/ubuntu/shots/bg-house/` for the six landed viewports and 1440 mid-morph, mask/house-box alignment and card occlusion measurements. The original investigation/options below are retained as history, not the current design recommendation.
 
 ## Observed problem
 
@@ -42,7 +49,7 @@ All sizes compute `object-fit: cover`, `object-position: 50% 50%`, source 540×9
 - `components/ui/scroll-expansion-hero.module.css:11–20` stretches the background/video box to the stage and applies centred `cover` to both video and poster. `:24–30` makes that stage viewport-sized. A 9:16 image covering a landscape viewport necessarily discards roughly two thirds of its height; no responsive framing alternative is provided. The 540px encode magnifies the softness.
 - Counter-check against a sizing/stacking bug: the measured boxes and screenshots show complete stage coverage, no overflow, and the intended transparent house above the video. Merely adding `inset:0`, `width/height:100%`, `display:block` or `object-fit:cover` will not solve this; those conditions already hold.
 
-## Recommended fix — approved
+## Rejected option: portrait over blurred fill
 
 **Desktop: full-stage soft fill plus a centred, uncropped portrait video.** Keep the existing background wrapper and scrim. Use a blurred, cover-fitted version of the poster as a separate underlay, then fit the one existing video with `contain` inside that wrapper. Centre it; keep the full-stage 72% scrim above both. Slightly overscan/clip only the blurred underlay to prevent blur-edge halos. No second video decoder or synchronisation is needed. Use the same contained-poster composition before playing or on error so framing does not jump. Leave the phone's current cover treatment unchanged; initially apply the alternate composition at the existing 48rem breakpoint, then review tablet framing explicitly.
 
@@ -68,4 +75,4 @@ Evidence directory: `/home/ubuntu/shots/bg-fit/`. Landed screenshots: `1280x800-
 2. Must the reel's embedded captions remain visible, and is there a preferred subject/frame? If a different defect (bands/gaps) was seen, which browser, viewport and screenshot?
 3. If sharper large-desktop footage needs a larger download, what asset-size budget is acceptable, or is approved landscape footage available?
 
-The measurements above describe the pre-fix baseline. Approval selected the recommended composition for tablets and desktops; no new media or second video was introduced.
+The measurements above describe the original pre-fix baseline. The contain/blur option was implemented, then rejected in favour of the chosen masked-interior treatment above. No new media or second video was introduced.
