@@ -58,7 +58,7 @@
 :global([data-motion="reduced"]) .reveals [data-glass-revealed],
 :global([data-motion="reduced"]) .cta::before { animation: none; }
 :global([data-motion="reduced"]) .cta,
-:global([data-motion="reduced"]) .episode { transition: none; transform: none; }
+:global([data-motion="reduced"]) .episode { transition: none; transform: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .reveals [data-glass-revealed], .cta::before { animation: none; }
   .cta, .episode { transition: none; transform: none !important; }
