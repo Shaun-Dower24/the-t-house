@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import { loadGsap, rollChars, splitText, textMotionAllowed, watchTextMotion } from "../lib/text-motion";
 import { useCardRouteTransition } from "./card-route-transition";
 import { HouseOutline } from "./house-outline";
 import { GraffitiArrow } from "./ui/graffiti-arrow";
@@ -12,7 +13,7 @@ import styles from "./hero-carousel.module.css";
 
 const destinations = [
   { id: "watch", label: "Watch", href: "/watch", image: "/images/arrival-poster.jpg" },
-  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/threshold-detail.webp" },
+  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/inside-the-house-studio.webp" },
   { id: "about", label: "About", href: "/about" },
   { id: "connect", label: "Connect", href: "/connect" },
 ] as const;
@@ -39,6 +40,29 @@ function centerOf(rail: HTMLUListElement, slide: Element) {
   return rail.scrollLeft + bounds.left - railBounds.left + (bounds.width - rail.clientWidth) / 2;
 }
 
+type Landing = { finish: () => void };
+
+/** Split Text: the label's letters drop onto the sticker one by one with a slight tilt. */
+function landLabel(gsap: typeof import("gsap").gsap, label: HTMLElement) {
+  const split = splitText(label);
+  if (!split) return;
+  const timeline = gsap.timeline({ onComplete: () => split.revert() });
+  timeline.fromTo(split.chars, {
+    yPercent: -95,
+    opacity: 0,
+    rotation: () => gsap.utils.random(-14, 14, 1),
+    transformOrigin: "50% 100%",
+  }, {
+    yPercent: 0,
+    opacity: 1,
+    rotation: 0,
+    duration: 0.46,
+    ease: "back.out(2.4)",
+    stagger: 0.035,
+  });
+  return timeline;
+}
+
 function closestCard(rail: HTMLUListElement) {
   const distances = Array.from(rail.children, (slide) => Math.abs(centerOf(rail, slide) - rail.scrollLeft));
   return distances.indexOf(Math.min(...distances));
@@ -46,6 +70,9 @@ function closestCard(rail: HTMLUListElement) {
 
 export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
   const rail = useRef<HTMLUListElement>(null);
+  const counter = useRef<HTMLSpanElement>(null);
+  const shown = useRef<number>(null);
+  const landing = useRef<Landing>(null);
   const browsed = useRef(0);
   const drag = useRef<Drag>(null);
   const ignoreClick = useRef(false);
@@ -122,6 +149,48 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
       list.removeEventListener("scroll", onScroll);
     };
   }, [enhanced, orbit]);
+
+  useEffect(() => {
+    const position = counter.current;
+    const previous = shown.current;
+    if (!enhanced || !position) return;
+    shown.current = active;
+    if (previous === null || previous === active || !textMotionAllowed(position)) return;
+
+    const forward = orbit ? wrap(active - previous) <= destinations.length / 2 : active > previous;
+    const label = rail.current?.children[active]?.querySelector<HTMLElement>(`.${styles.label}`);
+    let cancelled = false;
+    let stopWatching: (() => void) | undefined;
+    const runs: { timeline: gsap.core.Timeline; revert?: () => void }[] = [];
+    const finish = () => {
+      cancelled = true;
+      stopWatching?.();
+      runs.splice(0).forEach(({ timeline, revert }) => {
+        timeline.progress(1);
+        revert?.();
+      });
+      landing.current = null;
+    };
+    landing.current = { finish };
+
+    void loadGsap().then((gsap) => {
+      if (cancelled) return;
+      stopWatching = watchTextMotion(position, (allowed) => { if (!allowed) finish(); });
+      if (cancelled) return;
+      const split = splitText(position);
+      if (split) {
+        runs.push({
+          timeline: rollChars(gsap, split.chars, { direction: forward ? 1 : -1, from: `${previous + 1} / ${destinations.length}`, steps: 2, duration: 0.5 })
+            .eventCallback("onComplete", () => split.revert()),
+          revert: () => split.revert(),
+        });
+      }
+      const timeline = label && landLabel(gsap, label);
+      if (timeline) runs.push({ timeline });
+    }).catch(() => {});
+
+    return finish;
+  }, [active, enhanced, orbit]);
 
   function selectTurn(angle: number, instant: boolean) {
     const index = wrap(Math.round(angle / step));
@@ -238,6 +307,7 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
                   if (!busy && rail.current) {
                     window.history.replaceState({ ...window.history.state, [historyKey]: browsed.current }, "");
                   }
+                  landing.current?.finish();
                   if (link && start(link, card)) {
                     event.preventDefault();
                     if (!busy) router.prefetch(card.href);
@@ -259,7 +329,6 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
                   ) : <HouseOutline />}
                 </span>
                 <span>
-                  {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}
                   <span className={styles.label}>{card.label}</span>
                 </span>
               </Link>
@@ -272,7 +341,7 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
           aria-disabled={busy || (!orbit && active === 0)} onClick={() => browse(active - 1, true)}>
           <GraffitiArrow direction="left" />
         </button>
-        <span className={styles.position} aria-hidden="true">{active + 1} / {destinations.length}</span>
+        <span ref={counter} className={styles.position} aria-hidden="true">{active + 1} / {destinations.length}</span>
         <button className={styles.control} type="button" aria-label="Next destination"
           aria-disabled={busy || (!orbit && active === destinations.length - 1)} onClick={() => browse(active + 1, true)}>
           <GraffitiArrow direction="right" />

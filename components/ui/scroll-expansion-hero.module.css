@@ -1,3 +1,4 @@
+.house :global(.house-elevation) { filter: url(#graffiti-roughen); }
 .scene { position: relative; background: var(--canvas); }
 .stage {
   position: relative;
@@ -61,4 +62,5 @@
 }
 @media (forced-colors: active) {
   .background { display: none; }
+  .house :global(.house-elevation) { filter: none; }
 }

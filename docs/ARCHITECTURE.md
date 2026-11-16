@@ -20,6 +20,7 @@
 | `components/ui/warp-carousel.tsx`, `components/hero-carousel.tsx`, `components/card-route-transition.tsx` | The supplied Warp Carousel and its link renderer, the T-House cards, and the visual handoff through a Next.js route change. |
 | `app/watch/` | Media library, stable video pages and progressive video and share controls. |
 | `app/inside-the-house/`, `app/about/`, `app/connect/` | Studio, brand story and official contact routes. |
+| `lib/text-motion.ts`, `components/ui/stroke-tag.tsx`, `components/ui/circular-text.tsx`, `components/text-shuffle.tsx` | Homepage text effects: motion gating, temporary letter splits, Stroke Text tags, the play button ring and delegated hover/focus Shuffle. The carousel landing and counter roll live in `hero-carousel.tsx`; the gate echoes live in `home-intro.tsx`. |
 | `content/studio.ts` | Verified video, studio and channel records. |
 | `content/site.ts`, `app/robots.ts`, `app/sitemap.ts` | Canonical and social metadata, indexing controls and sitemap. |
 | `public/` | Local artwork and images. |
