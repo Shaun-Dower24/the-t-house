@@ -15,6 +15,14 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ## Verification
 
+### Slower homepage entrance
+
+- Doubled the approved sequence: draw at approximately 200–1600 ms, red blinks/title at 1300–1900 ms, aperture at 1900–3100 ms. The two red pulses and intervening gaps are 120 ms each; the title fades over 500 ms. The hard deadline is now 3200 ms and the CSS-only failsafe is 4500 ms from the pre-paint gate. Eligibility, passive skips, focus, native scrolling and the aperture/playback handshake are unchanged. These timings supersede the original entrance timings recorded below.
+- The updated `check-intro.cjs` measured aperture/completion in Chrome at 390/768/1280/1440/844 widths: 1900/3111, 1900/3119, 1900/3104, 1900/3096 and 1900/3089 ms. Video currentTime was zero at every aperture event; the never-decoding poster case finished at 3201 ms. All five stationary-poster handoff comparisons were byte-identical, with no overflow or console/page errors.
+- The eligibility table and key, Tab, click, wheel, tap, scroll and simulated hidden-tab skips passed; skips took 14–56 ms. Blocked/failed video and poster decode failures retained the poster fallback. Actual script-disabled CSS cleanup passed at 4.55 seconds, restoring the overlay, media clip, header and actions.
+- `check-intro-strokes.cjs --chrome` retained monotonic 1→fractional→0 computed offsets for every outline, with 40/44/49/50 distinct fractional samples. `check-handoff.cjs` passed all 12 forward/reverse samples, maximum geometry difference 0.015625 px. Lint, typecheck and production build passed (11 static pages).
+- Evidence: `/home/ubuntu/shots/intro-slow.log`, `intro-slow-handoff.log`, `intro-strokes-chrome.json` and refreshed `intro-{390,768,1280,1440,844}-{first,mid-draw,aperture,handoff}.png` and `intro-*-comparison-{handoff,no-intro}.png`. Mid-draw and aperture screenshots at 1280 were visually reviewed. The initial browser run reached a stale development server still serving the old 1600 ms bootstrap; the server was restarted and the complete browser checks above ran against the verified 3200 ms bootstrap. The previously documented hydration CLS is unchanged; it is recorded, not asserted zero.
+
 ### Entrance stroke interpolation follow-up
 
 - Disabled GSAP CSS pixel rounding for the normalized outline and detail dash offsets. The existing draw timings, easing, aperture and playback handoff are unchanged. Before the fix Chrome produced no fractional outline offsets; GSAP's CSS plugin selects its integer pixel renderer unless `autoRound` is false.

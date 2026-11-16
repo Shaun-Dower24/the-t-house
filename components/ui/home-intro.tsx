@@ -28,7 +28,7 @@ export function HomeIntro() {
     let wait: ReturnType<typeof setTimeout> | undefined;
     const started = Number(html.dataset.introStarted);
     const elapsed = () => (performance.now() - started) / 1000;
-    html.style.setProperty("--intro-failsafe-delay", `${Math.max(0, 2.5 - elapsed())}s`);
+    html.style.setProperty("--intro-failsafe-delay", `${Math.max(0, 4.5 - elapsed())}s`);
     const finish = () => {
       html.dataset.intro = "done";
       window.dispatchEvent(new Event("t-house:intro-done"));
@@ -65,15 +65,15 @@ export function HomeIntro() {
         const light = overlay!.querySelector(`.${styles.door}`);
         const figure = overlay!.querySelector(`.${styles.figure}`);
         draw = gsap.timeline()
-          .to(outlines, { strokeDashoffset: 0, autoRound: false, duration: 0.48, stagger: 0.04, ease: "power2.out" }, 0.1)
-          .to(details, { strokeDashoffset: 0, autoRound: false, duration: 0.3, stagger: 0.015, ease: "power2.out" }, 0.4)
-          .set(light, { opacity: 1 }, 0.65).set(light, { opacity: 0 }, 0.71)
-          .set(light, { opacity: 1 }, 0.77).set(light, { opacity: 0 }, 0.83)
-          .set(light, { opacity: 1 }, 0.89)
-          .to(overlay!.querySelector(`.${styles.title}`), { opacity: 1, duration: 0.25 }, 0.65)
+          .to(outlines, { strokeDashoffset: 0, autoRound: false, duration: 0.96, stagger: 0.08, ease: "power2.out" }, 0.2)
+          .to(details, { strokeDashoffset: 0, autoRound: false, duration: 0.6, stagger: 0.03, ease: "power2.out" }, 0.8)
+          .set(light, { opacity: 1 }, 1.3).set(light, { opacity: 0 }, 1.42)
+          .set(light, { opacity: 1 }, 1.54).set(light, { opacity: 0 }, 1.66)
+          .set(light, { opacity: 1 }, 1.78)
+          .to(overlay!.querySelector(`.${styles.title}`), { opacity: 1, duration: 0.5 }, 1.3)
           .play(elapsed());
         await Promise.all([decoded, new Promise<void>(resolve => {
-          wait = setTimeout(resolve, Math.max(0, 950 - elapsed() * 1000));
+          wait = setTimeout(resolve, Math.max(0, 1900 - elapsed() * 1000));
         })]);
         if (disposed) return;
         if (!document.querySelector("[data-arrival-enhanced]")) { finish(); return; }
@@ -82,7 +82,7 @@ export function HomeIntro() {
         frame!.style.clipPath = `inset(${opening.top - bounds.top}px ${bounds.right - opening.right}px ${bounds.bottom - opening.bottom}px ${opening.left - bounds.left}px)`;
         html.dataset.intro = "opening";
         window.dispatchEvent(new Event("t-house:intro-aperture"));
-        const duration = Math.max(0, Math.min(0.6, 1.55 - elapsed()));
+        const duration = Math.max(0, Math.min(1.2, 3.1 - elapsed()));
         aperture = gsap.timeline({ onComplete: finish })
           .to(frame!, { clipPath: "inset(0px 0px 0px 0px)", duration, ease: "power2.inOut" }, 0)
           .to(figure, { scale: 1.08, opacity: 0, duration, ease: "power2.inOut" }, 0);

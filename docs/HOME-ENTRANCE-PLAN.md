@@ -1,10 +1,10 @@
 # Homepage entrance animation: plan
 
-Status: approved for implementation. Concept A “Lights on”, once per browser session using sessionStorage, with the Hurricane title and HouseElevation rather than a raster logo; about 1.5 seconds, capped at 1.6 seconds. It builds on the video arrival from [PR #2](https://github.com/Shaun-Dower24/the-t-house/pull/2).
+Status: approved for implementation. Concept A “Lights on”, once per browser session using sessionStorage, with the Hurricane title and HouseElevation rather than a raster logo; about 3.0 seconds, capped at 3.2 seconds. It builds on the video arrival from [PR #2](https://github.com/Shaun-Dower24/the-t-house/pull/2).
 
 ## 1. Constraints
 
-- **The master plan says visitors reach the video immediately.** An entrance can therefore be short brand theatre (at most ~1.6s, skippable, once per visit), but not a blocking "wait until loaded" screen.
+- **The master plan says visitors reach the video immediately.** The approved slower entrance is skippable brand theatre (at most ~3.2s, once per visit), not a blocking "wait until loaded" screen.
 - **The page underneath must stay usable.** The server HTML (header, carousel, Explore link) is rendered and focusable under the intro.
   - The intro is added by JS only, so no-JS visitors never see it.
   - Reduced motion and forced colours skip it entirely.
@@ -23,14 +23,14 @@ Status: approved for implementation. Concept A “Lights on”, once per browser
 ## 2. Concepts
 
 ### A. "Lights on" — house draws, door opens into the video (recommended)
-1. **0–100ms:** canvas black. The header is present but dimmed to 0.4.
-2. **100–800ms:** `HouseElevation`'s outline strokes draw in white, from 0 to 1 dash offset, with a slight stagger: roof, then walls, then detail.
-3. **650–950ms:** the door or front window gets a signature-red neon flicker, two quick 60ms blinks then steady. "The T-House" fades up in Hurricane beneath it.
-4. **950–1550ms:** the lit door becomes a clip-path aperture.
+1. **0–200ms:** canvas black. The header is present but dimmed to 0.4.
+2. **200–1600ms:** `HouseElevation`'s outline strokes draw in white, from 1 to 0 dash offset, with a slight stagger: roof, then walls, then detail.
+3. **1300–1900ms:** the door or front window gets a signature-red neon flicker, two quick 120ms blinks then steady. "The T-House" fades up in Hurricane beneath it over 500ms.
+4. **1900–3100ms:** the lit door becomes a clip-path aperture.
    - It expands from the door's rect to the full stage rect. Through it you see the already-playing arrival video (or the poster).
    - The house lines scale up slightly and fade as the aperture passes them.
    - The header returns to full opacity.
-5. **1550ms:** the overlay is removed. The page is now in the exact state the arrival already starts from.
+5. **3100ms:** the overlay is removed, with a hard cap at 3200ms. The page is now in the exact state the arrival already starts from.
 
 This works well because it is the reverse of the scroll morph: the video grows *out of* the house, then scrolling shrinks it back *into* the Watch card. Both house motifs bookend the experience.
 
@@ -49,7 +49,7 @@ Eight vertical charcoal slats retract left and right (as in Swiss Poster Counter
 - Pro: crisp and fast.
 - Con: generic. It doesn't use the house motif.
 
-**Recommendation:** A, borrowing B's readiness logic invisibly. The aperture opens when the poster is decoded or at 950ms, whichever is later, with a hard cap at 1.6s. C is a fallback if you supply a vector logo and want something simpler.
+**Recommendation:** A, borrowing B's readiness logic invisibly. The aperture opens when the poster is decoded or at 1900ms, whichever is later, with a hard cap at 3.2s. C is a fallback if you supply a vector logo and want something simpler.
 
 ## 3. Behaviour rules (all concepts)
 
@@ -72,14 +72,14 @@ Eight vertical charcoal slats retract left and right (as in Swiss Poster Counter
   - Input listeners are `passive` and only trigger `finish()`.
 - **No flash before hydration.** A tiny inline script in `app/layout.tsx` `<head>` runs before first paint. If the conditions in §3 hold, it sets `<html data-intro="pending">`.
   - CSS for `[data-intro=pending]` paints the black canvas only, and never hides the DOM from assistive tech.
-  - A 2.5s CSS-animation failsafe clears it even if JS dies.
+  - A 4.5s CSS-animation failsafe clears it even if JS dies.
 - **Animation:** GSAP timeline (already a dependency, dynamically imported like the arrival).
   - Stroke-dash draw on `HouseElevation` paths.
   - Clip-path `inset()` from the measured door rect to the stage rect.
   - Elements are mutated directly, with no React state per frame.
 - **Handshake with `scroll-expansion-hero.tsx`:**
   - The intro dispatches `t-house:intro-done` and sets `data-intro="done"`.
-  - The hero defers *starting* playback until the aperture begins (t ≈ 950ms), so the clip isn't 1s in when revealed.
+  - The hero defers *starting* playback until the aperture begins (t ≈ 1900ms), so the clip has not advanced when revealed.
   - The hero ignores the intro entirely when it restores a settled entry.
 - **Focus:** the overlay is never focusable, and focus order is unchanged. The skip is implicit: the first Tab press ends the intro and lands on the header as today.
 - **Performance:**
@@ -100,7 +100,7 @@ Eight vertical charcoal slats retract left and right (as in Swiss Poster Counter
 2. Frequency: once per browser session (proposed), once ever (localStorage), or every homepage load?
 3. Should the "The T-House" Hurricane title appear in the intro, or only the house and red light?
 4. Do you have a vector version of the studio mark? It's needed for concept C and would improve A.
-5. Is ~1.5s right, or should it be snappier (~1s)?
+5. Timing approved after review: about 3.0s, with a 3.2s hard cap and unchanged immediate skipping.
 
 ## 7. 21st.dev references (technique only)
 

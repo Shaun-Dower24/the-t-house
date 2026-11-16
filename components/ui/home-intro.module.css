@@ -6,7 +6,7 @@
   place-items: center;
   background: var(--canvas);
   pointer-events: none;
-  animation: clear 0s var(--intro-failsafe-delay, 2.5s) forwards;
+  animation: clear 0s var(--intro-failsafe-delay, 4.5s) forwards;
 }
 .figure { width: min(82vw, 42rem, 110svh); text-align: center; }
 .drawing { position: relative; }

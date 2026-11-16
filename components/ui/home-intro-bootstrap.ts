@@ -29,7 +29,7 @@ export const homeIntroBootstrap = `(() => {
     inputs.forEach(type => window.addEventListener(type, finish, options));
     document.addEventListener('visibilitychange', hidden);
     window.addEventListener('t-house:intro-done', cleanup);
-    timer = setTimeout(finish, 1600);
+    timer = setTimeout(finish, 3200);
     hidden();
   } catch {}
 })();`;
@@ -40,7 +40,7 @@ export const homeIntroFailsafe = `
 @keyframes t-house-intro-visible { to { opacity: 1; } }
 html:is([data-intro="pending"], [data-intro="running"])::before {
   content: ''; position: fixed; inset: 0; z-index: 2; background: #0b0b0b;
-  pointer-events: none; animation: t-house-intro-clear 0s var(--intro-failsafe-delay, 2.5s) forwards;
+  pointer-events: none; animation: t-house-intro-clear 0s var(--intro-failsafe-delay, 4.5s) forwards;
 }
 html[data-intro="running"]::before { content: none; }
 html:is([data-intro="pending"], [data-intro="running"]) .site-header { opacity: .4; }
@@ -48,10 +48,10 @@ html:is([data-intro="pending"], [data-intro="running"]) [data-arrival-media] { c
 html:is([data-intro="pending"], [data-intro="running"], [data-intro="opening"]) [data-arrival-actions] { opacity: 0; }
 html[data-intro="done"] [data-arrival-media] { clip-path: none !important; }
 html:is([data-intro="pending"], [data-intro="running"], [data-intro="opening"]) [data-arrival-media] {
-  animation: t-house-intro-unclip 0s var(--intro-failsafe-delay, 2.5s) forwards;
+  animation: t-house-intro-unclip 0s var(--intro-failsafe-delay, 4.5s) forwards;
 }
 html:is([data-intro="pending"], [data-intro="running"], [data-intro="opening"]) :is(.site-header, [data-arrival-actions]) {
-  animation: t-house-intro-visible 0s var(--intro-failsafe-delay, 2.5s) forwards;
+  animation: t-house-intro-visible 0s var(--intro-failsafe-delay, 4.5s) forwards;
 }
 @media (prefers-reduced-motion: reduce), (forced-colors: active) {
   html[data-intro]::before { display: none; }

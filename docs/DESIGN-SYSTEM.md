@@ -33,7 +33,7 @@ On desktop, a hovered portrait card expands into a 16:9 artwork frame. Its heigh
 
 ## Homepage entrance
 
-The homepage's optional “Lights on” entrance uses the vector `HouseElevation`, not an enlarged raster mark. White architectural strokes draw over canvas black, a signature-red door blinks twice and “The T-House” appears in Hurricane. A measured door aperture opens onto the existing full-bleed arrival video or matching poster without a second reveal. It lasts about 1.55 seconds, capped at 1.6 seconds, once per tab session. The header remains present, briefly dimmed; input immediately restores the ordinary page. Reduced motion, forced colours, no JavaScript, restored history and internal navigation home retain the existing arrival without the entrance. The decorative overlay never blocks links, focus or native scrolling.
+The homepage's optional “Lights on” entrance uses the vector `HouseElevation`, not an enlarged raster mark. White architectural strokes draw over canvas black, a signature-red door blinks twice and “The T-House” appears in Hurricane. A measured door aperture opens onto the existing full-bleed arrival video or matching poster without a second reveal. It lasts about 3.1 seconds, capped at 3.2 seconds, once per tab session. The header remains present, briefly dimmed; input immediately restores the ordinary page. Reduced motion, forced colours, no JavaScript, restored history and internal navigation home retain the existing arrival without the entrance. The decorative overlay never blocks links, focus or native scrolling.
 
 ## Artwork and rights
 
