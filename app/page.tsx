@@ -46,7 +46,7 @@ export default function HomePage() {
               <dl className={styles.facts}>
                 <div><dt>Guest</dt><dd>Kojo Funds</dd></div>
                 <div><dt>Duration</dt><dd>{featuredVideo.duration}</dd></div>
-                <div><dt>Published</dt><dd><time dateTime={featuredVideo.publishedAt}>{formatVideoDate(featuredVideo.publishedAt.slice(0, 10))}</time></dd></div>
+                <div><dt>Published</dt><dd><time dateTime={featuredVideo.publishedAt}>{formatVideoDate(featuredVideo.publishedAt)}</time></dd></div>
               </dl>
               <div className={styles.links}><Link className="text-action" href={featuredVideo.href}>Watch episode <span aria-hidden="true">↗</span></Link><a className="text-action" href={featuredVideo.url}>Watch on YouTube <span aria-hidden="true">↗</span></a></div>
             </GlassPanel>
