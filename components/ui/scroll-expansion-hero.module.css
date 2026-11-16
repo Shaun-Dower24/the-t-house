@@ -8,7 +8,17 @@
   min-height: calc(100svh - 5rem);
   padding-block: 5rem 2rem;
 }
-.house { z-index: -1; }
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: url("/images/carousel-bg-poster.jpg") center / cover;
+}
+.background video { width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.background[data-playing] video { opacity: 1; }
+.background::after { content: ""; position: absolute; inset: 0; background: rgb(11 11 11 / 72%); }
+.house { z-index: -1; background: none; }
 .house :global(.arrival-art) { top: 48%; }
 .carousel { min-width: 0; }
 .scene[data-arrival-enhanced] { height: 200svh; }
@@ -19,6 +29,7 @@
   min-height: 0;
 }
 .scene[data-arrival-enhanced] .house { opacity: var(--arrival-reveal, 0); }
+.scene[data-arrival-enhanced] .background { opacity: var(--arrival-reveal, 0); }
 .scene[data-arrival-morph] .carousel { opacity: var(--arrival-reveal, 0); }
 .scene[data-arrival-morph] .carousel :global([data-destination="watch"]) { pointer-events: none; }
 @media (max-width: 47.999rem) {
@@ -31,4 +42,7 @@
 @media (prefers-reduced-motion: reduce), (forced-colors: active) {
   .scene[data-arrival-enhanced] { height: auto; }
   .scene[data-arrival-enhanced] .stage { position: relative; height: auto; min-height: calc(100svh - 5rem); }
+}
+@media (forced-colors: active) {
+  .background { display: none; }
 }

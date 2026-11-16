@@ -17,13 +17,16 @@ export function ScrollExpansionHero() {
     const scene = root.current;
     const stage = scene?.querySelector<HTMLElement>("[data-arrival-stage]");
     const frame = scene?.querySelector<HTMLElement>("[data-arrival-media]");
+    const background = scene?.querySelector<HTMLVideoElement>("[data-carousel-background] video");
     const art = frame?.parentElement;
     const preferences = scene?.closest<HTMLElement>("[data-motion], .prototype");
-    if (!scene || !stage || !frame || !art || !preferences) return;
+    if (!scene || !stage || !frame || !background || !art || !preferences) return;
     const query = window.matchMedia("(prefers-reduced-motion: reduce), (forced-colors: active)");
     let disposed = false;
     let visible = false;
     let failed = false;
+    let backgroundFailed = false;
+    let backgroundRevealed = false;
     let teardown: (() => void) | undefined;
     let generation = 0;
     const player = createYouTubeArrival(frame, () => { failed = true; });
@@ -32,11 +35,46 @@ export function ScrollExpansionHero() {
       return preferences?.dataset.motion === "full" && !query.matches;
     }
 
+    function backgroundError() {
+      backgroundFailed = true;
+      background?.pause();
+      background?.parentElement?.removeAttribute("data-playing");
+    }
+
+    function backgroundPlaying() {
+      if (!disposed) background?.parentElement?.setAttribute("data-playing", "true");
+    }
+
+    background.addEventListener("playing", backgroundPlaying);
+    background.addEventListener("error", backgroundError);
+
     function playback() {
       if (disposed || !scene) return;
       const watchActive = scene.querySelector('[data-carousel-slide][data-active="true"] [data-destination="watch"]');
       const intro = document.documentElement.dataset.intro;
       const waitingForIntro = (intro === "pending" || intro === "running" || intro === "ready") && !window.history.state?.[historyKey];
+      if (background) {
+        const sources = background.querySelectorAll<HTMLSourceElement>("source");
+        if (!eligible()) {
+          background.pause();
+          if (background.querySelector("source[src]")) {
+            sources.forEach(source => source.removeAttribute("src"));
+            background.load();
+          }
+          background.parentElement?.removeAttribute("data-playing");
+        } else if (!visible || document.hidden || waitingForIntro || !backgroundRevealed || backgroundFailed) {
+          background.pause();
+        } else {
+          if (!background.querySelector("source[src]")) {
+            sources.forEach(source => { source.src = source.dataset.src!; });
+            background.load();
+          }
+          background.muted = true;
+          if (background.paused) void background.play().catch((error: unknown) => {
+            if (!disposed && !(error instanceof DOMException && error.name === "AbortError")) backgroundError();
+          });
+        }
+      }
       const canPlay = eligible() && visible && !!watchActive && !document.hidden && !failed && !waitingForIntro;
       player.update(canPlay, eligible() && !failed);
     }
@@ -78,6 +116,8 @@ export function ScrollExpansionHero() {
       function draw(value: number) {
         if (!scene || !stage || !frame || !art) return;
         progress = chosen ? 1 : value;
+        const revealBackground = progress > 0.02;
+        if (backgroundRevealed !== revealBackground) { backgroundRevealed = revealBackground; playback(); }
         const morphing = progress < 0.999;
         scene.toggleAttribute("data-arrival-morph", morphing);
         stage.style.setProperty("--arrival-reveal", String(Math.min(1, progress * 1.7)));
@@ -130,6 +170,9 @@ export function ScrollExpansionHero() {
     void configure();
     return () => {
       disposed = true; generation++; player.destroy(); teardown?.();
+      background.pause();
+      background.removeEventListener("playing", backgroundPlaying);
+      background.removeEventListener("error", backgroundError);
       visibility.disconnect(); selection.disconnect(); mode.disconnect();
       query.removeEventListener("change", configure);
       document.removeEventListener("visibilitychange", playback);
@@ -147,6 +190,12 @@ export function ScrollExpansionHero() {
     <div className={styles.stage} data-arrival-stage>
       <HomeIntro />
       <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
+      <div className={styles.background} data-carousel-background aria-hidden="true">
+        <video muted loop playsInline autoPlay preload="metadata" poster="/images/carousel-bg-poster.jpg" tabIndex={-1}>
+          <source data-src="/videos/carousel-bg.webm" type="video/webm" />
+          <source data-src="/videos/carousel-bg.mp4" type="video/mp4" />
+        </video>
+      </div>
       <div className={`hero-environment ${styles.house}`} aria-hidden="true"><div className="arrival-art"><HouseElevation /></div></div>
       <div id="arrival-carousel" className={styles.carousel}
         onFocusCapture={settleArrival}
