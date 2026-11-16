@@ -44,7 +44,7 @@ function closestCard(rail: HTMLUListElement) {
   return distances.indexOf(Math.min(...distances));
 }
 
-export function HeroCarousel() {
+export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
   const rail = useRef<HTMLUListElement>(null);
   const browsed = useRef(0);
   const drag = useRef<Drag>(null);
@@ -183,6 +183,7 @@ export function HeroCarousel() {
       const shown = Number.parseFloat(getComputedStyle(event.currentTarget).getPropertyValue("--t-house-orbit-angle"));
       if (Number.isFinite(shown)) current.angle = shown;
       current.moved = true;
+      onBrowse?.();
       ignoreClick.current = true;
       event.currentTarget.setAttribute("data-dragging", "");
       event.currentTarget.setPointerCapture(event.pointerId);
