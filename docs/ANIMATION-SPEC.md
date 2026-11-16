@@ -24,7 +24,7 @@
 
 ## Interaction rules
 
-- Homepage glass sections use a small IntersectionObserver boundary for one-shot 550ms reveals (12px travel, opacity .6 to 1); nothing is hidden before JavaScript or observer initialization. Focus within immediately removes a reveal. Interactive glass links lift 3px with equal hover/focus emphasis; the enquiry CTA shimmers once for 800ms on hover/focus, not continuously. System and site reduced motion remove reveals, shimmer, lift and transitions. Existing gate, arrival morph, carousel and masked reel behaviour/geometry are unchanged.
+- Glass is a CSS-only treatment on existing surfaces. It adds no reveals, shimmer, lift or observers; existing hover/focus and system/site reduced-motion behaviour remain. Gate, arrival morph, carousel and masked reel geometry/behaviour are unchanged.
 
 - Tie scroll motion to document travel and keep the browser’s normal scrolling, navigation and history.
 - The arrival lazily loads a privacy-enhanced `youtube-nocookie.com` iframe only when eligible and allowed to play. Keep the poster until the API reports playing and on embed/API failure or blocked autoplay. Cover the clipped frame with a centred 16:9 iframe, with pointer events disabled. The API mutes, seeks each loop to 13 seconds and pauses/resumes for visibility, active card and entrance-door state. Route-transition clones use the poster rather than copying a cross-origin player.
