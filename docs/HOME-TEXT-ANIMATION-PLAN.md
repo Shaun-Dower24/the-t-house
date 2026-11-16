@@ -1,6 +1,6 @@
 # Homepage text animation plan
 
-Status: all five effects are built and checked (see [Implementation status](IMPLEMENTATION-STATUS.md)). The preview is at https://text-motion--the-t-house.netlify.app. Nothing goes live and nothing is merged without your say-so.
+Status: all five effects are live on https://the-t-house.netlify.app since 16 November 2026, after owner approval of the preview at https://text-motion--the-t-house.netlify.app. Checks are recorded in [Implementation status](IMPLEMENTATION-STATUS.md). Nothing goes live and nothing is merged without your say-so.
 
 ## 1. What we're adding
 
