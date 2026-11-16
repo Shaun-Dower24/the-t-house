@@ -1,6 +1,6 @@
 # Homepage graffiti redesign plan
 
-Status: plan only, not built. Scope: the homepage `/` first. Other pages follow once the direction is approved.
+Status: step 1 built — fonts, shared styling primitives and site-wide header/footer. Gate, carousel and homepage section restyles remain planned. Scope: the homepage `/` first, except the approved shared header/footer treatment.
 
 ## 1. Brief
 

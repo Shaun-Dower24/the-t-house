@@ -20,6 +20,9 @@
   --ink: var(--canvas);
   --line: rgb(255 255 255 / 29%);
   --font-script: "Hurricane", var(--font-sans);
+  --font-tag: "Sedgwick Ave Display", var(--font-sans);
+  --font-marker: "Permanent Marker", var(--font-sans);
+  --font-label: "Barlow Condensed", var(--font-sans);
   --display-weight: 700;
   --display-spacing: -0.035em;
   --gutter: clamp(1.125rem, 5vw, 5rem);
@@ -64,6 +67,9 @@ html {
   filter: url("#text-antialiasing");
 }
 body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.76' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='white' opacity='.035' filter='url(%23grain)' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+}
 ::selection { background: var(--sign-white); color: var(--canvas); }
 
 :focus-visible {
@@ -751,6 +757,161 @@ html:has(.site-menu[open]) { overflow: hidden; }
   html {
     @apply font-sans;
   }
+}
+
+.tag-title {
+  font-family: var(--font-tag);
+  font-weight: 400;
+  color: var(--signature-red);
+  line-height: 1.1;
+  transform: rotate(-2deg);
+  text-shadow: 1px 2px 0 rgb(200 56 56 / 18%), -3px 1px 12px rgb(200 56 56 / 24%);
+}
+
+.marker-frame, .sticker, .drip { position: relative; isolation: isolate; }
+.marker-frame::before, .sticker::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid currentColor;
+  border-radius: 2px 5px 1px 3px;
+  filter: url(#graffiti-roughen);
+  pointer-events: none;
+}
+.sticker {
+  background: var(--sign-white);
+  color: var(--canvas);
+  box-shadow: 2px 3px 0 rgb(0 0 0 / 50%);
+}
+.sticker::before { transform: rotate(-1deg); opacity: .65; }
+.sticker::after {
+  content: "";
+  position: absolute;
+  width: 1.2rem;
+  height: .3rem;
+  top: -.12rem;
+  left: 16%;
+  background: var(--signature-red);
+  transform: rotate(-9deg);
+  pointer-events: none;
+}
+.drip::after {
+  content: "";
+  position: absolute;
+  bottom: -.7rem;
+  left: 18%;
+  width: 2px;
+  height: .8rem;
+  border-radius: 0 0 2px 2px;
+  background: var(--signature-red);
+  box-shadow: 9px -.3rem 0 var(--signature-red), 18px -.1rem 0 var(--signature-red);
+  filter: url(#graffiti-drip);
+  pointer-events: none;
+}
+
+.header-nav a, .menu-links a, .menu-socials a, .footer-nav a, .marker-link {
+  position: relative;
+  font-family: var(--font-label);
+  font-weight: 600;
+  text-decoration: none;
+}
+.header-nav a::after, .menu-links a::after, .menu-socials a::after,
+.footer-nav a::after, .marker-link::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 .1em;
+  height: 3px;
+  background: currentColor;
+  clip-path: polygon(0 50%, 18% 10%, 59% 30%, 100% 0, 97% 75%, 30% 100%, 2% 80%);
+  transform: scaleX(0) rotate(-1deg);
+  transform-origin: left;
+  transition: transform 180ms ease-out;
+  pointer-events: none;
+}
+.header-nav a:is(:hover, :focus-visible, [aria-current="page"]),
+.menu-links a:is(:hover, :focus-visible, [aria-current="page"]),
+.menu-socials a:is(:hover, :focus-visible), .footer-nav a:is(:hover, :focus-visible),
+.marker-link:is(:hover, :focus-visible) { text-decoration: none; }
+.header-nav a:is(:hover, :focus-visible, [aria-current="page"])::after,
+.menu-links a:is(:hover, :focus-visible, [aria-current="page"])::after,
+.menu-socials a:is(:hover, :focus-visible)::after,
+.footer-nav a:is(:hover, :focus-visible)::after,
+.marker-link:is(:hover, :focus-visible)::after { transform: scaleX(1) rotate(-1deg); }
+
+.menu-trigger.sticker {
+  color: var(--canvas);
+  font-family: var(--font-marker);
+  font-weight: 400;
+  border-color: transparent;
+  text-decoration: none;
+}
+.menu-trigger.sticker:is(:hover, :focus-visible) { background: var(--sign-white); color: var(--canvas); text-decoration: none; }
+.menu-trigger.sticker:is(:hover, :focus-visible)::before { border-width: 2px; }
+.site-header, .site-footer { border-color: transparent; }
+.graffiti-edge {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  color: var(--sign-white);
+  opacity: .55;
+  pointer-events: none;
+  overflow: hidden;
+}
+.graffiti-edge-bottom { bottom: -4px; }
+.graffiti-edge-top { top: 0; }
+.graffiti-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#graffiti-roughen);
+}
+.social-links { display: grid; gap: .65rem; }
+.social-links a.sticker {
+  padding-inline: .8rem;
+  border: 0;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--canvas);
+}
+.social-links a.sticker span { color: inherit; }
+.social-links a.sticker:is(:hover, :focus-visible)::before { border-width: 2px; }
+.footer-tag {
+  position: absolute;
+  width: 4rem;
+  height: auto;
+  left: 62%;
+  bottom: .5rem;
+  color: var(--sign-white);
+  opacity: .7;
+  pointer-events: none;
+}
+.footer-tag-signature { fill: none; stroke: var(--signature-red); stroke-width: 2; stroke-linecap: round; }
+@media (max-width: 47.999rem) {
+  .footer-tag { left: var(--gutter); top: .05rem; bottom: auto; width: 2rem; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body { background-image: none; }
+  .tag-title { font-family: var(--font-sans); font-weight: 700; text-shadow: none; transform: none; }
+  .graffiti-edge, .footer-tag { opacity: 1; }
+}
+@media (forced-colors: active) {
+  body { background-image: none; }
+  .tag-title { font-family: var(--font-sans); font-weight: 700; color: CanvasText; text-shadow: none; transform: none; }
+  .graffiti-stroke, .marker-frame::before, .sticker::before, .drip::after { filter: none; }
+  .graffiti-edge, .footer-tag, .sticker::after, .drip::after { display: none; }
+  .site-header, .site-footer { border-color: CanvasText; }
+  .sticker, .social-links a.sticker, .menu-trigger.sticker { background: Canvas; color: CanvasText; border: 1px solid ButtonText; box-shadow: none; }
+  .header-nav a:is(:hover, :focus-visible, [aria-current="page"]),
+  .menu-links a:is(:hover, :focus-visible, [aria-current="page"]),
+  .menu-socials a:is(:hover, :focus-visible), .footer-nav a:is(:hover, :focus-visible),
+  .marker-link:is(:hover, :focus-visible) { text-decoration: underline; }
 }
 
 .magnetic-button-demo {

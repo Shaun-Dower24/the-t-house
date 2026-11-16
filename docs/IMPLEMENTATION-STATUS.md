@@ -1,5 +1,11 @@
 # The T-House implementation status
 
+## Graffiti homepage — step 1
+
+- Added self-hosted Latin Sedgwick Ave Display 400, Permanent Marker 400 and Barlow Condensed 600, with shared tag/marker/label tokens; Barlow body text and existing page titles remain unchanged in this step. Added static styling utilities, grayscale wall grain, and one shared filter-definitions block. Roughening is confined to decorative borders and strokes, never text or masks.
+- Restyled the shared header/footer site-wide: condensed navigation with matching hover/focus marker underlines, taped menu/social stickers, rough decorative edges and an original small house doodle. No sections, copy or links changed; house geometry, reel mask, gate and arrival logic are untouched.
+- Chromium at 390/1440: no overflow or console errors, original sections, visible keyboard focus, menu/Escape focus return, no-JS, system/site reduced motion, forced colours and reduced transparency passed. Header/footer and full-page screenshots are under `/home/ubuntu/shots/graffiti-step1-*.png`. Browser checks isolate the unrelated YouTube API; real video playback, Safari/Firefox and physical phones were not retested. Lint, standalone TypeScript and production build passed. Font installation reported 13 dependency vulnerabilities (2 low, 11 moderate); dependency remediation is outside this styling step.
+
 ## Rebuild scope
 
 The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes cover Home, Watch, the individual release, Inside the House, About and Connect. The homepage feature opens the episode page, where viewers can load the privacy-enhanced player, share the episode or watch directly on YouTube. Its official source supplies the title, 3:43 duration, publication timestamp and thumbnail. [Official upload](https://www.youtube.com/watch?v=9adqs1vgcMA)

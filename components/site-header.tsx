@@ -45,7 +45,7 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
             <Link href="/connect" className="header-secondary" aria-current={pathname === "/connect" ? "page" : undefined}>Connect</Link>
           </nav>
           {enhanced && (
-            <button ref={menu} type="button" className="menu-trigger" aria-haspopup="dialog" aria-controls="site-menu" onClick={() => dialog.current?.showModal()}>
+            <button ref={menu} type="button" className="menu-trigger sticker" aria-haspopup="dialog" aria-controls="site-menu" onClick={() => dialog.current?.showModal()}>
               <span aria-hidden="true" className="menu-icon" /> Menu
             </button>
           )}
@@ -56,7 +56,7 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
           <div className="menu-top">
             <StudioMark className="studio-mark menu-mark" />
             <h2 id="menu-title" className="sr-only">The T-House / Menu</h2>
-            <form method="dialog"><button className="menu-trigger" autoFocus>Close <span aria-hidden="true">×</span></button></form>
+            <form method="dialog"><button className="menu-trigger sticker" autoFocus>Close <span aria-hidden="true">×</span></button></form>
           </div>
           <nav aria-label="Site menu" className="menu-links">
             {links.map(({ href, label }) => (
@@ -77,6 +77,9 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
           </div>
         </div>
       </dialog>
+      <svg className="graffiti-edge graffiti-edge-bottom" viewBox="0 0 1440 8" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path className="graffiti-stroke" d="M0 3 120 4 267 2 410 5 599 3 760 4 944 2 1100 5 1267 3 1440 4 M12 6 210 5 390 7 510 5 M1010 6 1190 7 1430 5" />
+      </svg>
     </header>
   );
 }
