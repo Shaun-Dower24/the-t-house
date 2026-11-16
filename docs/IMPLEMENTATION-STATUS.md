@@ -15,6 +15,13 @@ The full website follows [Website Master Plan v1.1](MASTER-PLAN.md). Its routes 
 
 ## Verification
 
+### Responsive carousel backdrop fit
+
+- Implemented the approved `CAROUSEL-BACKGROUND-FIT-PLAN.md`: from 48rem, one centred, contained video sits over a matching contained static poster and a cover-fitted poster underlay blurred by 1rem. The underlay extends 3rem past the clipped backdrop to avoid blur-edge halos. The existing 72% canvas scrim remains above all three layers. Below 48rem, the previous cover composition is unchanged.
+- No new media, second video, playback/controller changes or stage/carousel/Watch geometry changes. Static/error/reduced-motion/no-JS states retain the same responsive poster composition; forced colours hide the entire backdrop. Existing lazy loading, gate deferral, visibility pause, pointer-inert and aria-hidden behavior are unchanged.
+- Verified Chromium at 1280×800, 1440×900, 1920×1080, 2560×1440, 768×1024 and 390×844, plus 1440 mid-morph. All measured stage, section, carousel, media-frame and backdrop rects match the pre-fix baseline exactly; tablet/desktop videos use contain, while the phone retains cover. Screenshots in `/home/ubuntu/shots/bg-fit-after/` were visually reviewed: intentional sharp portrait boundaries against the soft fill, no blur-edge halos or unintended seams, no horizontal overflow or page errors. A post-seek mid-morph capture was resampled after a presented video frame to avoid a transient capture artefact.
+- Background playback/lifecycle and fallback checks passed at 390 and 1280, including no JS, system/site reduced motion, forced colours, failed media, blocked autoplay and MP4 fallback. Additional 1440 static-composition checks verified matching contained poster/video framing, the 16px blur/48px overscan, one video and the full-layer scrim. Gate poster comparisons remained pixel-identical at 390/1280; 12 forward/reverse handoff samples differed by at most 0.015625px. iPhone 13/Pixel 7 emulation retained zero stationary-contact jumps and passed native pan/resize, fling/reverse, swipe and tap checks. Lint, TypeScript and production build passed. Hidden-tab state was simulated; Firefox, Safari and physical devices were not rechecked. Local backdrop checks isolated the unrelated YouTube API.
+
 ### Permitted Instagram carousel backdrop
 
 - Source: [SVOnTheBeat Instagram reel DePXvADO6zk](https://www.instagram.com/reel/DePXvADO6zk/). The owner confirmed SV's permission to host this footage. Downloaded with yt-dlp; the separately embedded YouTube arrival remains unchanged and was not downloaded.

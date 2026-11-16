@@ -1,6 +1,6 @@
 # Carousel background fit — diagnosis and proposed fix
 
-Status: **plan only; approval needed before implementation**. Baseline: `773af81`, branch `devin/1794833551-youtube-hero`.
+Status: **approved and implemented**. At 48rem and up, the single video and static poster use centred contain over a blurred, overscanned poster fill; phones retain cover. Baseline diagnosis: `773af81`, branch `devin/1794833551-youtube-hero`. Verification results are recorded in `IMPLEMENTATION-STATUS.md`.
 
 ## Observed problem
 
@@ -42,7 +42,7 @@ All sizes compute `object-fit: cover`, `object-position: 50% 50%`, source 540×9
 - `components/ui/scroll-expansion-hero.module.css:11–20` stretches the background/video box to the stage and applies centred `cover` to both video and poster. `:24–30` makes that stage viewport-sized. A 9:16 image covering a landscape viewport necessarily discards roughly two thirds of its height; no responsive framing alternative is provided. The 540px encode magnifies the softness.
 - Counter-check against a sizing/stacking bug: the measured boxes and screenshots show complete stage coverage, no overflow, and the intended transparent house above the video. Merely adding `inset:0`, `width/height:100%`, `display:block` or `object-fit:cover` will not solve this; those conditions already hold.
 
-## Recommended fix, subject to approval
+## Recommended fix — approved
 
 **Desktop: full-stage soft fill plus a centred, uncropped portrait video.** Keep the existing background wrapper and scrim. Use a blurred, cover-fitted version of the poster as a separate underlay, then fit the one existing video with `contain` inside that wrapper. Centre it; keep the full-stage 72% scrim above both. Slightly overscan/clip only the blurred underlay to prevent blur-edge halos. No second video decoder or synchronisation is needed. Use the same contained-poster composition before playing or on error so framing does not jump. Leave the phone's current cover treatment unchanged; initially apply the alternate composition at the existing 48rem breakpoint, then review tablet framing explicitly.
 
@@ -68,4 +68,4 @@ Evidence directory: `/home/ubuntu/shots/bg-fit/`. Landed screenshots: `1280x800-
 2. Must the reel's embedded captions remain visible, and is there a preferred subject/frame? If a different defect (bands/gaps) was seen, which browser, viewport and screenshot?
 3. If sharper large-desktop footage needs a larger download, what asset-size budget is acceptable, or is approved landscape footage available?
 
-No application code/assets changed. Only this plan is committed; implementation and regression suites await approval.
+The measurements above describe the pre-fix baseline. Approval selected the recommended composition for tablets and desktops; no new media or second video was introduced.

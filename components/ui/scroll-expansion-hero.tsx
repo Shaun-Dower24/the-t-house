@@ -191,6 +191,7 @@ export function ScrollExpansionHero() {
       <HomeIntro />
       <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
       <div className={styles.background} data-carousel-background aria-hidden="true">
+        <div className={styles.backgroundPoster} />
         <video muted loop playsInline autoPlay preload="metadata" poster="/images/carousel-bg-poster.jpg" tabIndex={-1}>
           <source data-src="/videos/carousel-bg.webm" type="video/webm" />
           <source data-src="/videos/carousel-bg.mp4" type="video/mp4" />
