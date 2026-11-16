@@ -181,9 +181,10 @@ export function ScrollExpansionHero() {
       </div>
       <div id="arrival-carousel" className={styles.carousel}
         onFocusCapture={settleArrival}
-        onPointerDownCapture={settleArrival}
+        onPointerDownCapture={(event) => { if (event.pointerType === "mouse") settleArrival(); }}
+        onClickCapture={settleArrival}
         onKeyDownCapture={settleArrival}>
-        <HeroCarousel />
+        <HeroCarousel onBrowse={settleArrival} />
       </div>
     </div>
   </section>;
