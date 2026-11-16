@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { HeroCarousel } from "../hero-carousel";
 import { HouseElevation } from "../house-elevation";
+import { HomeIntro } from "./home-intro";
 import styles from "./scroll-expansion-hero.module.css";
 
 const historyKey = "tHouseArrivalSettled";
@@ -36,7 +37,9 @@ export function ScrollExpansionHero() {
     function playback() {
       if (!video || !scene) return;
       const watchActive = scene.querySelector('[data-carousel-slide][data-active="true"] [data-destination="watch"]');
-      const canPlay = eligible() && visible && !!watchActive && !document.hidden && !failed;
+      const intro = document.documentElement.dataset.intro;
+      const waitingForIntro = (intro === "pending" || intro === "running" || intro === "ready") && !window.history.state?.[historyKey];
+      const canPlay = eligible() && visible && !!watchActive && !document.hidden && !failed && !waitingForIntro;
       setPlayable(eligible() && !failed);
       if (!eligible() && video.hasAttribute("src")) {
         video.pause(); video.removeAttribute("src"); video.load();
@@ -64,6 +67,8 @@ export function ScrollExpansionHero() {
     });
     visibility.observe(stage);
     document.addEventListener("visibilitychange", playback);
+    window.addEventListener("t-house:intro-aperture", playback);
+    window.addEventListener("t-house:intro-done", playback);
     scene.addEventListener("arrival-playback", playback);
     const selection = new MutationObserver(playback);
     selection.observe(scene, { subtree: true, attributes: true, attributeFilter: ["data-active"] });
@@ -141,6 +146,8 @@ export function ScrollExpansionHero() {
       visibility.disconnect(); selection.disconnect(); mode.disconnect();
       query.removeEventListener("change", configure);
       document.removeEventListener("visibilitychange", playback);
+      window.removeEventListener("t-house:intro-aperture", playback);
+      window.removeEventListener("t-house:intro-done", playback);
       scene.removeEventListener("arrival-playback", playback);
       video.removeEventListener("error", onError);
     };
@@ -161,9 +168,10 @@ export function ScrollExpansionHero() {
 
   return <section id="arrival" ref={root} className={styles.scene} aria-labelledby="arrival-heading">
     <div className={styles.stage} data-arrival-stage>
+      <HomeIntro />
       <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
       <div className={`hero-environment ${styles.house}`} aria-hidden="true"><div className="arrival-art"><HouseElevation /></div></div>
-      <div className={styles.actions}>
+      <div className={styles.actions} data-arrival-actions>
         <a href="#arrival-carousel" onClick={(event) => { event.preventDefault(); explore(); }}>Explore carousel ↓</a>
         {playable && <button type="button" onClick={() => {
           userPaused.current = !userPaused.current;
