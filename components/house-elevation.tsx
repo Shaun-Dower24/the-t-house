@@ -1,6 +1,23 @@
+const houseViewBox = "0 0 1000 540";
+
+export const HOUSE_OPENINGS = {
+  attic: "M287 227v-43l46-34 46 35v42z",
+  upperLeft: "M206 265h49v65h-49z",
+  upperMiddle: "M431 254h48v72h-48z",
+  upperNarrow: "M511 256h38v62h-38z",
+  dormer: "M625 258h57v35h-57z",
+  upperRight: "M755 251h46v44h-46z",
+  lowerLeft: "M213 364h97v37h-97z",
+  door: "M378 426v-55h72v55",
+  lowerMiddle: "M505 354h58v48h-58z",
+  lowerRight: "M674 357h133v50H674z",
+};
+
+export const HOUSE_OPENING_MASK = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${houseViewBox}" preserveAspectRatio="xMidYMid meet"><g fill="white">${Object.entries(HOUSE_OPENINGS).map(([name, d]) => `<path id="${name}" d="${d}"/>`).join("")}</g></svg>`)}")`;
+
 export function HouseElevation() {
   return (
-    <svg className="house-elevation" viewBox="0 0 1000 540" fill="none" aria-hidden="true">
+    <svg className="house-elevation" viewBox={houseViewBox} preserveAspectRatio="xMidYMid meet" fill="none" aria-hidden="true">
       <g className="elevation-guides" data-house-detail>
         <path d="M68 462H943M82 470H929M113 480H893M173 136V488M353 60V488M548 122V488M759 98V488M867 158V488" />
         <path d="M141 205H878M112 326H926M221 105H799M86 430H933M126 455V469M886 455V469" />
@@ -18,12 +35,12 @@ export function HouseElevation() {
         <path pathLength="1" d="M579 304v-86l75-48 71 58v73m-132-1v-76l61-40 58 49v64M570 220l84-61 86 72" />
       </g>
       <g className="elevation-detail" data-house-detail>
-        <path d="M275 238v-60l58-42 58 44v58zm12-11v-43l46-34 46 35v42zm46-75v75m-45-36h90m-90 18h90" />
-        <path d="M198 257h65v81h-65zm8 8h49v65h-49zm25 0v65m-25-43h49m-49 22h49m168-63h64v88h-64zm8 8h48v72h-48zm24 0v72m-24-48h48m-48 24h48" />
-        <path d="M504 249h52v76h-52zm7 7h38v62h-38zm19 0v62m-19-40h38M617 251h73v49h-73zm8 7h57v35h-57zm29 0v35m-29-17h57" />
-        <path d="M748 243h60v60h-60zm7 8h46v44h-46zm23 0v44m-23-23h46M205 356h113v53H205zm8 8h97v37h-97zm24 0v37m25-37v37m24-37v37m-73-18h97" />
-        <path d="M364 427v-66l45-38 56 39v65m-87-1v-55h72v55m-63 0v-45h54v45m-27-44v43m18-23h2M496 347h76v62h-76zm9 7h58v48h-58zm29 0v48m-29-24h58" />
-        <path d="M665 347h151v70H665zm9 10h133v50H674zm0 11h133m-133 13h133m-133 13h133m-24-36v48m-28-48v48m-28-48v48m-28-48v48" />
+        <path d={`M275 238v-60l58-42 58 44v58z${HOUSE_OPENINGS.attic}m46-75v75m-45-36h90m-90 18h90`} />
+        <path d={`M198 257h65v81h-65z${HOUSE_OPENINGS.upperLeft}m25 0v65m-25-43h49m-49 22h49m168-63h64v88h-64z${HOUSE_OPENINGS.upperMiddle}m24 0v72m-24-48h48m-48 24h48`} />
+        <path d={`M504 249h52v76h-52z${HOUSE_OPENINGS.upperNarrow}m19 0v62m-19-40h38M617 251h73v49h-73z${HOUSE_OPENINGS.dormer}m29 0v35m-29-17h57`} />
+        <path d={`M748 243h60v60h-60z${HOUSE_OPENINGS.upperRight}m23 0v44m-23-23h46M205 356h113v53H205z${HOUSE_OPENINGS.lowerLeft}m24 0v37m25-37v37m24-37v37m-73-18h97`} />
+        <path d={`M364 427v-66l45-38 56 39v65${HOUSE_OPENINGS.door}m-63 0v-45h54v45m-27-44v43m18-23h2M496 347h76v62h-76z${HOUSE_OPENINGS.lowerMiddle}m29 0v48m-29-24h58`} />
+        <path d={`M665 347h151v70H665z${HOUSE_OPENINGS.lowerRight}m0 11h133m-133 13h133m-133 13h133m-24-36v48m-28-48v48m-28-48v48m-28-48v48`} />
         <path d="M216 207l130-93 172 121m-115-83 86 63m80-15 67-26m90 27 25-17 65 49m-510 91v-76m295 111v52m-435-65h170m148 71h141m17 14h182" />
         <path d="M231 450h96m39 0h100m179 0h121m-439-7v9m139-9v9m-59 3v14m466-39h27m-16-7v14" />
       </g>

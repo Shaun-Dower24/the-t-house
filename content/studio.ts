@@ -62,6 +62,7 @@ export const videoKindLabels = {
   music: "Music",
 } as const;
 
-export function getEmbedUrl(id: string) {
-  return `https://www.youtube-nocookie.com/embed/${id}`;
+export function getEmbedUrl(id: string, parameters?: Record<string, string | number>) {
+  const query = parameters && new URLSearchParams(Object.entries(parameters).map(([key, value]) => [key, String(value)]));
+  return `https://www.youtube-nocookie.com/embed/${id}${query ? `?${query}` : ""}`;
 }

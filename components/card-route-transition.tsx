@@ -86,13 +86,13 @@ function captureVideoFrame(video: HTMLVideoElement) {
   }
 }
 
-function cloneWithoutVideo(node: Node, video: HTMLVideoElement | null): Node | null {
-  if (node === video) return null;
-  if (!video || !node.contains(video)) return node.cloneNode(true);
+function cloneWithoutMedia(node: Node, media: HTMLVideoElement | HTMLIFrameElement | null): Node | null {
+  if (node === media) return null;
+  if (!media || !node.contains(media)) return node.cloneNode(true);
 
   const wrapper = node.cloneNode(false);
   for (const child of node.childNodes) {
-    const copy = cloneWithoutVideo(child, video);
+    const copy = cloneWithoutMedia(child, media);
     if (copy) wrapper.appendChild(copy);
   }
   return wrapper;
@@ -112,11 +112,12 @@ function copyFrontFace(source: HTMLAnchorElement, face: HTMLElement, visual: Vis
   front.style.transform = "none";
   front.style.transition = "none";
 
-  const video = source.querySelector<HTMLVideoElement>("video[data-hero-video]");
+  const media = source.querySelector<HTMLVideoElement | HTMLIFrameElement>("video[data-hero-video], iframe[data-hero-player]");
   for (const child of source.childNodes) {
-    const copy = cloneWithoutVideo(child, video);
+    const copy = cloneWithoutMedia(child, media);
     if (copy) front.append(copy);
   }
+  front.querySelector("[data-arrival-media]")?.removeAttribute("data-playing");
   const image = front.querySelector("img");
   const sourceUrl = visual.videoStill?.src || source.querySelector("img")?.currentSrc;
   if (image && sourceUrl) {

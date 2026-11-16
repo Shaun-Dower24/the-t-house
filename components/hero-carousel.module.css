@@ -121,8 +121,11 @@
   object-position: var(--arrival-focal-point, 50% 50%);
 }
 
-.videoFrame { position: absolute; inset: 0; display: block; overflow: hidden; z-index: 1; }
-.videoFrame video { width: 100%; height: 100%; object-fit: cover; object-position: var(--arrival-focal-point, 50% 50%); }
+.videoFrame { position: absolute; inset: 0; display: block; overflow: hidden; z-index: 1; container-type: size; pointer-events: none; }
+.videoFrame img { width: 100%; height: 100%; object-fit: cover; object-position: var(--arrival-focal-point, 50% 50%); }
+.videoFrame iframe { position: absolute; top: 50%; left: 50%; width: max(100cqw, 177.777778cqh); height: max(100cqh, 56.25cqw); transform: translate(-50%, -50%); border: 0; pointer-events: none; opacity: 0; }
+.videoFrame[data-playing] iframe { opacity: 1; }
+.videoFrame[data-playing] img { opacity: 0; }
 
 .art svg {
   position: absolute;

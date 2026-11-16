@@ -46,7 +46,6 @@ export const homeIntroBootstrap = `(() => {
 export const homeIntroFailsafe = `
 @keyframes t-house-intro-clear { to { opacity: 0; visibility: hidden; } }
 @keyframes t-house-intro-unclip { to { clip-path: inset(0); } }
-@keyframes t-house-intro-visible { to { opacity: 1; } }
 @keyframes t-house-intro-unlock { to { overflow: visible; } }
 html:is([data-intro="pending"], [data-intro="running"], [data-intro="ready"], [data-intro="opening"]) { overflow: hidden; }
 html[data-intro="pending"] { animation: t-house-intro-unlock 0s 6s forwards; }
@@ -55,17 +54,13 @@ html[data-intro="pending"]::before {
   pointer-events: auto; animation: t-house-intro-clear 0s 6s forwards;
 }
 html:is([data-intro="pending"], [data-intro="running"], [data-intro="ready"]) [data-arrival-media] { clip-path: inset(50%); }
-html:is([data-intro="pending"], [data-intro="running"], [data-intro="ready"], [data-intro="opening"]) [data-arrival-actions] { opacity: 0; }
 html[data-intro="done"] [data-arrival-media] { clip-path: none !important; }
 html[data-intro="pending"] [data-arrival-media] {
   animation: t-house-intro-unclip 0s 6s forwards;
 }
-html[data-intro="pending"] [data-arrival-actions] {
-  animation: t-house-intro-visible 0s 6s forwards;
-}
 @media (prefers-reduced-motion: reduce), (forced-colors: active) {
   html[data-intro]::before { display: none; }
-  html[data-intro] :is(.site-header, [data-arrival-actions]) { opacity: 1; }
+  html[data-intro] .site-header { opacity: 1; }
   html[data-intro] [data-arrival-media] { clip-path: none; }
 }
 `;
