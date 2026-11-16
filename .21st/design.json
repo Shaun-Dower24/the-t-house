@@ -59,9 +59,13 @@
   },
   "constraints": {
     "must": ["Use real route links and honour system and site motion preferences", "Keep the image-derived studio mark compact and use signature red for decorative details"],
-    "avoid": ["Autoplay and navigation triggered by swiping or focus"]
+    "avoid": ["Automatic carousel browsing and navigation triggered by swiping or focus", "Scroll hijacking and React renders per scroll frame"]
   },
   "decisions": [{
+    "id": "home-video-arrival",
+    "decision": "Scrub a full-bleed silent background loop into the actual Watch art box with native scroll and GSAP ScrollTrigger. Keep one video mounted, reveal the house and carousel, and let intentional browsing settle the arrival. Keep a pause control, offscreen/tab/selection pausing, and a static poster rail for reduced motion, forced colours and no JavaScript. Episode playback stays user-initiated. The demo footage requires production approval.",
+    "source": "docs/HOME-HERO-VIDEO-PLAN.md"
+  }, {
     "id": "hero-carousel-navigation",
     "decision": "Use the supplied Warp Carousel's fitted projection and spin timing for four upright 1:2 portrait links with white rims. Keep manual browsing, the 180° flip and route zoom, and the native scroll-snap rail as the fallback.",
     "source": "https://21st.dev/@louisstudios/components/warp-carousel"

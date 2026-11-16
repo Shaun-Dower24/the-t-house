@@ -73,12 +73,6 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
         const media = gsap.matchMedia(scope);
 
         media.add("(min-width: 48rem)", () => {
-          const entrance = { trigger: "#arrival", start: "top top", end: "bottom 42%", scrub: true };
-
-          gsap.timeline({ defaults: { ease: "none" }, scrollTrigger: entrance })
-            .to("[data-house-art] [data-house-detail]", { opacity: 0, stagger: 0.03 }, 0)
-            .to("[data-house-art]", { yPercent: 8, scale: 0.94, opacity: 0.24 }, 0);
-
           gsap.fromTo("#inside [data-slot='gallery-image']", { yPercent: -5 }, {
             yPercent: 5,
             ease: "none",
