@@ -15,14 +15,14 @@ export function SiteFooter() {
           <StudioMark className="studio-mark footer-mark" />
         </Link>
         <nav aria-label="Footer" className="footer-nav">
-          <Link href="/watch">Watch</Link>
-          <Link href="/inside-the-house">Inside the House</Link>
-          <Link href="/about">About</Link>
-          <Link href="/connect">Connect</Link>
+          <Link href="/watch" data-shuffle>Watch</Link>
+          <Link href="/inside-the-house" data-shuffle>Inside the House</Link>
+          <Link href="/about" data-shuffle>About</Link>
+          <Link href="/connect" data-shuffle>Connect</Link>
         </nav>
         <nav className="social-links" aria-label="Social media">
-          <a className="sticker" href={studio.youtube}>YouTube <span aria-hidden="true">↗</span></a>
-          <a className="sticker" href={studio.instagram}>Instagram <span aria-hidden="true">↗</span></a>
+          <a className="sticker" href={studio.youtube} data-shuffle>YouTube <span aria-hidden="true">↗</span></a>
+          <a className="sticker" href={studio.instagram} data-shuffle>Instagram <span aria-hidden="true">↗</span></a>
         </nav>
         <svg className="footer-tag" viewBox="0 0 110 90" aria-hidden="true" focusable="false">
           <path className="graffiti-stroke" d="m8 42 43-32 48 30 M13 45 54 15 98 44 M22 36l-1 39 67-2 1-38 M27 38l-1 34 M43 73l1-24 19 1-1 23 M29 43l9-1v12h-9z M71 43l9 1v12l-9-1z M16 78l79-4" />

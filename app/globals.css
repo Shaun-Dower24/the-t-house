@@ -1250,3 +1250,46 @@ html:has(.site-menu[open]) { overflow: hidden; }
 }
 
 [data-motion="reduced"] [data-slot="border-beam-ring"] { display: none; }
+
+/* Text motion: temporary letter splits, Shuffle reels, Stroke Text and Circular Text. */
+.split-word { display: inline-block; white-space: nowrap; }
+.split-char { display: inline-block; }
+.roll-cell { clip-path: inset(0 -0.3em); }
+.roll-reel { position: relative; display: inline-block; }
+.roll-ghost { position: absolute; left: 50%; translate: -50% 0; white-space: pre; }
+
+.stroke-tag { position: relative; }
+.stroke-tag:not([data-stroke-tag]) { transition: text-shadow 450ms ease-out; }
+.stroke-tag[data-stroke-tag] { color: transparent; text-shadow: none; }
+.stroke-tag-ink { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+.stroke-tag-fill { fill: var(--signature-red); }
+.stroke-tag-outline { fill: none; stroke: var(--sign-white); stroke-linecap: round; stroke-linejoin: round; }
+
+.circular-text {
+  position: absolute;
+  top: -62%;
+  left: -62%;
+  width: 224%;
+  height: 224%;
+  overflow: visible;
+  pointer-events: none;
+}
+.circular-text text {
+  fill: var(--sign-white);
+  font-family: var(--font-label);
+  font-size: 17px;
+  font-weight: 600;
+  white-space: pre;
+  paint-order: stroke;
+  stroke: rgb(11 11 11 / 62%);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+@media (forced-colors: active) {
+  .circular-text { display: none; }
+}
+@media print {
+  .stroke-tag[data-stroke-tag] { color: var(--signature-red); }
+  .stroke-tag-ink { display: none; }
+}

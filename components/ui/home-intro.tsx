@@ -10,6 +10,12 @@ const subscribe = (notify: () => void) => {
   return () => window.removeEventListener("t-house:intro-done", notify);
 };
 const isActive = () => ["pending", "running", "ready", "opening"].includes(document.documentElement.dataset.intro ?? "");
+// Echo Text: faint overspray copies trail behind the sprayed title, then settle into it.
+const echoTrail = [
+  { x: -12, y: 3, scale: 1.03, opacity: 0.34 },
+  { x: -25, y: 6, scale: 1.06, opacity: 0.22 },
+  { x: -39, y: 9, scale: 1.09, opacity: 0.13 },
+];
 const serverSnapshot = () => false;
 
 function splitLines(overlay: HTMLElement) {
@@ -73,6 +79,7 @@ export function HomeIntro() {
     const panel = overlay.querySelector<HTMLElement>("[data-gate-panel]")!;
     const reveal = overlay.querySelector<SVGRectElement>("[data-spray-reveal]")!;
     const brush = overlay.querySelector<SVGRectElement>("[data-spray-brush]")!;
+    const echoes = [...overlay.querySelectorAll<SVGTextElement>("[data-spray-echo]")];
     const previousFocus = document.activeElement;
     const outside = [...document.body.children].filter((node): node is HTMLElement => node instanceof HTMLElement && node !== overlay).map(node => ({ node, inert: node.inert }));
     outside.forEach(({ node }) => { node.inert = true; });
@@ -104,6 +111,7 @@ export function HomeIntro() {
       segments.forEach(path => { path.style.strokeDashoffset = "0"; });
       reveal.setAttribute("width", "800");
       brush.setAttribute("x", "800");
+      echoes.forEach(echo => { echo.style.opacity = "0"; });
       phase = "ready";
       html.dataset.intro = "ready";
       overlay.dataset.phase = "ready";
@@ -179,6 +187,12 @@ export function HomeIntro() {
         .to(reveal, { attr: { width: 800 }, duration: 1.2, ease: "none" }, 3.65)
         .to(brush, { attr: { x: 800 }, duration: 1.2, ease: "none" }, 3.65)
         .to(button, { opacity: 1, visibility: "visible", duration: 0.3 }, 4.85);
+      // The echoes settle within the existing timeline, which still ends at 5.15 s when the button is ready.
+      timeline.set(echoes, {
+        x: index => echoTrail[index].x, y: index => echoTrail[index].y, scale: index => echoTrail[index].scale,
+        opacity: index => echoTrail[index].opacity, transformOrigin: "50% 50%",
+      }, 3.65)
+        .to(echoes, { x: 0, y: 0, scale: 1, opacity: 0, duration: 0.78, ease: "power2.inOut", stagger: { each: 0.06, from: "end" } }, 4.25);
     }).catch(ready);
     return () => {
       stop(); preference.disconnect(); motion.removeEventListener("change", changed);
@@ -201,12 +215,16 @@ export function HomeIntro() {
       <svg className={styles.title} viewBox="0 0 800 180" role="img" aria-label="The T-House">
         <defs>
           <filter id={`${id}-brush`}><feGaussianBlur stdDeviation="9" /></filter>
+          <filter id={`${id}-echo`} x="-15%" y="-40%" width="130%" height="180%"><feGaussianBlur stdDeviation="2.4" /></filter>
           <mask id={`${id}-mask`} maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="180">
             <rect data-spray-reveal x="0" y="0" width="0" height="180" fill="white" />
             <rect data-spray-brush x="-100" y="0" width="100" height="180" rx="50" fill="white" filter={`url(#${id}-brush)`} />
           </mask>
         </defs>
         <g mask={`url(#${id}-mask)`} fill="currentColor">
+          <g className={styles.echoes} filter={`url(#${id}-echo)`}>
+            {echoTrail.map((_, index) => <text key={index} data-spray-echo x="400" y="122" textAnchor="middle">The T-House</text>)}
+          </g>
           <text x="400" y="122" textAnchor="middle">The T-House</text>
           {Array.from({ length: 28 }, (_, i) => <circle key={i} cx={150 + (i * 137) % 500} cy={30 + (i * 43) % 125} r={0.6 + (i % 4) * 0.45} opacity={0.15 + (i % 3) * 0.1} />)}
         </g>

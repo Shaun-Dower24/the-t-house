@@ -4,6 +4,7 @@ import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { CardRouteTransitionProvider } from "./card-route-transition";
 import { SiteHeader } from "./site-header";
+import { TextShuffle } from "./text-shuffle";
 
 const preferenceKey = "t-house-reduce-motion";
 const systemPreference = "(prefers-reduced-motion: reduce)";
@@ -106,6 +107,7 @@ export function HomeScenes({ children, footer }: { children: ReactNode; footer: 
         <main id="main-content" tabIndex={-1}>{children}</main>
         {footer}
       </CardRouteTransitionProvider>
+      <TextShuffle />
     </div>
   );
 }

@@ -39,13 +39,13 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
         </Link>
         <div className="header-actions">
           <nav className="header-nav" aria-label="Main">
-            <Link href="/watch" aria-current={pathname.startsWith("/watch") ? "page" : undefined}>Watch</Link>
-            <Link href="/inside-the-house" aria-current={pathname === "/inside-the-house" ? "page" : undefined}>Inside<span className="sr-only"> the House</span></Link>
-            <Link href="/about" className="header-secondary" aria-current={pathname === "/about" ? "page" : undefined}>About</Link>
-            <Link href="/connect" className="header-secondary" aria-current={pathname === "/connect" ? "page" : undefined}>Connect</Link>
+            <Link href="/watch" data-shuffle aria-current={pathname.startsWith("/watch") ? "page" : undefined}>Watch</Link>
+            <Link href="/inside-the-house" data-shuffle aria-current={pathname === "/inside-the-house" ? "page" : undefined}>Inside<span className="sr-only"> the House</span></Link>
+            <Link href="/about" data-shuffle className="header-secondary" aria-current={pathname === "/about" ? "page" : undefined}>About</Link>
+            <Link href="/connect" data-shuffle className="header-secondary" aria-current={pathname === "/connect" ? "page" : undefined}>Connect</Link>
           </nav>
           {enhanced && (
-            <button ref={menu} type="button" className="menu-trigger sticker" aria-haspopup="dialog" aria-controls="site-menu" onClick={() => dialog.current?.showModal()}>
+            <button ref={menu} type="button" className="menu-trigger sticker" data-shuffle aria-haspopup="dialog" aria-controls="site-menu" onClick={() => dialog.current?.showModal()}>
               <span aria-hidden="true" className="menu-icon" /> Menu
             </button>
           )}
@@ -56,11 +56,11 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
           <div className="menu-top">
             <StudioMark className="studio-mark menu-mark" />
             <h2 id="menu-title" className="sr-only">The T-House / Menu</h2>
-            <form method="dialog"><button className="menu-trigger sticker" autoFocus>Close <span aria-hidden="true">×</span></button></form>
+            <form method="dialog"><button className="menu-trigger sticker" data-shuffle autoFocus>Close <span aria-hidden="true">×</span></button></form>
           </div>
           <nav aria-label="Site menu" className="menu-links">
             {links.map(({ href, label }) => (
-              <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={(event) => {
+              <Link key={href} href={href} data-shuffle aria-current={pathname === href ? "page" : undefined} onClick={(event) => {
                 if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
                 dialog.current?.close();
               }}>{label}<span aria-hidden="true">↗</span></Link>
@@ -68,8 +68,8 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
           </nav>
           <div className="menu-bottom">
             <div className="menu-socials">
-              <a href={studio.youtube}>YouTube <span aria-hidden="true">↗</span></a>
-              <a href={studio.instagram}>Instagram <span aria-hidden="true">↗</span></a>
+              <a href={studio.youtube} data-shuffle>YouTube <span aria-hidden="true">↗</span></a>
+              <a href={studio.instagram} data-shuffle>Instagram <span aria-hidden="true">↗</span></a>
             </div>
             <button type="button" className="motion-control" aria-pressed={reduceMotion} disabled={systemReduced} onClick={toggleMotion}>
               {systemReduced ? "Reduce motion (system)" : "Reduce motion"}

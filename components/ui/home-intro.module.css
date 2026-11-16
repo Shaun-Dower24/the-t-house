@@ -11,6 +11,7 @@
 .title { display: block; width: 85%; height: auto; margin: -2rem auto -0.3rem; color: var(--signature-red); filter: drop-shadow(0 0 3px rgb(200 56 56 / 35%)); }
 .title text { font-family: var(--font-tag); font-size: 112px; }
 .drips path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.echoes text { opacity: 0; }
 .overlay[data-phase="ready"] .drips path { animation: drawn 650ms ease-out forwards; }
 .title [data-spray-reveal] { animation: painted 0s 6s forwards; }
 .button { position: relative; padding: 0.85rem 1.35rem; border: 1px solid var(--signature-red); background: var(--signature-red); color: var(--sign-white); font-family: var(--font-marker); font-size: 0.85rem; line-height: 1.5; text-transform: uppercase; letter-spacing: 0.16em; cursor: pointer; opacity: 0; visibility: hidden; animation: available 0s 6s forwards; }
@@ -29,5 +30,6 @@
 @media (prefers-reduced-motion: reduce), (forced-colors: active) { .overlay { display: none; } }
 @media (prefers-reduced-transparency: reduce) {
   .title { filter: none; }
+  .echoes { display: none; }
   .title text { font-family: var(--font-sans); font-weight: 700; }
 }
