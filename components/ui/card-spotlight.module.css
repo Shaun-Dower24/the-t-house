@@ -1,0 +1,33 @@
+.card {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight,
+.fallback {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.dots {
+  position: absolute;
+  inset: 0;
+}
+
+.card[data-spotlight-active] .spotlight,
+.card:not([data-spotlight-active]):focus-within .fallback { opacity: 1; }
+
+@media (hover: hover) {
+  .card:not([data-spotlight-active]):hover .fallback { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight,
+  .fallback { transition: none; }
+}

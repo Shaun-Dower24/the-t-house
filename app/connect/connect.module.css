@@ -1,0 +1,206 @@
+.connect {
+  background:
+    radial-gradient(ellipse at 77% 13rem, var(--charcoal), transparent 42rem),
+    var(--canvas);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  align-items: center;
+  gap: clamp(2rem, 5.5vw, 6rem);
+  padding-block: clamp(3.75rem, 8vw, 8rem) clamp(3rem, 6vw, 6rem);
+}
+
+.intro { min-width: 0; }
+
+.title {
+  margin-inline-start: -0.06em;
+  font-size: clamp(4.9rem, 9.5vw, 9rem);
+}
+
+.lead {
+  max-width: 31ch;
+  margin-top: clamp(1rem, 2.5vw, 1.6rem);
+  color: var(--muted-text);
+  font-size: clamp(1.08rem, 1.75vw, 1.45rem);
+  line-height: 1.48;
+}
+
+.gridJump {
+  display: flex;
+  width: min(100%, 25rem);
+  min-height: 3.65rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-top: clamp(1.5rem, 3vw, 2.45rem);
+  padding-inline: 0.85rem;
+  background: var(--sign-white);
+  color: var(--canvas);
+  font-size: clamp(1.04rem, 1.7vw, 1.25rem);
+  font-weight: 650;
+}
+
+.gridJump > span { --graffiti-arrow-size: 1.5rem; transform: rotate(90deg); }
+.gridJump:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: 0.25em; }
+
+.channel {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: 6.75rem;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding: clamp(0.9rem, 2vw, 1.5rem);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--sign-white);
+  transition: border-color 180ms ease;
+}
+
+.channel[data-platform="instagram"] {
+  grid-area: instagram;
+  background: var(--charcoal);
+}
+
+.channelBeam {
+  display: flex;
+  min-width: 0;
+  grid-area: youtube;
+  border-radius: 0;
+}
+
+.channel:is(:hover, :focus-visible) { border-color: var(--sign-white); }
+
+.channel > span {
+  width: min(100%, clamp(7.25rem, 18vw, 12.5rem));
+}
+
+.channelLogo {
+  display: flex;
+  align-items: center;
+  gap: 7%;
+}
+
+.channelLogo img { display: block; height: auto; }
+.instagramGlyph { width: 24%; }
+.instagramWordmark { width: 69%; }
+.youtubeWordmark { width: 100%; }
+
+@media (forced-colors: active) {
+  .channelLogo {
+    padding: 0.35rem;
+    background: var(--canvas);
+    forced-color-adjust: none;
+  }
+}
+
+.channelSpray {
+  display: block;
+  width: 100%;
+  height: 0.42rem;
+  color: var(--signature-red);
+}
+
+.contactDetails {
+  grid-template-areas: "episode episode" "instagram youtube" "draft draft";
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.35vw, 1.25rem);
+}
+
+.contactDetails > :global(#message-draft) { grid-area: draft; }
+
+.episodeSpotlight {
+  min-width: 0;
+  grid-area: episode;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--surface);
+}
+
+.episode {
+  --bento-surface: transparent;
+  --graffiti-arrow-size: 1.35rem;
+  min-height: 100%;
+}
+
+.episode:is(:hover, :focus-visible) {
+  --graffiti-spray-remaining: 0%;
+}
+
+.poster {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+}
+
+.poster img { z-index: -1; filter: grayscale(1); object-fit: cover; }
+
+.posterWave {
+  --waveform-unplayed-opacity: 1;
+  position: absolute;
+  inset: 0.6rem auto auto 0.6rem;
+  width: clamp(4rem, 18%, 6.25rem);
+  height: 1.375rem;
+  padding: 0.2rem 0.35rem;
+  background: var(--canvas);
+  color: var(--signature-red);
+  pointer-events: none;
+}
+
+.posterWave > [data-slot="waveform"] { height: 100%; color: inherit; }
+
+.play {
+  position: relative;
+  display: grid;
+  width: clamp(2.75rem, 5vw, 4rem);
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid var(--sign-white);
+  border-radius: 50%;
+  background: var(--canvas);
+  color: var(--sign-white);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.play::before {
+  margin-inline-start: 0.15rem;
+  border-block: 0.42rem solid transparent;
+  border-left: 0.65rem solid currentColor;
+  content: "";
+}
+
+.episode:is(:hover, :focus-visible) .play {
+  background: var(--sign-white);
+  color: var(--canvas);
+}
+
+.duration {
+  position: absolute;
+  inset: auto 0.6rem 0.6rem auto;
+  padding: 0.13rem 0.38rem;
+  background: var(--canvas);
+  color: var(--sign-white);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 36rem) {
+  .contactDetails {
+    grid-template-areas: "episode instagram" "episode youtube" "draft draft";
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-rows: repeat(2, 1fr) auto;
+  }
+}
+
+@media (max-width: 52.99rem) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 25rem) {
+  .title { font-size: clamp(3.9rem, 19vw, 4.75rem); }
+}

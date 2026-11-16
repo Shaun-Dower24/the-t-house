@@ -1,0 +1,345 @@
+.root {
+  container: slot-week-picker / inline-size;
+  inline-size: min(100%, 33rem);
+  min-inline-size: 0;
+  margin-inline: auto;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 0.625rem);
+  background: var(--surface);
+  color: var(--sign-white);
+  font-family: var(--font-sans);
+  overflow-wrap: anywhere;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.75rem;
+  margin-block-end: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.range,
+.zone,
+.notice,
+.status {
+  color: var(--muted-text);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.range {
+  margin-block-start: 0.25rem;
+}
+
+.navigation {
+  display: flex;
+  flex: none;
+  gap: 0.375rem;
+}
+
+.arrow,
+.day,
+.tile,
+.confirm {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  border: 1px solid var(--line);
+  border-radius: 0.4375rem;
+  background: var(--canvas);
+  color: var(--sign-white);
+}
+
+.arrow,
+.day,
+.confirm,
+label.slot {
+  cursor: pointer;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  padding: 0;
+}
+
+.arrow svg,
+.zone svg,
+.confirm svg {
+  flex: none;
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+
+.day {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.125rem;
+  min-block-size: 3.875rem;
+  padding: 0.3125rem 0.125rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.weekday {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.number {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.dayCount {
+  color: var(--muted-text);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.day[aria-selected="true"] .dayCount {
+  color: inherit;
+}
+
+.panel {
+  min-inline-size: 0;
+  margin-block-start: 1rem;
+}
+
+.slots {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-block-end: 0.625rem;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.slot {
+  position: relative;
+  display: block;
+  min-inline-size: 0;
+}
+
+.slot input[type="radio"] {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.175rem;
+  block-size: 100%;
+  padding: 0.375rem 0.5rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.time {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.reason,
+.empty {
+  color: var(--muted-text);
+  font-size: 0.8125rem;
+}
+
+.day:disabled,
+.slot:has(input:disabled) {
+  cursor: default;
+}
+
+.slot[data-unavailable] .tile {
+  border-style: dashed;
+  background: var(--charcoal);
+}
+
+.empty {
+  margin: 0;
+  padding-block: 1rem;
+  line-height: 1.45;
+}
+
+.footer {
+  display: grid;
+  gap: 0.625rem;
+  margin-block-start: 1rem;
+  padding-block-start: 0.875rem;
+  border-block-start: 1px solid var(--line);
+}
+
+.zone,
+.confirm {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.summaryRow {
+  display: grid;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.summary {
+  min-inline-size: 0;
+  color: var(--sign-white);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.notice {
+  display: block;
+  font-weight: 400;
+}
+
+.confirm {
+  justify-content: center;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.arrow:is(:disabled, [aria-disabled="true"]),
+.confirm:is(:disabled, [aria-disabled="true"]) {
+  cursor: default;
+  border-color: var(--line);
+  background: var(--charcoal);
+  color: var(--muted-text);
+}
+
+.status {
+  min-block-size: 1.15em;
+  margin: 0;
+}
+
+.day[aria-selected="true"],
+.slot[data-selected] .tile,
+.confirm:not(:disabled, [aria-disabled="true"]) {
+  border-color: var(--signature-red);
+  background: var(--signature-red);
+  color: var(--sign-white);
+}
+
+.arrow:not(:disabled, [aria-disabled="true"]):hover,
+.day:not(:disabled):hover,
+.slot:has(input:enabled):hover .tile,
+.confirm:not(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--sign-white);
+}
+
+.arrow:focus-visible,
+.day:focus-visible,
+.panel:focus-visible,
+.confirm:focus-visible,
+.slot:has(input:focus-visible) .tile {
+  outline: 2px solid var(--sign-white);
+  outline-offset: 2px;
+}
+
+@container slot-week-picker (min-width: 24rem) {
+  .days {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .summaryRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@keyframes fill-slot-selection {
+  from { background-color: var(--charcoal); }
+  to { background-color: var(--signature-red); }
+}
+
+@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {
+  .day[aria-selected="true"],
+  .slot[data-selected] .tile {
+    animation: fill-slot-selection 180ms ease-out;
+  }
+
+  :global([data-motion="reduced"]) .day[aria-selected="true"],
+  :global([data-motion="reduced"]) .slot[data-selected] .tile {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root,
+  .footer,
+  .arrow,
+  .day,
+  .tile,
+  .confirm {
+    border-color: CanvasText;
+  }
+
+  .day[aria-selected="true"],
+  .slot[data-selected] .tile,
+  .confirm:not(:disabled, [aria-disabled="true"]) {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .slot[data-unavailable] .tile,
+  .arrow:is(:disabled, [aria-disabled="true"]),
+  .confirm:is(:disabled, [aria-disabled="true"]) {
+    border-color: GrayText;
+  }
+
+  .arrow:focus-visible,
+  .day:focus-visible,
+  .panel:focus-visible,
+  .confirm:focus-visible,
+  .slot:has(input:focus-visible) .tile {
+    outline-color: Highlight;
+  }
+}

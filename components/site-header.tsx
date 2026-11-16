@@ -1,13 +1,17 @@
 "use client";
 
 import { useRef, useSyncExternalStore } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { studio } from "../content/studio";
+import { StudioMark } from "./studio-mark";
 
 const links = [
-  { href: "#arrival", label: "Home" },
-  { href: "#watch", label: "Watch" },
-  { href: "#inside", label: "Inside the House" },
-  { href: "#follow", label: "Follow" },
+  { href: "/", label: "Home" },
+  { href: "/watch", label: "Watch" },
+  { href: "/inside-the-house", label: "Inside the House" },
+  { href: "/about", label: "About" },
+  { href: "/connect", label: "Connect" },
 ];
 
 const subscribe = () => () => {};
@@ -19,33 +23,26 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const menu = useRef<HTMLButtonElement>(null);
-  const destination = useRef<string | null>(null);
+  const pathname = usePathname();
   const enhanced = useSyncExternalStore(subscribe, () => true, () => false);
 
   function closeMenu() {
-    const sectionId = destination.current;
-    destination.current = null;
-
-    if (sectionId) {
-      document.getElementById(sectionId)?.focus({ preventScroll: true });
-    } else {
-      menu.current?.focus();
-    }
+    menu.current?.focus();
   }
 
   return (
     <header className="site-header">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="page-grid header-inner">
-        <a className="wordmark" href="#arrival" aria-label={`${studio.name} home`}>
-          <span className="house-mark" aria-hidden="true" />
-          The T-House<span className="sr-only"> Studio</span>
-        </a>
+        <Link className="wordmark" href="/" aria-label={`${studio.name} home`}>
+          <StudioMark className="studio-mark header-mark" />
+        </Link>
         <div className="header-actions">
           <nav className="header-nav" aria-label="Main">
-            <a href="#watch">Watch</a>
-            <a href="#inside">Inside<span className="sr-only"> the House</span></a>
-            {!enhanced && <a href="#follow">Follow</a>}
+            <Link href="/watch" aria-current={pathname.startsWith("/watch") ? "page" : undefined}>Watch</Link>
+            <Link href="/inside-the-house" aria-current={pathname === "/inside-the-house" ? "page" : undefined}>Inside<span className="sr-only"> the House</span></Link>
+            <Link href="/about" className="header-secondary" aria-current={pathname === "/about" ? "page" : undefined}>About</Link>
+            <Link href="/connect" className="header-secondary" aria-current={pathname === "/connect" ? "page" : undefined}>Connect</Link>
           </nav>
           {enhanced && (
             <button ref={menu} type="button" className="menu-trigger" aria-haspopup="dialog" aria-controls="site-menu" onClick={() => dialog.current?.showModal()}>
@@ -57,16 +54,16 @@ export function SiteHeader({ reduceMotion, toggleMotion, systemReduced }: {
       <dialog ref={dialog} id="site-menu" className="site-menu" aria-labelledby="menu-title" onClose={closeMenu}>
         <div className="page-grid menu-layout">
           <div className="menu-top">
-            <h2 id="menu-title" className="meta">The T-House / Menu</h2>
+            <StudioMark className="studio-mark menu-mark" />
+            <h2 id="menu-title" className="sr-only">The T-House / Menu</h2>
             <form method="dialog"><button className="menu-trigger" autoFocus>Close <span aria-hidden="true">×</span></button></form>
           </div>
           <nav aria-label="Site menu" className="menu-links">
             {links.map(({ href, label }) => (
-              <a key={href} href={href} onClick={(event) => {
+              <Link key={href} href={href} aria-current={pathname === href ? "page" : undefined} onClick={(event) => {
                 if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-                destination.current = href.slice(1);
                 dialog.current?.close();
-              }}>{label}<span aria-hidden="true">↘</span></a>
+              }}>{label}<span aria-hidden="true">↗</span></Link>
             ))}
           </nav>
           <div className="menu-bottom">

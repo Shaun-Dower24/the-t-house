@@ -1,0 +1,121 @@
+.figure { min-width: 0; }
+
+.stage {
+  position: relative;
+  isolation: isolate;
+}
+
+.figure[data-layout="stack"] {
+  width: min(100%, 24rem);
+  margin-inline: auto;
+}
+
+.figure[data-layout="stack"] .stage {
+  aspect-ratio: 1;
+  overflow: clip;
+}
+
+.figure[data-layout="collage"] .stage {
+  aspect-ratio: 1.56;
+  background-image: radial-gradient(color-mix(in srgb, var(--sign-white) 15%, transparent) 0.5px, transparent 0.5px);
+  background-size: 5px 5px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  opacity: 0.68;
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--sign-white) 55%, transparent);
+  background: var(--surface);
+}
+
+.figure[data-layout="stack"] .card {
+  inset-inline-start: calc(50% - var(--image-stack-depth) * 3%);
+  inset-block-start: calc(50% - var(--image-stack-depth) * 2%);
+  inline-size: 66.667%;
+  aspect-ratio: 5 / 7;
+  translate: -50% -50%;
+  rotate: var(--image-stack-tilt);
+  transform-origin: center bottom;
+  border-radius: 0.85rem;
+  box-shadow: 0 0.65rem 1.5rem color-mix(in srgb, var(--canvas) 54%, transparent);
+}
+
+.figure[data-layout="collage"] .card {
+  inset-inline-start: 16.6667%;
+  inset-block-start: 0;
+  inline-size: 83.3333%;
+  block-size: 91.6667%;
+  box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--canvas) 40%, transparent);
+}
+
+.figure[data-layout="collage"] .stage:not([data-single]) .card[data-depth="0"] {
+  inset-inline-start: 0;
+  inset-block-start: 41.6667%;
+  inline-size: 41.6667%;
+  block-size: 58.3333%;
+  border-color: color-mix(in srgb, var(--sign-white) 72%, transparent);
+  box-shadow: -0.35rem 0.4rem 0 var(--canvas), 0 0.65rem 1.5rem color-mix(in srgb, var(--canvas) 54%, transparent);
+}
+
+.card[data-draggable] {
+  cursor: grab;
+  touch-action: pan-y pinch-zoom !important;
+  user-select: none;
+}
+
+.card[data-draggable]:active { cursor: grabbing; }
+
+.image { object-fit: cover; pointer-events: none; }
+.figure[data-monochrome] .image { filter: grayscale(1); }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  margin-top: 0.85rem;
+  color: var(--muted-text);
+  font-size: 0.8rem;
+}
+
+.footer[data-browsable] { min-block-size: 2.75rem; }
+
+.next {
+  flex: 0 0 auto;
+  min-block-size: 2.75rem;
+  margin-inline-start: auto;
+  padding-inline: 0.7rem;
+  border: 1px solid var(--line);
+  background: var(--canvas);
+  color: var(--sign-white);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+}
+
+.next:is(:hover, :focus-visible) { border-color: var(--sign-white); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .figure[data-stack-motion="full"] .card {
+    transition: inset-inline-start 360ms ease, inset-block-start 360ms ease,
+      inline-size 360ms ease, block-size 360ms ease, rotate 360ms ease, box-shadow 360ms ease;
+  }
+}
+
+.figure[data-stack-motion="static"] .card,
+:global([data-motion="reduced"]) .figure .card { transform: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .figure .card { transform: none !important; }
+}
+
+@media (max-width: 52.99rem) {
+  .figure[data-layout="collage"] { width: min(100%, 39rem); }
+}

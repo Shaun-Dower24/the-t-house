@@ -1,0 +1,185 @@
+.gallery {
+  container: hover-gallery / inline-size;
+  min-width: 0;
+  width: 100%;
+  color: var(--sign-white);
+}
+
+.list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item { min-width: 0; }
+
+.panel {
+  --gallery-row-image: min(var(--gallery-mobile-height), 76cqw);
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.trigger {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  color: var(--muted-text);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 650;
+  list-style: none;
+}
+
+.trigger::-webkit-details-marker { display: none; }
+
+.trigger:focus-visible {
+  outline: 2px solid var(--sign-white);
+  outline-offset: -4px;
+}
+
+.trigger::after {
+  width: 0.52rem;
+  height: 0.52rem;
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+  border: solid currentColor;
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg) translateY(-0.1rem);
+  content: "";
+}
+
+.panel[open] .trigger::after { transform: rotate(225deg) translateY(-0.1rem); }
+.panel[open] .trigger { color: var(--sign-white); }
+.panel:not([open]) .meta { display: none; }
+.title { min-width: 0; overflow-wrap: anywhere; }
+.meta { color: var(--muted-text); font-size: 0.82rem; }
+
+.media {
+  position: relative;
+  height: var(--gallery-row-image);
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+.media img { object-fit: cover; }
+.image { position: absolute; inset: 0; }
+
+@supports selector(details::details-content) {
+  @supports (transition-behavior: allow-discrete) {
+    .panel::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition: block-size var(--gallery-time) cubic-bezier(0.32, 0.72, 0, 1),
+        content-visibility var(--gallery-time) allow-discrete;
+    }
+
+    .panel[open]::details-content { block-size: var(--gallery-row-image); }
+  }
+}
+
+@container hover-gallery (min-width: 29rem) {
+  .list {
+    display: flex;
+    height: var(--gallery-height);
+    align-items: stretch;
+    justify-content: safe center;
+    overflow-x: auto;
+  }
+
+  .item {
+    flex: 0 0 var(--gallery-rail-width);
+    transition: flex-basis var(--gallery-time) cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .item:has(.panel[open]) {
+    flex-basis: min(var(--gallery-open-width), max(var(--gallery-rail-width), calc(100% - var(--gallery-closed-space))));
+  }
+
+  .panel { height: 100%; overflow: hidden; }
+
+  .trigger {
+    --gallery-rail-mode: 1;
+    width: var(--gallery-rail-width);
+    height: 100%;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 0.8rem 0.3rem;
+  }
+
+  .trigger::after { display: none; }
+
+  .title,
+  .meta {
+    overflow: hidden;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+  }
+
+  .panel::details-content,
+  .panel[open]::details-content { block-size: auto; overflow: visible; transition: none; }
+
+  .media {
+    position: absolute;
+    inset: 0.4rem 0.4rem 0.4rem var(--gallery-rail-width);
+    height: auto;
+  }
+
+  .imagePanels .panel::details-content { content-visibility: visible; }
+  .imagePanels .media { inset: 0; }
+  .imagePanels .media::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 92%), rgb(0 0 0 / 15%) 65%);
+    content: "";
+  }
+
+  .imagePanels .trigger {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    width: 100%;
+    color: var(--sign-white);
+    font-size: 1rem;
+  }
+
+  .imagePanels .title {
+    position: absolute;
+    inset: auto auto 1.1rem 50%;
+    max-width: calc(var(--gallery-height) - 2rem);
+    transform: translateX(-50%) rotate(-90deg) translateX(50%);
+    writing-mode: horizontal-tb;
+    text-overflow: ellipsis;
+    transition: transform min(300ms, var(--gallery-time)) ease-out;
+  }
+
+  .imagePanels .panel[open] .title {
+    max-width: calc(100% - 1.5rem);
+    transform: translateX(-50%);
+  }
+
+  .imagePanels .meta {
+    position: absolute;
+    inset: 0.75rem 0.75rem auto;
+    color: var(--sign-white);
+    text-shadow: 0 1px 3px var(--canvas);
+    transform: none;
+    writing-mode: horizontal-tb;
+  }
+}
+
+:global([data-motion="reduced"]) .item,
+:global([data-motion="reduced"]) .panel::details-content,
+:global([data-motion="reduced"]) .imagePanels .title { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .panel::details-content,
+  .imagePanels .title { transition: none; }
+}

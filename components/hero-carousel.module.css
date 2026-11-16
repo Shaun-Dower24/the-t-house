@@ -1,0 +1,311 @@
+.carousel {
+  --portrait-width: clamp(9rem, min(17vw, 20svh), 12rem);
+  --card-width: var(--portrait-width);
+  --card-gap: clamp(0.75rem, 2vw, 1.75rem);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  overflow: clip;
+}
+
+.rail {
+  display: flex;
+  align-items: stretch;
+  gap: var(--card-gap);
+  overflow-x: auto;
+  padding-block: 0.75rem 1.2rem;
+  padding-inline: max(0px, calc((100% - var(--card-width)) / 2));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--sign-white) 55%, transparent) transparent;
+}
+
+.carousel[data-enhanced="true"] .rail {
+  scrollbar-width: none;
+}
+
+.carousel[data-enhanced="true"] .rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail[data-hero-orbit] {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 0;
+  overflow: visible;
+  padding-inline: 0;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+.slide {
+  flex: 0 0 var(--card-width);
+  min-inline-size: 0;
+  scroll-snap-align: center;
+}
+
+.rail[data-hero-orbit] .slide {
+  grid-area: 1 / 1;
+  width: var(--card-width);
+  z-index: var(--warp-layer, 0);
+  opacity: var(--warp-opacity, 1);
+  transform: perspective(calc(var(--card-width) * var(--warp-focal, 2.87))) translate3d(
+    calc(var(--card-width) * var(--warp-x, 0)),
+    0,
+    calc(var(--card-width) * var(--warp-depth, 0))
+  ) rotateY(var(--warp-yaw, 0rad));
+}
+
+.rail[data-hero-orbit] .slide[data-rear] {
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: end;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 2;
+  padding: clamp(0.8rem, 2vw, 1.15rem);
+  border: 1px solid color-mix(in srgb, var(--sign-white) 32%, transparent);
+  background: var(--surface);
+  color: var(--sign-white);
+  text-decoration: none;
+  box-shadow: 0 1rem 1.5rem rgb(0 0 0 / 42%);
+  transition: border-color 250ms ease-out;
+}
+
+.slide[data-active="true"] .card {
+  border-color: color-mix(in srgb, var(--sign-white) 68%, var(--surface));
+}
+
+.card:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--sign-white);
+  outline-offset: 4px;
+  border-color: var(--sign-white);
+}
+
+.art,
+.card::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.art {
+  z-index: -2;
+  display: block;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+.card[data-destination="watch"] .art img {
+  object-position: var(--arrival-focal-point, 50% 50%);
+}
+
+.videoFrame { position: absolute; inset: 0; display: block; overflow: hidden; z-index: 1; }
+.videoFrame video { width: 100%; height: 100%; object-fit: cover; object-position: var(--arrival-focal-point, 50% 50%); }
+
+.art svg {
+  position: absolute;
+  inset: 0 5% auto;
+  width: 90%;
+  height: 86%;
+  color: var(--sign-white);
+}
+
+.art :global(.house-frames),
+.art :global(.house-door),
+.art :global(.house-datum) { stroke: currentColor; }
+
+.card[data-destination="connect"] .art svg {
+  inset: -11% auto auto -14%;
+  width: 128%;
+  height: 104%;
+  opacity: 0.83;
+}
+
+.card::after {
+  z-index: -1;
+  content: "";
+  background: linear-gradient(0deg, rgb(0 0 0 / 95%), rgb(0 0 0 / 72%) 22%, transparent 58%);
+}
+
+.label {
+  display: block;
+  font-size: clamp(1rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 var(--canvas), 0 0 0.7rem var(--canvas);
+}
+
+@media (max-height: 32rem) {
+  :global([data-arrival-enhanced]) .label {
+    font-size: 0.75rem;
+    overflow-wrap: normal;
+  }
+}
+
+.caption {
+  display: inline-block;
+  margin-block-end: 0.4rem;
+  padding: 0.28rem 0.38rem;
+  background: var(--canvas);
+  color: var(--sign-white);
+  font: 600 0.65rem/1.15 var(--font-sans);
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem;
+  margin-inline: auto;
+}
+
+.carousel:not([data-enhanced="true"]) .controls {
+  visibility: hidden;
+}
+
+.control {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 3.125rem;
+  min-block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--sign-white);
+  cursor: pointer;
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--sign-white);
+  outline-offset: 4px;
+}
+
+.control:not(:disabled, [aria-disabled="true"]):focus-visible {
+  --graffiti-spray-remaining: 0%;
+}
+
+.control:disabled,
+.control[aria-disabled="true"] {
+  color: var(--muted-text);
+  cursor: default;
+}
+
+.position {
+  min-inline-size: 5.4rem;
+  padding: 0.125rem 0.7rem;
+  color: var(--signature-red);
+  font: 400 1.875rem/1 var(--font-script);
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .control:not(:disabled, [aria-disabled="true"]):hover {
+    --graffiti-spray-remaining: 0%;
+  }
+
+  .card:hover { border-color: var(--sign-white); }
+}
+
+@media (min-width: 36rem) and (hover: hover) and (pointer: fine) {
+  .carousel {
+    --card-width: min(var(--portrait-width), calc((100vw - 2.5rem) * 9 / 32));
+  }
+
+  .rail[data-hero-orbit] {
+    --preview-width: calc(var(--card-width) * 32 / 9);
+    --preview-travel: max(0px, calc((100vw - var(--preview-width)) / 2 - 1.25rem));
+    --preview-motion: 300ms cubic-bezier(0.2, 0.72, 0.25, 1);
+  }
+
+  .rail[data-hero-orbit] .slide {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    place-items: center;
+    height: calc(var(--card-width) * 2);
+  }
+
+  .rail[data-hero-orbit] .card {
+    width: var(--card-width);
+  }
+
+  .rail[data-hero-orbit]:not([data-warp-moving], [data-dragging], [aria-busy="true"]):not(:global([data-arrival-morph]) *) {
+    & .slide {
+      transition: transform var(--preview-motion);
+    }
+
+    & .card {
+      transition: width var(--preview-motion), border-color 250ms ease-out;
+    }
+
+    & .card[data-destination="watch"] .art img {
+      transition: transform var(--preview-motion), object-position var(--preview-motion);
+    }
+
+    & .slide:not([data-rear]):hover {
+      z-index: 3000;
+      transform: perspective(calc(var(--card-width) * var(--warp-focal, 2.87))) translate3d(
+        clamp(calc(-1 * var(--preview-travel)), calc(var(--card-width) * var(--warp-preview-x, 0)), var(--preview-travel)),
+        0,
+        0
+      ) rotateY(0rad);
+    }
+
+    & .slide:not([data-rear]):hover .card {
+      width: var(--preview-width);
+    }
+
+    & .slide:not([data-rear]):hover .card[data-destination="watch"] .art img {
+      object-position: center;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .carousel {
+    --portrait-width: clamp(6.5rem, min(46vw, calc(27svh - 3rem)), 11.5rem);
+    --card-gap: 0.65rem;
+  }
+
+  .rail { padding-block: 0.65rem 0.95rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+}
+
+:global([data-motion="reduced"]) .card { transition: none; }
+
+@media (forced-colors: active) {
+  .slide[data-active="true"] .card,
+  .control:focus-visible,
+  .card:focus-visible { outline: 2px solid Highlight; }
+
+  .card { border-color: ButtonText; }
+}
