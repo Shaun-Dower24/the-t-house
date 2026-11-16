@@ -1,0 +1,44 @@
+.section { padding-block: clamp(2.5rem, 5vw, 5rem); }
+.actions { padding-top: 1.5rem; padding-bottom: 1rem; }
+.actionStrip { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 2rem; }
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
+.heading { margin-bottom: 2rem; }
+.heading > p { margin-bottom: .75rem; color: #b7b7b7; }
+.featured { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: center; }
+.featuredImage { position: relative; display: block; border-radius: 8px; }
+.featuredImage > div { border-radius: 8px; }
+.featuredImage:focus-visible { outline: 2px solid white; outline-offset: 5px; }
+.play { position: absolute; inset: auto 1rem 1rem auto; display: grid; place-items: center; width: 3.5rem; aspect-ratio: 1; border: 1px solid rgb(255 255 255 / 60%); border-radius: 50%; background: rgb(11 11 11 / 75%); }
+.featuredInfo { padding: clamp(1.5rem, 3vw, 3rem); margin-left: -1.5rem; z-index: 1; }
+.featuredInfo h3 { font-size: clamp(1.6rem, 2.7vw, 2.6rem); line-height: 1.12; margin-block: 1rem; }
+.featuredInfo > p:not(:first-child), .caption p + p, .subscribe > p:not(:first-child) { color: #c7c7c7; line-height: 1.65; }
+.facts { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-block: 1.5rem 2rem; }
+.facts dt { color: #b7b7b7; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3rem; }
+.facts dd { margin: 0; }
+.episodeGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+.subscribe { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 1.2rem; padding: clamp(1.5rem, 4vw, 4rem); background-image: radial-gradient(ellipse at top right, rgb(200 56 56 / 12%), transparent 70%); }
+.subscribe h3 { font-size: clamp(1.8rem, 3vw, 3rem); line-height: 1.1; }
+.caption { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.5rem 2rem; margin-top: 1rem; }
+.caption p + p { margin-top: .5rem; }
+.caption a { flex-shrink: 0; }
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: clamp(1.5rem, 4vw, 4rem); }
+.about h2 { margin-top: .7rem; }
+.lead { font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.6; margin-bottom: 2rem; }
+.enquiry { padding-bottom: clamp(4rem, 8vw, 8rem); }
+.ctaDetail { display: block; font-size: .95rem; font-weight: 400; color: #c7c7c7; margin-top: .35rem; }
+@media (min-width: 64rem) {
+  .play { right: 3rem; }
+}
+@media (max-width: 63.99rem) {
+  .featured { grid-template-columns: minmax(0, 1fr); }
+  .featuredInfo { margin: 1rem 0 0; }
+}
+@media (max-width: 47.99rem) {
+  .actionStrip, .caption { align-items: flex-start; flex-direction: column; padding: 1.5rem; }
+  .episodeGrid, .about { grid-template-columns: minmax(0, 1fr); }
+}
+@media (forced-colors: active) {
+  .heading > p, .facts dt, .featuredInfo > p, .caption p + p, .subscribe > p, .ctaDetail { color: CanvasText; }
+  .subscribe { background-image: none; }
+  .play { background: Canvas; color: CanvasText; border-color: CanvasText; }
+}
