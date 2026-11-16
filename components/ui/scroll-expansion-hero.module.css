@@ -35,7 +35,10 @@
   }
   .background::after { background: rgb(11 11 11 / 35%); }
 }
-.house { z-index: -1; background: none; }
+.house { z-index: -1; }
+/* Two classes so this beats the global .hero-environment gradient in any stylesheet order;
+   otherwise the opaque house layer hides the carousel background video. */
+.stage .house { background: none; }
 .house :global(.arrival-art) { top: 48%; }
 .carousel { min-width: 0; }
 .scene[data-arrival-enhanced] { height: 200svh; }

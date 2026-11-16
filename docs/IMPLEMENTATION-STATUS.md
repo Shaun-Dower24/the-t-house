@@ -1,5 +1,16 @@
 # The T-House implementation status
 
+## Carousel background reel swap
+
+- **Source:** [Pacman TV Instagram reel DXgyhKPDN3E](https://www.instagram.com/reel/DXgyhKPDN3E/), M24's freestyle for #TheHatch with SV on the Beat. The owner confirmed permission to host it on 16 November 2026, and it replaces SVOnTheBeat's `DePXvADO6zk`. It was downloaded with yt-dlp 2026.10.26 as the 1916×1080 VP9 video-only stream, after allowing `www.instagram.com`, `i.instagram.com` and `scontent-ord5-1.cdninstagram.com` in the session environment. No audio was kept.
+- **Trim:** the loop runs from 0.64 s to 20.28 s (19.64 s). This removes the 0.6 s fade-in from black and the 5.2 s black "OUT NOW" end card. Both loop ends average a luma of about 57, and blackdetect finds no black frames.
+- **Encode:** a 1280×720 landscape loop at 25 fps with no audio. H.264 MP4 with faststart is 2,645,293 bytes, VP9 WebM is 2,130,621 bytes, and the matching JPG poster (from 2.5 s) is 28,440 bytes. The file names, the WebM-first source order and the playback logic are unchanged.
+- **Fix:** in production builds, the global `.hero-environment` gradient could load after the module's `.house { background: none }`. When it did, the opaque house layer covered the whole backdrop on every screen size. `.stage .house { background: none; }` now wins in any stylesheet order. A white-filter check confirmed the video shows through all ten openings at 48rem and up, and full-bleed under the 72% scrim on phones. The production build checked here showed the same order, so the live backdrop was likely hidden until this fix.
+- **Checks (Chromium, production build):**
+  - The video plays at 1440 and 390 px (WebM, 1280×720, 19.64 s).
+  - Reduced motion loads no video and shows the masked poster.
+  - All five routes at 390, 768, 1280 and 1920 px show no overflow and no page or console errors.
+
 ## Homepage text animations
 
 - **Live:** the owner approved the preview, and `dd08a45` was deployed to production on 16 November 2026 ([Netlify deploy](https://app.netlify.com/projects/the-t-house/deploys/6afb678d99058097427fd94b)). The Netlify API confirmed it as the published production deploy, with the studio photo and the Next.js server handler. The previous production deploy, graffiti homepage `1f6d9fc` (`6afb2fa491a4a6edd7e01348`), remains available to restore. The branch is not merged into `feature/immersive-homepage`, and [pull request #8](https://github.com/Shaun-Dower24/the-t-house/pull/8) is still open.
