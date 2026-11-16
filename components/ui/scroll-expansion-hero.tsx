@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef } from "react";
 import { HeroCarousel } from "../hero-carousel";
-import { HouseElevation, HOUSE_OPENING_MASK } from "../house-elevation";
+import { HouseElevation } from "../house-elevation";
 import { HomeIntro } from "./home-intro";
 import { createYouTubeArrival } from "./youtube-arrival";
 import styles from "./scroll-expansion-hero.module.css";
@@ -190,7 +190,7 @@ export function ScrollExpansionHero() {
     <div className={styles.stage} data-arrival-stage>
       <HomeIntro />
       <h1 id="arrival-heading" className="sr-only">The T-House Studio</h1>
-      <div className={styles.background} data-carousel-background aria-hidden="true" style={{ "--house-opening-mask": HOUSE_OPENING_MASK } as CSSProperties}>
+      <div className={styles.background} data-carousel-background aria-hidden="true">
         <video muted loop playsInline autoPlay preload="metadata" poster="/images/carousel-bg-poster.jpg" tabIndex={-1}>
           <source data-src="/videos/carousel-bg.webm" type="video/webm" />
           <source data-src="/videos/carousel-bg.mp4" type="video/mp4" />

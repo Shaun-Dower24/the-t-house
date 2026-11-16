@@ -2,6 +2,8 @@
 
 ## Carousel background reel swap
 
+- **Full-bleed:** at the owner's request, the reel now fills the whole carousel stage at every screen size, under a 60% scrim. The scrim was 72% on phones, and at 48rem and up the reel was only visible through a 35% tint in the window-and-door mask. That mask (`HOUSE_OPENING_MASK` and its inline custom property) is removed, while `HOUSE_OPENINGS` still draws the elevation. Chromium checks: at 1280 px the artist, lamp and seats show behind the house and cards, which stay legible. At 390 px the reel shows behind the carousel. Reduced motion shows the full-bleed poster. Through the arrival scroll, backdrop opacity follows the reveal (0 → 0.40 → 0.95 → 1), and the five-route, four-width sweep found no overflow or errors.
+
 - **Source:** [Pacman TV Instagram reel DXgyhKPDN3E](https://www.instagram.com/reel/DXgyhKPDN3E/), M24's freestyle for #TheHatch with SV on the Beat. The owner confirmed permission to host it on 16 November 2026, and it replaces SVOnTheBeat's `DePXvADO6zk`. It was downloaded with yt-dlp 2026.10.26 as the 1916×1080 VP9 video-only stream, after allowing `www.instagram.com`, `i.instagram.com` and `scontent-ord5-1.cdninstagram.com` in the session environment. No audio was kept.
 - **Trim:** the loop runs from 0.64 s to 20.28 s (19.64 s). This removes the 0.6 s fade-in from black and the 5.2 s black "OUT NOW" end card. Both loop ends average a luma of about 57, and blackdetect finds no black frames.
 - **Encode:** a 1280×720 landscape loop at 25 fps with no audio. H.264 MP4 with faststart is 2,645,293 bytes, VP9 WebM is 2,130,621 bytes, and the matching JPG poster (from 2.5 s) is 28,440 bytes. The file names, the WebM-first source order and the playback logic are unchanged.

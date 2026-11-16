@@ -13,8 +13,6 @@ export const HOUSE_OPENINGS = {
   lowerRight: "M674 357h133v50H674z",
 };
 
-export const HOUSE_OPENING_MASK = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${houseViewBox}" preserveAspectRatio="xMidYMid meet"><g fill="white">${Object.entries(HOUSE_OPENINGS).map(([name, d]) => `<path id="${name}" d="${d}"/>`).join("")}</g></svg>`)}")`;
-
 export function HouseElevation() {
   return (
     <svg className="house-elevation" viewBox={houseViewBox} preserveAspectRatio="xMidYMid meet" fill="none" aria-hidden="true">
