@@ -1,5 +1,17 @@
 # The T-House implementation status
 
+## Homepage text animations
+
+- Built the five approved effects from [the text animation plan](HOME-TEXT-ANIMATION-PLAN.md) on `claude/nice-keller-e6x36c`. The branch sits on top of the live graffiti homepage (`1f6d9fc`, [pull request #8](https://github.com/Shaun-Dower24/the-t-house/pull/8)). The effects are Stroke Text on the Watch and Inside tags, Split Text on the carousel labels, Echo Text on the gate title, Shuffle on links, stickers and the counter, and Circular Text round the play button. They use the existing GSAP, with no new dependencies and no React Bits or 21st.dev code.
+- **Stroke Text:** at handover, the drawn letters matched the real heading pixel for pixel (zero difference) at 320, 360, 390, 768, 1280 and 1920 px, including the two-line tags at 320 and 360 px. Each tag plays once for about 1.86 s. A tag that is already on screen stays static.
+- **Gate:** the echoes finish at 5.15 s. Under a controlled clock, the button began fading in 1.19–1.20 s after the spray started, and the gate was ready 1.48–1.51 s after it, for both the live gate code and the new code. The differences are frame-level noise. Fast-forwarding hides the echoes.
+- **Carousel:** labels land and return to their original text node. The counter rolls only the changed digit, upward for next and downward for previous. Clicking a card mid-landing finishes the landing before the route transition copies the card, and navigation completes.
+- **Shuffle:** header links keep identical positions and widths while rolling, and an ARIA snapshot showed unchanged link names during a roll. Keyboard focus triggers it and touch taps don't. The Menu, footer social and duration stickers roll, and no split elements remain afterwards.
+- **Ring:** it turns at about 16.4° a second (one turn per 22 s), about 3.2× faster on hover or focus, and pauses off screen. It stayed legible over a stand-in photo at 390 and 1280 px.
+- **Preferences:** system reduced motion, the site toggle (both stored and switched mid-visit), forced colours and no JavaScript all showed plain text with no effect activity. Turning reduced motion on mid-effect settled the tag at once. Forced colours hide the ring.
+- **Pages:** all five routes at 390, 768, 1280 and 1920 px showed no horizontal overflow and no page or console errors. Lint, TypeScript and the production build passed on Node 24.
+- **Open:** Safari, Firefox and physical devices are untested. YouTube's thumbnail host and the live site were unreachable from the test environment, so the ring was checked over a stand-in photo and the gate timing against the live gate code locally. The Netlify preview deploy (alias `text-motion`) is waiting for the owner's go-ahead, and screen recordings stand in for it until then. Production is unchanged. Merging this branch also brings in the graffiti work from pull request #8.
+
 ## Graffiti homepage — step 1
 
 - Added self-hosted Latin Sedgwick Ave Display 400, Permanent Marker 400 and Barlow Condensed 600, with shared tag/marker/label tokens; Barlow body text and existing page titles remain unchanged in this step. Added static styling utilities, grayscale wall grain, and one shared filter-definitions block. Roughening is confined to decorative borders and strokes, never text or masks.

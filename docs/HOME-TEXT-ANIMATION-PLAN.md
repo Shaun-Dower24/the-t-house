@@ -1,6 +1,6 @@
 # Homepage text animation plan
 
-Status: plan agreed in chat (all five effects approved). Building on a preview only. Nothing goes live and nothing is merged without your say-so.
+Status: all five effects are built and checked (see [Implementation status](IMPLEMENTATION-STATUS.md)). The Netlify preview is waiting for your go-ahead. Nothing goes live and nothing is merged without your say-so.
 
 ## 1. What we're adding
 
