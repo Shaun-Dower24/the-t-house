@@ -246,16 +246,15 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
               >
                 <span className={styles.art} aria-hidden="true">
                   {card.id === "watch" && <span data-arrival-media className={styles.videoFrame}>
-                    <video data-hero-video muted loop playsInline preload="none" poster="/images/arrival-poster.jpg" disablePictureInPicture />
+                    <Image src="/images/arrival-poster.jpg" alt="" fill unoptimized sizes="100vw" draggable={false} />
                   </span>}
-                  {"image" in card ? (
+                  {card.id === "watch" ? null : "image" in card ? (
                     <Image
                       src={card.image}
                       alt=""
                       fill
                       draggable={false}
                       sizes="(min-width: 576px) and (hover: hover) and (pointer: fine) min(683px, calc(100vw - 40px)), (min-width: 768px) 192px, (min-width: 400px) 184px, 46vw"
-                      unoptimized={card.id === "watch"}
                     />
                   ) : <HouseOutline />}
                 </span>
