@@ -201,20 +201,17 @@ export function HomeIntro() {
       <svg className={styles.title} viewBox="0 0 800 180" role="img" aria-label="The T-House">
         <defs>
           <filter id={`${id}-brush`}><feGaussianBlur stdDeviation="9" /></filter>
-          <filter id={`${id}-spray`} x="-10%" y="-20%" width="120%" height="140%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="7" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.4" xChannelSelector="R" yChannelSelector="G" result="paint" />
-            <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 3 0 0 0 -0.6" result="grain" />
-            <feComposite in="paint" in2="grain" operator="in" />
-          </filter>
           <mask id={`${id}-mask`} maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="180">
             <rect data-spray-reveal x="0" y="0" width="0" height="180" fill="white" />
             <rect data-spray-brush x="-100" y="0" width="100" height="180" rx="50" fill="white" filter={`url(#${id}-brush)`} />
           </mask>
         </defs>
         <g mask={`url(#${id}-mask)`} fill="currentColor">
-          <text x="400" y="122" textAnchor="middle" filter={`url(#${id}-spray)`}>The T-House</text>
+          <text x="400" y="122" textAnchor="middle">The T-House</text>
           {Array.from({ length: 28 }, (_, i) => <circle key={i} cx={150 + (i * 137) % 500} cy={30 + (i * 43) % 125} r={0.6 + (i % 4) * 0.45} opacity={0.15 + (i % 3) * 0.1} />)}
+        </g>
+        <g className={styles.drips} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+          <path pathLength="1" d="M260 130v16" /><path pathLength="1" d="M470 127v27" /><path pathLength="1" d="M590 130v12" />
         </g>
       </svg>
       <button type="button" className={styles.button} tabIndex={-1} onClick={event => enter.current(event.nativeEvent)}>Enter the house</button>

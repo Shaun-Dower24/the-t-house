@@ -5,6 +5,7 @@
   aspect-ratio: 44 / 32;
   pointer-events: none;
 }
+.icon::after { content: ""; position: absolute; right: -3px; top: 2px; width: 4px; height: 4px; border-radius: 50%; background: var(--signature-red); box-shadow: 3px 4px 0 -1px var(--signature-red), -2px -3px 0 -1px var(--signature-red); clip-path: inset(0 var(--graffiti-dot-remaining, 100%) 0 0); pointer-events: none; }
 
 .mark,
 .spray {

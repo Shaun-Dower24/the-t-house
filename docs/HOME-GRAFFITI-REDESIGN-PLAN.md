@@ -1,6 +1,6 @@
 # Homepage graffiti redesign plan
 
-Status: step 1 built — fonts, shared styling primitives and site-wide header/footer. Gate, carousel and homepage section restyles remain planned. Scope: the homepage `/` first, except the approved shared header/footer treatment.
+Status: steps 1–2 built — fonts, shared styling primitives, site-wide header/footer, entrance gate and carousel. Watch/Inside section restyles remain planned. Scope: the homepage `/` first, except the approved shared header/footer treatment.
 
 ## 1. Brief
 

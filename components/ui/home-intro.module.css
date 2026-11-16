@@ -4,13 +4,17 @@
 .drawing { position: relative; }
 .drawing > svg { display: block; width: 100%; height: auto; }
 .drawing :global(path) { animation: drawn 0s 6s forwards; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.drawing :global(.house-elevation) { filter: url(#graffiti-roughen) drop-shadow(1px 1px 0 rgb(245 245 245 / 25%)); }
 .door { position: absolute; left: 38.7%; top: 70.555556%; width: 5.4%; height: 8.333333%; perspective: 450px; }
 .panel { width: 100%; height: 100%; background: var(--canvas); border: 1px solid var(--signature-red); transform-origin: left center; opacity: 0; backface-visibility: hidden; }
 .overlay:is([data-phase="ready"], [data-phase="opening"]) .panel { opacity: 1; }
 .title { display: block; width: 85%; height: auto; margin: -2rem auto -0.3rem; color: var(--signature-red); filter: drop-shadow(0 0 3px rgb(200 56 56 / 35%)); }
-.title text { font-family: var(--font-script); font-size: 112px; }
+.title text { font-family: var(--font-tag); font-size: 112px; }
+.drips path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.overlay[data-phase="ready"] .drips path { animation: drawn 650ms ease-out forwards; }
 .title [data-spray-reveal] { animation: painted 0s 6s forwards; }
-.button { position: relative; padding: 0.85rem 1.35rem; border: 1px solid var(--signature-red); background: var(--canvas); color: var(--sign-white); font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.16em; cursor: pointer; opacity: 0; visibility: hidden; animation: available 0s 6s forwards; }
+.button { position: relative; padding: 0.85rem 1.35rem; border: 1px solid var(--signature-red); background: var(--signature-red); color: var(--sign-white); font-family: var(--font-marker); font-size: 0.85rem; line-height: 1.5; text-transform: uppercase; letter-spacing: 0.16em; cursor: pointer; opacity: 0; visibility: hidden; animation: available 0s 6s forwards; }
+.button::before { content: ""; position: absolute; inset: -3px -2px; border: 2px solid var(--signature-red); border-radius: 3px 1px 4px 2px; transform: rotate(-1deg); filter: url(#graffiti-roughen); pointer-events: none; }
 .button:focus-visible { outline: 2px solid var(--sign-white); outline-offset: 5px; }
 .button:hover { background: var(--signature-red); }
 .overlay[data-phase="ready"] .button { opacity: 1 !important; visibility: visible !important; }
@@ -23,3 +27,7 @@
 @keyframes recovered { to { transform: none; opacity: 1; clip-path: none; } }
 @media (max-height: 32rem) { .figure { width: min(64vw, 30rem, 105svh); } .title { margin-top: -1rem; } .button { padding-block: 0.6rem; } }
 @media (prefers-reduced-motion: reduce), (forced-colors: active) { .overlay { display: none; } }
+@media (prefers-reduced-transparency: reduce) {
+  .title { filter: none; }
+  .title text { font-family: var(--font-sans); font-weight: 700; }
+}
