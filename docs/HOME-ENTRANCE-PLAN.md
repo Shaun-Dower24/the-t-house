@@ -1,113 +1,54 @@
 # Homepage entrance animation: plan
 
-Status: approved for implementation. Concept A “Lights on”, once per browser session using sessionStorage, with the Hurricane title and HouseElevation rather than a raster logo; about 3.0 seconds, capped at 3.2 seconds. It builds on the video arrival from [PR #2](https://github.com/Shaun-Dower24/the-t-house/pull/2).
+## Revision 2 — Enter the house
+
+Approved revision: replace the automatic Lights on reveal with a once-per-tab-session interactive entrance. Draw the house line by line, spray “The T-House” underneath, then invite the visitor to open the door. This supersedes the earlier 3.1-second automatic reveal and its hard cap.
 
 ## 1. Constraints
 
-- **The master plan says visitors reach the video immediately.** The approved slower entrance is skippable brand theatre (at most ~3.2s, once per visit), not a blocking "wait until loaded" screen.
-- **The page underneath must stay usable.** The server HTML (header, carousel, Explore link) is rendered and focusable under the intro.
-  - The intro is added by JS only, so no-JS visitors never see it.
-  - Reduced motion and forced colours skip it entirely.
-- **Native scroll and history are untouched.**
-  - Nothing calls `preventDefault` on wheel or touch.
-  - The intro never plays on a restored history entry (`history.state.tHouseArrivalSettled`) or when the page loads with a scroll offset.
-- **It must hand off to the existing arrival.** The intro ends on exactly the first frame the user already sees: the full-bleed video under the header. No second "reveal" follows it.
-- **Only our own assets are used:**
-  - `HouseElevation` (`components/house-elevation.tsx`, viewBox 1000×540; the outline paths already have `pathLength="1"`)
-  - `HouseOutline`
-  - the studio mark
-  - the tokens canvas `#0B0B0B`, sign white `#F5F5F5`, signature red `#C83838`, and the Hurricane and Barlow fonts
+- Preserve the existing HouseElevation everywhere else, native scrolling after entry, browser history, carousel geometry and the single arrival media node.
+- The gate is a fixed modal dialog with an accessible label. Background content is inert, focus stays inside, and `html` overflow is hidden until entry. Never cancel wheel or touch events.
+- No new dependencies, canvas libraries, raster logos or third-party artwork. Use HouseElevation, Hurricane, Barlow, canvas black, sign white and signature red `#C83838`.
+- Keep server rendering and no-JS usable. The gate only mounts when the pre-paint eligibility check allows it.
 
-  The 21st.dev pieces below are references for technique only; no code is copied (several have no licence).
+## 2. Sequence
 
-## 2. Concepts
+1. **House, approximately 3.5 seconds:** split the intro copy's straight SVG commands (including relative moves and closed subpaths) into individual normalized line paths at runtime. Order ground/base, walls, roof, window/detail lines, then door. Each segment starts after the previous one, with only a slight overlap. Do not change the shared HouseElevation component.
+2. **Spray, 1.2 seconds:** reveal the signature-red Hurricane title left to right with an SVG mask and moving soft brush. Turbulence/displacement grain, sparse overspray dots and a restrained glow give the lettering a spray-painted edge without sacrificing legibility.
+3. **Invitation, 300 ms fade:** show the uppercase Barlow “Enter the house” button with tracked lettering and a visible focus ring. Focus it with `preventScroll`. Wait indefinitely; there is no automatic entry deadline.
+4. **Entry:** click, Enter or Space opens the left-hinged door panel in 3D over 600 ms. Start hero playback at that moment. Then zoom the house around the doorway over 1000 ms using `power2.inOut`, enlarging the measured hero aperture to the full stage. End on the existing arrival first frame, without settling the carousel.
+5. **Immediate entry:** Escape from the button state reveals the arrival without door/zoom animation.
 
-### A. "Lights on" — house draws, door opens into the video (recommended)
-1. **0–200ms:** canvas black. The header is present but dimmed to 0.4.
-2. **200–1600ms:** `HouseElevation`'s outline strokes draw in white, from 1 to 0 dash offset, with a slight stagger: roof, then walls, then detail.
-3. **1300–1900ms:** the door or front window gets a signature-red neon flicker, two quick 120ms blinks then steady. "The T-House" fades up in Hurricane beneath it over 500ms.
-4. **1900–3100ms:** the lit door becomes a clip-path aperture.
-   - It expands from the door's rect to the full stage rect. Through it you see the already-playing arrival video (or the poster).
-   - The house lines scale up slightly and fade as the aperture passes them.
-   - The header returns to full opacity.
-5. **3100ms:** the overlay is removed, with a hard cap at 3200ms. The page is now in the exact state the arrival already starts from.
+## 3. Behaviour rules
 
-This works well because it is the reverse of the scroll morph: the video grows *out of* the house, then scrolling shrinks it back *into* the Watch card. Both house motifs bookend the experience.
-
-### B. Red counter loader
-A Hurricane `0 → 100` counter in signature red sits bottom-right, echoing the carousel counter. It is tied to real readiness (poster decoded, and video `canplay` or failure), with a 1.8s ceiling. At 100, two charcoal panels split horizontally, like studio doors, to reveal the video.
-- Pro: honest loading feedback.
-- Con: on fast connections it's either instant (pointless) or faked. Counters read "agency template".
-
-### C. Neon sign switch-on
-On black, the studio mark (white house lines and red handwriting) switches on like a neon sign: flicker, buzz-glow, steady. The whole frame then cross-fades to the video.
-- Pro: very on-brand and cheap to build.
-- Con: the mark is a 150×150 raster, so it's soft at large sizes. It needs a vector logo from the studio to look premium.
-
-### D. Studio curtain / slat wipe
-Eight vertical charcoal slats retract left and right (as in Swiss Poster Counter Preloader), with the wordmark revealed via vertical cut text.
-- Pro: crisp and fast.
-- Con: generic. It doesn't use the house motif.
-
-**Recommendation:** A, borrowing B's readiness logic invisibly. The aperture opens when the poster is decoded or at 1900ms, whichever is later, with a hard cap at 3.2s. C is a fallback if you supply a vector logo and want something simpler.
-
-## 3. Behaviour rules (all concepts)
-
-| Situation | Intro? |
+| Situation | Behaviour |
 |---|---|
-| First homepage load in a tab (sessionStorage `tHouseIntroSeen` unset) | Yes |
-| Reload / later homepage visits in the same session | No |
-| Back/forward to a settled entry, or load with a scroll offset or hash | No |
-| Internal navigation to `/` from another page | No (the arrival only) |
-| `prefers-reduced-motion`, site "reduced" setting, forced colours | No |
-| No JS | No (the intro is never rendered) |
-| Any key, click, tap, wheel or scroll during the intro | Jump to the end state within 150ms; the scroll still happens natively |
-| Video blocked or failed | The aperture reveals the poster; same timing |
-| Tab hidden during the intro | Finish instantly on `visibilitychange` |
+| First eligible homepage document in a tab | Gate; record `sessionStorage.tHouseIntroSeen` |
+| Reload / later visits in the same session | Skip |
+| Back/forward, restored settled entry, scroll offset or hash | Skip |
+| Internal navigation to `/` | Skip |
+| System or site reduced motion; forced colours | Skip |
+| No JavaScript | No gate; ordinary homepage |
+| Storage access denied | Fail open to the homepage |
+| Click, key or wheel during drawing/spray | Fast-forward to the focused button, never enter on that same action |
+| Tab / Shift+Tab at the button | Keep focus inside the gate |
+| Click / Enter / Space at the button | Door opening, then zoom and arrival |
+| Escape at the button | Enter immediately |
+| Video blocked/failed | Reveal the matching poster |
+| Hidden tab / pagehide; reduced motion enabled mid-gate | Finish and restore the page |
 
-## 4. Implementation sketch
+## 4. Implementation and failure safety
 
-- **`components/ui/home-intro.tsx`** (client, smallest boundary), with styles in `home-intro.module.css`.
-  - A fixed overlay, `aria-hidden="true"`, `pointer-events: none`, so input reaches the page and native scroll is unaffected.
-  - Input listeners are `passive` and only trigger `finish()`.
-- **No flash before hydration.** A tiny inline script in `app/layout.tsx` `<head>` runs before first paint. If the conditions in §3 hold, it sets `<html data-intro="pending">`.
-  - CSS for `[data-intro=pending]` paints the black canvas only, and never hides the DOM from assistive tech.
-  - A 4.5s CSS-animation failsafe clears it even if JS dies.
-- **Animation:** GSAP timeline (already a dependency, dynamically imported like the arrival).
-  - Stroke-dash draw on `HouseElevation` paths.
-  - Clip-path `inset()` from the measured door rect to the stage rect.
-  - Elements are mutated directly, with no React state per frame.
-- **Handshake with `scroll-expansion-hero.tsx`:**
-  - The intro dispatches `t-house:intro-done` and sets `data-intro="done"`.
-  - The hero defers *starting* playback until the aperture begins (t ≈ 1900ms), so the clip has not advanced when revealed.
-  - The hero ignores the intro entirely when it restores a settled entry.
-- **Focus:** the overlay is never focusable, and focus order is unchanged. The skip is implicit: the first Tab press ends the intro and lands on the header as today.
-- **Performance:**
-  - Preload the poster (`<link rel="preload" as="image">`) so the aperture usually reveals a real frame.
-  - No extra media: the intro uses only existing SVGs, at roughly 3–5 KB of JS on top of GSAP.
+- `home-intro-bootstrap.ts` retains the pre-paint eligibility decision and session key. It forwards initial input to the client gate; click/wheel handlers are passive. Only keyboard focus/activation defaults may be cancelled.
+- `home-intro.tsx` portals the dialog to the body, preserves/restores background inert state and focus, and dynamically imports GSAP. No per-frame React state and no media-ready wait.
+- Root states: `pending`, `running`, `ready`, `opening`, `done`. The hero holds playback through `ready`; `t-house:intro-aperture` releases it when the door starts opening. Completion removes the clip and scroll lock.
+- No old hard cap. After hydration, CSS failure safety reveals all lines, the title and the button statically after six seconds, without dismissing the gate. A stalled opening also resets the zoom, backdrop and panel after three seconds and shows the static invitation again. If hydration never happens, the pending black layer, media clip and scroll lock clear after six seconds independently of further JavaScript; a pending-only bootstrap timer also marks the entry done when script execution remains available.
+- The poster remains preloaded. Blocked playback still uses the same poster, and entry does not alter arrival settlement/history flags.
 
 ## 5. Verification
 
-- Phone (390), tablet (768), desktop (1280/1440) and short landscape (844×390): first frame, mid-draw, aperture, handoff. The handoff frame must be pixel-identical to the current arrival's first frame.
-- Skip by key, click, wheel, touch and Tab.
-- The §3 table: reload, Back, internal nav, hash, reduced motion, forced colours, no JS, blocked/failed video, hidden tab.
-- No layout shift (CLS 0), no horizontal overflow, no console errors.
-- Lint, typecheck and build. Record the results in `docs/IMPLEMENTATION-STATUS.md`, and add the sequence to `docs/ANIMATION-SPEC.md` and `docs/DESIGN-SYSTEM.md`.
-
-## 6. Open questions
-
-1. Concept A, or another?
-2. Frequency: once per browser session (proposed), once ever (localStorage), or every homepage load?
-3. Should the "The T-House" Hurricane title appear in the intro, or only the house and red light?
-4. Do you have a vector version of the studio mark? It's needed for concept C and would improve A.
-5. Timing approved after review: about 3.0s, with a 3.2s hard cap and unchanged immediate skipping.
-
-## 7. 21st.dev references (technique only)
-
-I couldn't search 21st.dev through the CLI because it isn't logged in, so these come from the public catalogue. None will be installed.
-- Handwriting SVG (@pulkitxm): stroke draw-on, used for A's line draw. No licence listed.
-- Dual Wipe Reveal (@soralabs): curtain panels, used for B's split. MIT.
-- Swiss Poster Counter Preloader (@kedhareswer): slat counter, used for B and D. MIT.
-- Preloader (@kevingirelli): readiness-gated overlay with unmount, used for the handshake pattern. MIT.
-- Preloader (@info-mdshakeeb): SVG curtain exit with a completion callback. Licence unknown.
-- Vertical Cut Reveal (@cnippet-dev): wordmark reveal. No licence listed.
+- Sample every segment's computed dash offset: ordered starts, monotonic fractional draws and only slight overlap. Sample spray-mask width and brush movement.
+- Verify automatic button focus, modal containment, each fast-forward input without accidental entry, click/Enter/Space/Escape entry, scroll lock/restoration and the complete §3 eligibility table.
+- Capture draw mid, spray mid, button, door opening, zoom mid and handoff at 1280 and 390 widths under `/home/ubuntu/shots/gate-*`.
+- Compare stationary-poster handoff pixels against the no-gate first frame at 390/768/1280/1440 and 844×390. Run `check-handoff.cjs`, assert no horizontal overflow or page exceptions, then lint, typecheck and production build.
+- Record outcomes and limitations in IMPLEMENTATION-STATUS. Deploy only a draft preview for review.

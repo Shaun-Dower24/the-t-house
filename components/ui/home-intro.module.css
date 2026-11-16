@@ -1,22 +1,25 @@
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 4;
-  display: grid;
-  place-items: center;
-  background: var(--canvas);
-  pointer-events: none;
-  animation: clear 0s var(--intro-failsafe-delay, 4.5s) forwards;
-}
-.figure { width: min(82vw, 42rem, 110svh); text-align: center; }
+.overlay { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: clip; pointer-events: auto; outline: none; }
+.shade { position: absolute; inset: 0; background: var(--canvas); }
+.figure { position: relative; width: min(90vw, 45rem, 108svh); text-align: center; }
 .drawing { position: relative; }
 .drawing > svg { display: block; width: 100%; height: auto; }
-.drawing :global(.elevation-guides), .drawing :global(.elevation-shadow) { display: none; }
-.drawing :global(path) { animation: none !important; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.drawing .door { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
-.door rect { fill: none; stroke: var(--signature-red); stroke-width: 3; filter: drop-shadow(0 0 6px var(--signature-red)); }
-.title { margin: -0.5rem 0 0; color: var(--signature-red); font-family: var(--font-script); font-size: clamp(2.8rem, 8vw, 5rem); line-height: 1; opacity: 0; }
-@keyframes clear { to { opacity: 0; visibility: hidden; } }
-@media (prefers-reduced-motion: reduce), (forced-colors: active) {
-  .overlay { display: none; }
-}
+.drawing :global(path) { animation: drawn 0s 6s forwards; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.door { position: absolute; left: 38.7%; top: 70.555556%; width: 5.4%; height: 8.333333%; perspective: 450px; }
+.panel { width: 100%; height: 100%; background: var(--canvas); border: 1px solid var(--signature-red); transform-origin: left center; opacity: 0; backface-visibility: hidden; }
+.overlay:is([data-phase="ready"], [data-phase="opening"]) .panel { opacity: 1; }
+.title { display: block; width: 85%; height: auto; margin: -2rem auto -0.3rem; color: var(--signature-red); filter: drop-shadow(0 0 3px rgb(200 56 56 / 35%)); }
+.title text { font-family: var(--font-script); font-size: 112px; }
+.title [data-spray-reveal] { animation: painted 0s 6s forwards; }
+.button { position: relative; padding: 0.85rem 1.35rem; border: 1px solid var(--signature-red); background: var(--canvas); color: var(--sign-white); font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.16em; cursor: pointer; opacity: 0; visibility: hidden; animation: available 0s 6s forwards; }
+.button:focus-visible { outline: 2px solid var(--sign-white); outline-offset: 5px; }
+.button:hover { background: var(--signature-red); }
+.overlay[data-phase="ready"] .button { opacity: 1 !important; visibility: visible !important; }
+.overlay[data-phase="opening"] :is(.title, .button) { visibility: hidden; animation: available 0s 3s forwards; }
+.overlay[data-phase="opening"] :is(.figure, .shade, .panel) { animation: recovered 0s 3s forwards; }
+.overlay[data-phase="opening"] [data-door-panel-line] { visibility: hidden; }
+@keyframes drawn { to { stroke-dashoffset: 0; } }
+@keyframes painted { to { width: 800px; } }
+@keyframes available { to { opacity: 1; visibility: visible; } }
+@keyframes recovered { to { transform: none; opacity: 1; clip-path: none; } }
+@media (max-height: 32rem) { .figure { width: min(64vw, 30rem, 105svh); } .title { margin-top: -1rem; } .button { padding-block: 0.6rem; } }
+@media (prefers-reduced-motion: reduce), (forced-colors: active) { .overlay { display: none; } }

@@ -38,7 +38,7 @@ export function ScrollExpansionHero() {
       if (!video || !scene) return;
       const watchActive = scene.querySelector('[data-carousel-slide][data-active="true"] [data-destination="watch"]');
       const intro = document.documentElement.dataset.intro;
-      const waitingForIntro = (intro === "pending" || intro === "running") && !window.history.state?.[historyKey];
+      const waitingForIntro = (intro === "pending" || intro === "running" || intro === "ready") && !window.history.state?.[historyKey];
       const canPlay = eligible() && visible && !!watchActive && !document.hidden && !failed && !waitingForIntro;
       setPlayable(eligible() && !failed);
       if (!eligible() && video.hasAttribute("src")) {
