@@ -38,4 +38,4 @@ The homepage's revision-2 “Enter the house” gate uses an intro-only segmente
 
 ## Artwork and rights
 
-The studio mark uses the supplied 150 × 150 px JPEG as its source. The displayed mark isolates the white drawing and red handwriting over a transparent background. Use it at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The YouTube image belongs to the official release and forms part of its Watch card and share preview.
+The studio mark uses the supplied 150 × 150 px JPEG as its source. The displayed mark isolates the white drawing and red handwriting over a transparent background. Use it at a compact display size. A vector or higher-resolution original would support a larger or sharper mark. The temporary studio artwork is identified as an illustration in context. The carousel's Inside the House card uses a studio photograph supplied by the owner. The YouTube image belongs to the official release and forms part of its Watch card and share preview.

@@ -13,7 +13,7 @@ import styles from "./hero-carousel.module.css";
 
 const destinations = [
   { id: "watch", label: "Watch", href: "/watch", image: "/images/arrival-poster.jpg" },
-  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/threshold-detail.webp" },
+  { id: "inside", label: "Inside the House", href: "/inside-the-house", image: "/images/inside-the-house-studio.webp" },
   { id: "about", label: "About", href: "/about" },
   { id: "connect", label: "Connect", href: "/connect" },
 ] as const;
@@ -329,7 +329,6 @@ export function HeroCarousel({ onBrowse }: { onBrowse?: () => void }) {
                   ) : <HouseOutline />}
                 </span>
                 <span>
-                  {card.id === "inside" && <span className={styles.caption} aria-hidden="true">Concept artwork</span>}
                   <span className={styles.label}>{card.label}</span>
                 </span>
               </Link>
